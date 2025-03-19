@@ -12,7 +12,9 @@ stdenv.mkDerivation {
     sha256 = "OWqmvgMd2dT8rSlrrLtfmNm1/sjYa1h6+AbpX7uWdnk="; # SHA-256 ハッシュ
   };
   installPhase = ''
+    runHook preInstall
     mkdir -p $out/bin
     cp -r * $out/bin
+    runHook postInstall
   '';
 }
