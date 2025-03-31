@@ -1,25 +1,22 @@
-{ stdenv, fetchurl, autoPatchelfHook }:
+{ stdenv, fetchzip, autoPatchelfHook }:
 
 let
-  version = "0.25.1";  # 最新の安定版に更新
-  system = if stdenv.isDarwin then "x86_64-darwin" else "x86_64-linux";
+  version = "0.25.0"; # バージョンを変数として定義
 in
 stdenv.mkDerivation {
   pname = "dfx";
-  inherit version;
+  inherit  version; # バージョンを継承
 
-  src = fetchurl {
-    url = "https://github.com/dfinity/sdk/releases/download/${version}/dfx-${version}-${system}.tar.gz";
-    sha256 = ""; # バイナリの正しいSHA256ハッシュを追加する必要があります
+  src = fetchzip {
+    url = "https://github.com/dfinity/sdk/releases/download/${version}/dfx-${version}-x86_64-linux.tar.gz";
+    sha256 = "OWqmvgMd2dT8rSlrrLtfmNm1/sjYa1h6+AbpX7uWdnk="; # SHA-256 ハッシュ
   };
-
-  nativeBuildInputs = stdenv.lib.optional stdenv.isLinux autoPatchelfHook;
-
-  sourceRoot = ".";
+  nativeBuildInputs = [ autoPatchelfHook ];
 
   installPhase = ''
+    runHook preInstall
     mkdir -p $out/bin
-    cp dfx $out/bin/
-    chmod +x $out/bin/dfx
+    cp -r * $out/bin
+    runHook postInstall
   '';
 }
