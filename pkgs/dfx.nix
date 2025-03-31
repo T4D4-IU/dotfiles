@@ -1,4 +1,4 @@
-{ stdenv, fetchzip, autoPatchelfHook }:
+{ stdenv, fetchzip, autoPatchelfHook, gcc }:
 
 let
   version = "0.25.0"; # バージョンを変数として定義
@@ -12,6 +12,8 @@ stdenv.mkDerivation {
     sha256 = "OWqmvgMd2dT8rSlrrLtfmNm1/sjYa1h6+AbpX7uWdnk="; # SHA-256 ハッシュ
   };
   nativeBuildInputs = [ autoPatchelfHook ];
+
+  buildInputs = [ gcc.cc.lib ];
 
   installPhase = ''
     runHook preInstall
