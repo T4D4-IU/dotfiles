@@ -1,4 +1,4 @@
-{ stdenv, fetcFromGitHub }:
+{ stdenv, fetchFromGitHub }:
 
 let
   version = "0.25.0"; # バージョンを変数として定義
@@ -7,7 +7,7 @@ stdenv.mkDerivation {
   pname = "dfx";
   inherit  version; # バージョンを継承
 
-  src = fetcFromGitHub {
+  src = fetchFromGitHub {
     owner = "dfinity";
     repo = "sdk";
     rev = "v${version}";
