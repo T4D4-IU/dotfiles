@@ -8,7 +8,7 @@ stdenv.mkDerivation {
   inherit  version; # バージョンを継承
 
   src = fetcFromGitHub {
-    owner = dfinity;
+    owner = "dfinity";
     repo = "sdk";
     rev = "v${version}";
     sha256 = "0hjz2xjahj2byzbbdf6x47qafdffhcgv2ikrwbh5mbcxp4iy41ww"; # SHA-256 ハッシュ
