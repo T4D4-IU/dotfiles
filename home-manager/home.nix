@@ -51,7 +51,7 @@
       find = "fd";
       vim = "nix run 'github:T4D4-IU/mynixvim'";
       lg = "lazygit";
-      dfx = "nix run github:T4D4-IU/dotfiles#dfx";
+      dfx = "nix run 'github:T4D4-IU/dotfiles#dfx'";
     };
   };
 
