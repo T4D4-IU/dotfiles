@@ -11,6 +11,11 @@
   };
 
   outputs = inputs: {
+    packages.x86_64-linux = let
+      pkgs = import inputs.nixpkgs { system = "x86_64-linux"; };
+      in {
+        dfx = pkgs.callPackage ./pkgs/dfx.nix { };
+      };
       nixosConfigurations = {
         myNixOS = inputs.nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
