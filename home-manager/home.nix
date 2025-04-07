@@ -176,7 +176,7 @@
       gh-dash
       gh-poi
       gh-actions-cache
-      gh-skyline
+      # gh-skyline
       gh-eco
     ];
     settings = {

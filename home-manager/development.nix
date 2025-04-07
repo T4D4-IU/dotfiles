@@ -25,7 +25,7 @@
     wakatime-cli
     ghq # Remote repository management made easy
     gibo # Gitignore boilerplate generator
-    claude-code # AI code generator
+    # claude-code # AI code generator
   ];
   programs.ghostty = {
     enable = true;
