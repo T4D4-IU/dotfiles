@@ -108,6 +108,12 @@
     spotify
     syncthing
     rquickshare # rust implementation of quickshare
+    act # GitHub Actionsのローカル実行
+    pinact # Pin GitHub Actions versions
+    gobuster # Tool used to brute-force URIs and DNS subdomains.
+    sniffnet # Cross-platform application to monitor your network traffic with ease
+    atuin #Replacement for a shell history which records additional commanads
+
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
@@ -169,9 +175,12 @@
       gh-copilot
       gh-dash
       gh-poi
+      gh-actions-cache
+      gh-skyline
+      gh-eco
     ];
     settings = {
-      editor = "nvim";
+      editor = "vim";
       git_protocol = "ssh";
     };
   };

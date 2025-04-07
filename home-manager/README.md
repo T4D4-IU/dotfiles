@@ -68,12 +68,21 @@
 - spotify
 - syncthing
 - rquickshare
+- act # GitHub Actionsのローカル実行
+- pinact # Pin GitHub Actions versions
+- gobuster # Tool used to brute-force URIs and DNS subdomains.
+- sniffnet # Cross-platform application to monitor your network traffic with ease
+- atuin #Replacement for a shell history which records additional commanads
+
 
 #### GitHub CLI extensions
 - markdown-preview
 - copilot
 - [dash](https://github.com/dlvhdr/gh-dash)
 - [poi](https://github.com/seachicken/gh-poi)
+- actions-cache
+- skyline
+- eco
 
 #### 分割したファイルの詳細
 - [direnv.nix](./direnv.nix) #direnvの設定
