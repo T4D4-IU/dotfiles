@@ -59,6 +59,15 @@
 - [neo-cowsay](https://github.com/Code-Hex/Neo-cowsay) # Cowsay reborn, written in Go
 - [gping](https://github.com/orf/gping) # ping, but with a graph
 - [sl](http://www.tkl.iis.u-tokyo.ac.jp/~toyoda/index_e.html) # Steam Locomotive runs across your terminal when you type 'sl'
+- obsidian
+- anki
+- notion-app-enhanced # #Notion Desktop build with Notion Enhancer for windows, macOS and Linux
+- zulip
+- slack
+- telegram-desktop
+- spotify
+- syncthing
+- rquickshare
 
 #### GitHub CLI extensions
 - markdown-preview

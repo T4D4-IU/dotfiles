@@ -99,6 +99,15 @@
     neo-cowsay # Cowsay reborn, written in Go
     gping # Ping, but with a graph
     sl # Steam Locomotive runs across your terminal when you type 'sl'
+    obsidian
+    anki
+    notion-app-enhanced #Notion Desktop build with Notion Enhancer for windows, macOS and Linux
+    zulip
+    slack
+    telegram-desktop
+    spotify
+    syncthing
+    rquickshare # rust implementation of quickshare
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
