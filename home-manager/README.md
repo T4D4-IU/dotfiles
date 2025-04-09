@@ -73,7 +73,12 @@
 - gobuster # Tool used to brute-force URIs and DNS subdomains.
 - sniffnet # Cross-platform application to monitor your network traffic with ease
 - atuin #Replacement for a shell history which records additional commanads
-
+- charm-freeze # Tool to generate images of code and terminal output
+- actionlint # Static checker for GitHub Actions workflow files
+- clive # Automates terminal operations
+- genact # Nonsense activity generator
+- vhs # Tool for generating terminal GIFs with code
+- xh # Friendly and fast tool for sending HTTP requests
 
 #### GitHub CLI extensions
 - markdown-preview
