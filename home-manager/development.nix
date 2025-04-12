@@ -37,7 +37,6 @@
       window-padding-balance = true;
       background-opacity = 0.85;
       background-blur-radius = 20;
-      fullscreen = true;
     };
   };
 }
