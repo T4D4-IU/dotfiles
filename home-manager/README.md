@@ -61,37 +61,39 @@
 - [sl](http://www.tkl.iis.u-tokyo.ac.jp/~toyoda/index_e.html) # Steam Locomotive runs across your terminal when you type 'sl'
 - obsidian
 - anki
-- notion-app-enhanced # #Notion Desktop build with Notion Enhancer for windows, macOS and Linux
+- [notion-app-enhanced](https://github.com/notion-enhancer/desktop) # #Notion Desktop build with Notion Enhancer for windows, macOS and Linux
 - zulip
 - slack
-- telegram-desktop
+- [telegram-desktop](https://desktop.telegram.org/)
 - spotify
 - syncthing
-- rquickshare
-- act # GitHub Actionsのローカル実行
-- pinact # Pin GitHub Actions versions
-- gobuster # Tool used to brute-force URIs and DNS subdomains.
-- sniffnet # Cross-platform application to monitor your network traffic with ease
-- atuin #Replacement for a shell history which records additional commanads
-- charm-freeze # Tool to generate images of code and terminal output
-- actionlint # Static checker for GitHub Actions workflow files
+- [rquickshare](https://github.com/Martichou/rquickshare)
+- [act](https://github.com/nektos/act) # GitHub Actionsのローカル実行
+- [pinact](https://github.com/suzuki-shunsuke/pinact) # Pin GitHub Actions versions
+- [gobuster](https://github.com/OJ/gobuster) # Tool used to brute-force URIs and DNS subdomains.
+- [sniffnet](https://github.com/gyulyvgc/sniffnet) # Cross-platform application to monitor your network traffic with ease
+- [atuin](https://github.com/atuinsh/atuin) #Replacement for a shell history which records additional commanads
+- [charm-freeze](https://github.com/charmbracelet/freeze) # Tool to generate images of code and terminal output
+- [actionlint](https://rhysd.github.io/actionlint/) # Static checker for GitHub Actions workflow files
 - clive # Automates terminal operations
-- genact # Nonsense activity generator
-- vhs # Tool for generating terminal GIFs with code
-- xh # Friendly and fast tool for sending HTTP requests
+- [genact](https://github.com/svenstaro/genact) # Nonsense activity generator
+- [vhs](https://github.com/charmbracelet/vhs) # Tool for generating terminal GIFs with code
+- [xh](https://github.com/ducaale/xh) # Friendly and fast tool for sending HTTP requests
 
 #### GitHub CLI extensions
 - markdown-preview
 - copilot
 - [dash](https://github.com/dlvhdr/gh-dash)
 - [poi](https://github.com/seachicken/gh-poi)
-- actions-cache
+- [actions-cache](https://github.com/actions/gh-actions-cache)
 - skyline
-- eco
+- [eco](https://github.com/coloradocolby/gh-eco)
 
 #### 分割したファイルの詳細
 - [direnv.nix](./direnv.nix) #direnvの設定
 - [development.nix](./development.nix) #開発環境の設定
+- [zed.nix](./zed.nix) #zedの設定
+- [zsh.nix](./zsh.nix) #zshの設定
 
 #### Ghosttyの設定
 - [オプションリファレンス](https://ghostty.org/docs/config/reference#macos-icon-screen-color)
