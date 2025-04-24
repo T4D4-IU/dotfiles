@@ -101,5 +101,16 @@
 - [公式の配布しているレポジトリ内のCOnfigファイル](https://github.com/ghostty-org/ghostty/blob/main/src/config/Config.zig)
 - [設定を参考にしたYukiさんのブログ](https://blog-dry.com/entry/2024/12/27/162410)
 
+#### Hyprlandの設定
+- 参考リンク
+  - https://wiki.hyprland.org/Nix/Hyprland-on-NixOS/
+  - https://wiki.hyprland.org/Nix/Plugins/
+- プラグイン
+  - [hy3](https://github.com/outfoxxed/hy3)
+  - https://github.com/hyprwm/hyprland-plugins
+    - hyprbars
+    - hyprwinwrap
+    - borders-plus-plus
+
 #### お借りした設定
 - [elythh/nixvim](https://neovimcraft.com/plugin/elythh/nixvim/)

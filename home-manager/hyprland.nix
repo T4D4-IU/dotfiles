@@ -1,15 +1,15 @@
 {pkgs, ...}: {
+  programs.kitty.enable = true;
   wayland.windowManager.hyprland = {
+    enable = true;
     settings = {
-      decoration = {
-        shadow_offset = 0.5;
-        "col.shadow" = "#000099";
-      };
+      "$mod" ="SUPER";
     };
-    plugins = with pkgs.hyprlandPlugins;[
-      hypr-dynamic-cursors
-      hyprtrails
-      hyprwinwrap
+    plugins = [
+      pkgs.hyprlandPlugins.hy3
+      pkgs.hyprlandPlugins.hyprbars
+      # pkgs.hyprlandPlugins.hyprwinwrap
+      pkgs.hyprlandPlugins.borders-plus-plus
     ];
   };
 }

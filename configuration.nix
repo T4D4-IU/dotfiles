@@ -195,7 +195,6 @@
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
     #  thunderbird
-    kitty
     ];
     shell = pkgs.zsh;
   };
