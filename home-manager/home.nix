@@ -95,6 +95,10 @@
     xh # Friendly and fast tool for sending HTTP requests
     wl-clipboard-rs # Clipboard manager for Wayland
     wireshark # Powerful network protocol analyzer
+    wofi
+    waybar
+    grimblast
+    hyprpaper
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the

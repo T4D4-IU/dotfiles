@@ -1,10 +1,4 @@
 {pkgs, ...}: {
-  environment.systemPackages = with pkgs; [
-    wofi
-    waybar
-    grimblast
-    hyprpaper
-  ];
   programs.kitty.enable = true;
   wayland.windowManager.hyprland = {
     enable = true;
