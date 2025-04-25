@@ -81,6 +81,13 @@
 - [xh](https://github.com/ducaale/xh) # Friendly and fast tool for sending HTTP requests
 - [wl-clipboard-rs](https://github.com/YaLTeR/wl-clipboard-rs) # Wayland clipboard manager
 - [wireshark](https://www.wireshark.org/) # Powerful network protocol analyzer
+- [wofi](https://hg.sr.ht/~scoopta/wofi) # Launcher/menu program for wlroots based wayland compositors such as sway
+- [waybar](https://github.com/alexays/waybar) # Highly customizable Wayland bar for Sway and Wlroots based compositors
+- grimblast # Helper for screenshots within Hyprland, based on grimshot
+- [hyprpaper](https://github.com/hyprwm/hyprpaper) # Blazing fast wayland wallpaper utility
+- [dunst](https://dunst-project.org/) # Lightweight and customizable notification daemon
+- [wlogout](https://github.com/ArtsyMacaw/wlogout) # Wayland based logout menu
+
 
 #### GitHub CLI extensions
 - markdown-preview
@@ -107,6 +114,7 @@
 - 参考リンク
   - https://wiki.hyprland.org/Nix/Hyprland-on-NixOS/
   - https://wiki.hyprland.org/Nix/Plugins/
+  - https://qiita.com/furyu_penguin/items/1cb71b64b36f4a9410a1
 - プラグイン
   - [hy3](https://github.com/outfoxxed/hy3)
   - https://github.com/hyprwm/hyprland-plugins

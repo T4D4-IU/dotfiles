@@ -16,12 +16,13 @@
         ", Print, exec, grimblast copy area"
         "$mod, D, exec, $menu"
         "$mod, M, exit"
+        "$mod, X, exec, wlogout"
       ];
     };
     plugins = [
       pkgs.hyprlandPlugins.hy3
       pkgs.hyprlandPlugins.hyprbars
-      # pkgs.hyprlandPlugins.hyprwinwrap
+      pkgs.hyprlandPlugins.hyprwinwrap
       pkgs.hyprlandPlugins.borders-plus-plus
     ];
   };

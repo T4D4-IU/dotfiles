@@ -95,10 +95,14 @@
     xh # Friendly and fast tool for sending HTTP requests
     wl-clipboard-rs # Clipboard manager for Wayland
     wireshark # Powerful network protocol analyzer
-    wofi
-    waybar
-    grimblast
-    hyprpaper
+    wofi # Launcher/menu program for wlroots based wayland compositors such as sway
+    waybar # Highly customizable Wayland bar for Sway and Wlroots based compositors
+    grimblast # Helper for screenshots within Hyprland, based on grimshot
+    hyprpaper # Blazing fast wayland wallpaper utility
+    dunst # Lightweight and customizable notification daemon
+    wlogout # Wayland based logout menu
+
+
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
