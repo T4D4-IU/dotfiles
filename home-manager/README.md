@@ -79,6 +79,8 @@
 - [genact](https://github.com/svenstaro/genact) # Nonsense activity generator
 - [vhs](https://github.com/charmbracelet/vhs) # Tool for generating terminal GIFs with code
 - [xh](https://github.com/ducaale/xh) # Friendly and fast tool for sending HTTP requests
+- [wl-clipboard-rs](https://github.com/YaLTeR/wl-clipboard-rs) # Wayland clipboard manager
+- [wireshark](https://www.wireshark.org/) # Powerful network protocol analyzer
 
 #### GitHub CLI extensions
 - markdown-preview

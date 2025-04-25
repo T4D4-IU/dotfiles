@@ -93,6 +93,8 @@
     genact # Nonsense activity generator
     vhs # Tool for generating terminal GIFs with code
     xh # Friendly and fast tool for sending HTTP requests
+    wl-clipboard-rs # Clipboard manager for Wayland
+    wireshark # Powerful network protocol analyzer
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
