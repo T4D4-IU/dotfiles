@@ -6,6 +6,12 @@
     portalPackage = null;
     settings = {
       "$mod" ="SUPER";
+      bind = [
+        "$mod, G, exec, ghostty"
+        "$mod, C, exec, code"
+        "$mod, S, exec, supotify"
+        "$mod, B, exec, brave"
+      ];
     };
     plugins = [
       pkgs.hyprlandPlugins.hy3
