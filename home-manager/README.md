@@ -87,7 +87,8 @@
 - [hyprpaper](https://github.com/hyprwm/hyprpaper) # Blazing fast wayland wallpaper utility
 - [dunst](https://dunst-project.org/) # Lightweight and customizable notification daemon
 - [wlogout](https://github.com/ArtsyMacaw/wlogout) # Wayland based logout menu
-
+- cliphist # Wayland clipboard manager
+- hyprlock # Hypland's GPU-accelerated screen locking utility
 
 #### GitHub CLI extensions
 - markdown-preview

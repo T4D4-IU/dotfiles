@@ -20,6 +20,7 @@
     ./direnv.nix
     ./development.nix
     ./hyprland.nix
+    ./hyprlock.nix
     ./zed.nix
     ./zsh.nix
   ];
@@ -101,7 +102,7 @@
     hyprpaper # Blazing fast wayland wallpaper utility
     dunst # Lightweight and customizable notification daemon
     wlogout # Wayland based logout menu
-
+    cliphist # Wayland clipboard manager
 
 
     # # It is sometimes useful to fine-tune packages, for example, by applying

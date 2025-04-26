@@ -2,6 +2,7 @@
   programs.kitty.enable = true;
   wayland.windowManager.hyprland = {
     enable = true;
+    xwayland.enable = true;
     package = null;
     portalPackage = null;
     settings = {
@@ -18,6 +19,10 @@
         "$mod, M, exit"
         "$mod, X, exec, wlogout"
       ];
+      exec-once = [
+        "syncthing"
+
+      ];
     };
     plugins = [
       pkgs.hyprlandPlugins.hy3
@@ -26,4 +31,5 @@
       pkgs.hyprlandPlugins.borders-plus-plus
     ];
   };
+  services.gnome-keyring.enable = true;
 }
