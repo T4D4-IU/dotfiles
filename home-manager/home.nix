@@ -99,7 +99,8 @@
     hyprpaper # Blazing fast wayland wallpaper utility
     dunst # Lightweight and customizable notification daemon
     wlogout # Wayland based logout menu
-    cliphist # Wayland clipboard manager
+    cliphist # Wayland clipboard History
+    wl-clipboard # Wayland clipboard manager
 
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
