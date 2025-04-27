@@ -37,7 +37,7 @@
       ];
       env = [
         "XMODIFIERS, @im=fcitx5"
-      ]
+      ];
     };
 #    plugins = [
 #      pkgs.hyprlandPlugins.hy3
