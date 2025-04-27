@@ -14,12 +14,13 @@
         "$mod, S, exec, spotify"
         "$mod, B, exec, brave"
         "$mod, Q, killactive"
-        ", Print, exec, grimblast copy area"
+        ", Print, exec, grimblast copysave area"
         "$mod, D, exec, rofi -show drun"
         "$mod, period, exec, bemoji"
         "$mod, M, exit"
+        "$mod, F, fullscreen"
         "$mod, X, exec, wlogout"
-        "$mod, V, exec, cliphist list"
+        "$mod, V, exec, cliphist list | rofi -dmenu | cliphist decode | wl-copy"
         # switch workspaces
         "$alt, 1, workspace, 1"
         "$alt, 2, workspace, 2"
@@ -30,6 +31,13 @@
         "$alt, 7, workspace, 7"
         "$alt, 8, workspace, 8"
         "$alt, 9, workspace, 9"
+        # move focus
+        "$mod, left, movefocus, left"
+        "$mod, right, movefocus, right"
+        "$mod, up, movefocus, up"
+        "$mod, down, movefocus, down"
+        "$mod, Tab, cyclenext"
+        "$mod, Shift, Tab, cyclenext, prev"
       ];
       exec-once = [
         "syncthing"
@@ -38,6 +46,9 @@
       env = [
         "XMODIFIERS, @im=fcitx5"
       ];
+      xwayland = {
+        force_zero_scaling = true;
+      };
     };
 #    plugins = [
 #      pkgs.hyprlandPlugins.hy3

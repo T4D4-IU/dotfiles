@@ -102,6 +102,9 @@
     wlogout # Wayland based logout menu
     cliphist # Wayland clipboard History
     wl-clipboard # Wayland clipboard manager
+    zenity
+    networkmanagerapplet # network manager gui
+    brightnessctl # screen brightness
 
 
     # # It is sometimes useful to fine-tune packages, for example, by applying

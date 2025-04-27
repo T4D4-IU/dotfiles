@@ -86,6 +86,9 @@
 - [wlogout](https://github.com/ArtsyMacaw/wlogout) # Wayland based logout menu
 - cliphist # Wayland clipboard manager
 - hyprlock # Hypland's GPU-accelerated screen locking utility
+- zenity
+- networkmanagerapplet # network manager gui
+- brightnessctl # screen brightness
 
 #### GitHub CLI extensions
 - markdown-preview
