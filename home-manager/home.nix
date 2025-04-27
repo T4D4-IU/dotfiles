@@ -21,6 +21,7 @@
     ./development.nix
     ./hyprland.nix
     ./hyprlock.nix
+    ./rofi.nix
     ./zed.nix
     ./zsh.nix
   ];

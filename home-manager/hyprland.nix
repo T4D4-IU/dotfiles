@@ -33,15 +33,18 @@
       ];
       exec-once = [
         "syncthing"
-        "fcitx5 -d --replace"
+        "fcitx5 -D"
       ];
+      env = [
+        "XMODIFIERS, @im=fcitx5"
+      ]
     };
-    plugins = [
-      pkgs.hyprlandPlugins.hy3
-      pkgs.hyprlandPlugins.hyprbars
-      pkgs.hyprlandPlugins.hyprwinwrap
-      pkgs.hyprlandPlugins.borders-plus-plus
-    ];
+#    plugins = [
+#      pkgs.hyprlandPlugins.hy3
+#      pkgs.hyprlandPlugins.hyprbars
+#      pkgs.hyprlandPlugins.hyprwinwrap
+#      pkgs.hyprlandPlugins.borders-plus-plus
+#    ];
   };
   services.gnome-keyring.enable = true;
 }
