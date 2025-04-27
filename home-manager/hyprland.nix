@@ -8,7 +8,6 @@
     settings = {
       "$mod" ="SUPER";
       "$alt" = "ALT";
-      "$menu" = "rofi -show drun";
       bind = [
         "$mod, G, exec, ghostty"
         "$mod, C, exec, code"
@@ -16,11 +15,11 @@
         "$mod, B, exec, brave"
         "$mod, Q, killactive"
         ", Print, exec, grimblast copy area"
-        "$mod, D, exec, $menu"
+        "$mod, D, exec, rofi -show drun"
         "$mod, period, exec, bemoji"
         "$mod, M, exit"
         "$mod, X, exec, wlogout"
-        "$mod, V, exec, rofi -modi clipboard:${pkgs.cliphist}/bin/cliphist-rofi-img -show clipboard -show-icons -theme-str '##element-icon {size: 5ch; }'"
+        "$mod, V, exec, cliphist list"
         # switch workspaces
         "$alt, 1, workspace, 1"
         "$alt, 2, workspace, 2"
