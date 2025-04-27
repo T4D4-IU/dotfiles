@@ -76,7 +76,6 @@
     sl # Steam Locomotive runs across your terminal when you type 'sl'
     obsidian
     anki
-    notion-app-enhanced #Notion Desktop build with Notion Enhancer for windows, macOS and Linux
     zulip
     slack
     telegram-desktop
@@ -94,9 +93,7 @@
     genact # Nonsense activity generator
     vhs # Tool for generating terminal GIFs with code
     xh # Friendly and fast tool for sending HTTP requests
-    wl-clipboard-rs # Clipboard manager for Wayland
     wireshark # Powerful network protocol analyzer
-    wofi # Launcher/menu program for wlroots based wayland compositors such as sway
     waybar # Highly customizable Wayland bar for Sway and Wlroots based compositors
     grimblast # Helper for screenshots within Hyprland, based on grimshot
     hyprpaper # Blazing fast wayland wallpaper utility

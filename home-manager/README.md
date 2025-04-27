@@ -61,7 +61,6 @@
 - [sl](http://www.tkl.iis.u-tokyo.ac.jp/~toyoda/index_e.html) # Steam Locomotive runs across your terminal when you type 'sl'
 - obsidian
 - anki
-- [notion-app-enhanced](https://github.com/notion-enhancer/desktop) # #Notion Desktop build with Notion Enhancer for windows, macOS and Linux
 - zulip
 - slack
 - [telegram-desktop](https://desktop.telegram.org/)
@@ -79,11 +78,9 @@
 - [genact](https://github.com/svenstaro/genact) # Nonsense activity generator
 - [vhs](https://github.com/charmbracelet/vhs) # Tool for generating terminal GIFs with code
 - [xh](https://github.com/ducaale/xh) # Friendly and fast tool for sending HTTP requests
-- [wl-clipboard-rs](https://github.com/YaLTeR/wl-clipboard-rs) # Wayland clipboard manager
 - [wireshark](https://www.wireshark.org/) # Powerful network protocol analyzer
-- [wofi](https://hg.sr.ht/~scoopta/wofi) # Launcher/menu program for wlroots based wayland compositors such as sway
 - [waybar](https://github.com/alexays/waybar) # Highly customizable Wayland bar for Sway and Wlroots based compositors
-- grimblast # Helper for screenshots within Hyprland, based on grimshot
+- [grimblast](https://github.com/hyprwm/contrib/tree/main/grimblast) # Helper for screenshots within Hyprland, based on grimshot
 - [hyprpaper](https://github.com/hyprwm/hyprpaper) # Blazing fast wayland wallpaper utility
 - [dunst](https://dunst-project.org/) # Lightweight and customizable notification daemon
 - [wlogout](https://github.com/ArtsyMacaw/wlogout) # Wayland based logout menu
