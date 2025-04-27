@@ -2,7 +2,6 @@
   programs.kitty.enable = true;
   wayland.windowManager.hyprland = {
     enable = true;
-    xwayland.enable = true;
     package = null;
     portalPackage = null;
     settings = {
@@ -20,7 +19,8 @@
         "$mod, M, exit"
         "$mod, F, fullscreen"
         "$mod, X, exec, wlogout"
-        "$mod, V, exec, cliphist list | rofi -dmenu | cliphist decode | wl-copy"
+        #"$mod, V, exec, cliphist list | rofi -dmenu | cliphist decode | wl-copy"
+        "$mod, V, exec, rofi -modi clipboard:${pkgs.cliphist}/bin/cliphist-rofi-img -show clipboard -show-icons -theme-str '##element-icon {size: 5ch; }'"
         # switch workspaces
         "$alt, 1, workspace, 1"
         "$alt, 2, workspace, 2"
@@ -42,11 +42,14 @@
       exec-once = [
         "syncthing"
         "fcitx5 -D"
+        "rquickshare"
+        "discord"
       ];
       env = [
         "XMODIFIERS, @im=fcitx5"
       ];
       xwayland = {
+        enable = true;
         force_zero_scaling = true;
       };
     };
