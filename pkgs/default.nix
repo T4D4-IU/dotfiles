@@ -5,4 +5,5 @@ let
 in
 {
     dfx = pkgs.callPackage ./dfx.nix { };
+    haystack-editor = pkgs.callPackage ./haystack-editor.nix { };
 }
