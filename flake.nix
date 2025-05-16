@@ -15,6 +15,7 @@
       pkgs = import inputs.nixpkgs { system = "x86_64-linux"; };
       in {
         dfx = pkgs.callPackage ./pkgs/dfx.nix { };
+        haystack-editor = pkgs.callPackage ./pkgs/haystack-editor.nix { };
       };
       nixosConfigurations = {
         myNixOS = inputs.nixpkgs.lib.nixosSystem {
