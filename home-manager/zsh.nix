@@ -25,6 +25,7 @@
       vim = "nix run 'github:T4D4-IU/mynixvim'";
       lg = "lazygit";
       dfx = "nix run 'github:T4D4-IU/dotfiles#dfx'";
+      haystack-editor = "nix run 'github:T4D4-IU/dotfiles#haystack-editor'";
     };
     };
 }
