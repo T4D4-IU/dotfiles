@@ -16,6 +16,7 @@
         "$mod, Q, killactive"
         ", Print, exec, grimblast copysave area"
         "$mod, D, exec, rofi -show drun"
+        "$mod, W, exec, rofi -show window"
         "$mod, period, exec, bemoji"
         "$mod, M, exit"
         "$mod, F, fullscreen"
@@ -43,7 +44,8 @@
       ];
       exec-once = [
         "syncthing"
-        "fcitx5 -D"
+        "fcitx5-remote -r"
+        "fcitx5 -d --replace"
         "rquickshare"
         "discord"
       ];
