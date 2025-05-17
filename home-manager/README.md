@@ -1,4 +1,12 @@
 # Home-manager
+
+## TODO
+- ファイル構造を整理する(継続的に)
+- 日本語入力を良い感じにしたい
+- ステータスバーを良い感じにしたい
+- クリップボードを良い感じにしたい
+- ロック画面を良い感じにしたい
+
 ### memo
 - パッケージは[Nixpkgs](https://search.nixos.org/packages?query=)から探す。
 - 入れ方は[home.nix](./home.nix)のhome.packagesに追加する。
