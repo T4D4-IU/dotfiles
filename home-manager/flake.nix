@@ -8,10 +8,15 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    hyprpanel.url = "github:Jas-SinghFSU/HyprPanel";
     rust-overlay.url = "github:oxalica/rust-overlay";
+    treefmt-nix = {
+      url = "github:numtide/treefmt-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { nixpkgs, home-manager, rust-overlay, ... }:
+  outputs = { nixpkgs, home-manager, rust-overlay, treefmt-nix, hyprpanel, ... }:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs {
