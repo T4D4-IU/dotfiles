@@ -97,6 +97,9 @@
 - zenity
 - networkmanagerapplet # network manager gui
 - brightnessctl # screen brightness
+- [metasploit](https://docs.metasploit.com/) # Metasploit Framework - a collection of exploits
+- [armitage](https://github.com/r00t0v3rr1d3/armitage) # Graphical cyber attack management tool for Metasploit
+- [blueberry](https://github.com/linuxmint/blueberry) # Bluetooth configuration tool
 
 #### GitHub CLI extensions
 - markdown-preview

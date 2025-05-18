@@ -22,6 +22,7 @@
     ./hyprland.nix
     ./hyprlock.nix
     ./rofi.nix
+    ./starship.nix
     ./zed.nix
     ./zsh.nix
   ];
@@ -105,7 +106,9 @@
     zenity
     networkmanagerapplet # network manager gui
     brightnessctl # screen brightness
-
+    metasploit # Metasploit Framework - a collection of exploits
+    armitage # Graphical cyber attack management tool for Metasploit
+    blueberry # Bluetooth configuration tool
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
