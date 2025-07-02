@@ -8,6 +8,7 @@
     deno
     bun
     postman
+    mise
     foundry
     wasmer # ユニバーサルWebAssemblyランタイム
     (rust-bin.stable.latest.default.override {
