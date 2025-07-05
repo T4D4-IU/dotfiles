@@ -17,7 +17,13 @@
         dfx = pkgs.callPackage ./pkgs/dfx.nix { };
         haystack-editor = pkgs.callPackage ./pkgs/haystack-editor.nix { };
       };
-    checks.x86_64-linux = {
+    packageChecks = builtins.listToAttrs (
+      builtins.map (name: {
+        inherit name;
+        value = self.packages.${system}.${name};
+      }) (builtins.attrNames self.packages.${system})
+    );
+    checks.x86_64-linux = packageChecks // {
       nixos = self.nixosConfigurations.nixos.config.system.build.toplevel;
       home-manager = self.homeConfigurations."t4d4@nixos".activation-script;
     };
