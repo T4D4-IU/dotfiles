@@ -10,15 +10,19 @@
     };
   };
 
-  outputs = inputs: {
+  outputs = { self, ... }@inputs: {
     packages.x86_64-linux = let
       pkgs = import inputs.nixpkgs { system = "x86_64-linux"; };
       in {
         dfx = pkgs.callPackage ./pkgs/dfx.nix { };
         haystack-editor = pkgs.callPackage ./pkgs/haystack-editor.nix { };
       };
+    checks.x86_64-linux = {
+      nixos = self.nixosConfigurations.nixos.config.system.build.toplevel;
+      home-manager = self.homeConfigurations."t4d4@nixos".activation-script;
+    };
       nixosConfigurations = {
-        myNixOS = inputs.nixpkgs.lib.nixosSystem {
+        nixos = inputs.nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [
             ./configuration.nix
@@ -29,7 +33,7 @@
           };
         };
       homeConfigurations = {
-      myHome = inputs.home-manager.lib.homeManagerConfiguration {
+      "t4d4@nixos" = inputs.home-manager.lib.homeManagerConfiguration {
         pkgs = import inputs.nixpkgs {
           system = "x86_64-linux";
           config.allowUnfree = true; # プロプライエタリなパッケージを許可
