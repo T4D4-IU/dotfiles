@@ -29,7 +29,7 @@
           };
         };
       homeConfigurations = {
-      myHome = inputs.home-manager.lib.homeManagerConfiguration {
+      "t4d4@nixos" = inputs.home-manager.lib.homeManagerConfiguration {
         pkgs = import inputs.nixpkgs {
           system = "x86_64-linux";
           config.allowUnfree = true; # プロプライエタリなパッケージを許可
