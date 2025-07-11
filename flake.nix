@@ -24,20 +24,21 @@
       }) (builtins.attrNames self.packages.${system})
     );
     checks.x86_64-linux = self.packageChecks // {
-      nixos = self.nixosConfigurations.nixos.config.system.build.toplevel;
+      nixos = self.nixosConfigurations.default.config.system.build.toplevel;
       home-manager = self.homeConfigurations."t4d4@nixos".activation-script;
     };
       nixosConfigurations = {
-        nixos = inputs.nixpkgs.lib.nixosSystem {
+        default = inputs.nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [
             ./configuration.nix
-            ];
+            ./hosts/default/default.nix
+          ];
           specialArgs = {
             inherit inputs;
-            };
           };
         };
+      };
       homeConfigurations = {
       "t4d4@nixos" = inputs.home-manager.lib.homeManagerConfiguration {
         pkgs = import inputs.nixpkgs {
