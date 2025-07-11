@@ -41,6 +41,7 @@ nixos-generate-config --show-hardware-config > hardware-configuration.nix
 
     {
       imports = [ ./hardware-configuration.nix ];
+      networking.hostName = "laptop"; # Set machine-specific hostname
     }
     ```
 
@@ -111,6 +112,39 @@ nixos-generate-config --show-hardware-config > hardware-configuration.nix
 ```
 `default`の設定をコピーし、名前を`laptop`に変え、`modules`で読み込むパスを`./hosts/laptop/default.nix`に変更するだけです。
 
+**Home Managerの設定追加:**
+`flake.nix`の`homeConfigurations`にも、新しいマシン用のエントリを追加する必要があります。例えば、`t4d4@laptop`というユーザー名とホスト名の組み合わせでHome Managerの設定を追加します。
+
+```nix
+      homeConfigurations = {
+        "t4d4@nixos" = inputs.home-manager.lib.homeManagerConfiguration {
+          pkgs = import inputs.nixpkgs {
+            system = "x86_64-linux";
+            config.allowUnfree = true;
+          };
+          extraSpecialArgs = {
+            inherit inputs;
+          };
+          modules = [
+            ./home.nix
+          ];
+        };
+
+        "t4d4@laptop" = inputs.home-manager.lib.homeManagerConfiguration {
+          pkgs = import inputs.nixpkgs {
+            system = "x86_64-linux";
+            config.allowUnfree = true;
+          };
+          extraSpecialArgs = {
+            inherit inputs;
+          };
+          modules = [
+            ./home.nix
+          ];
+        };
+      };
+```
+
 ---
 
 ### まとめると
@@ -118,10 +152,11 @@ nixos-generate-config --show-hardware-config > hardware-configuration.nix
 新しいマシンを追加する際のワークフローは以下のようになります。
 
 1.  **新しいマシンで**: `nixos-generate-config` を実行して `hardware-configuration.nix` を作る。
-2.  **dotfilesリポジトリで**:
+2.  **dotfilesリポジリで**:
     *   `hosts/新しいマシン名` ディレクトリを作る。
     *   そこに `hardware-configuration.nix` と `default.nix` を置く。
-3.  **`flake.nix`を編集**: `nixosConfigurations` に新しいマシンのエントリを追加する。
+    *   `hosts/新しいマシン名/default.nix` に `networking.hostName = "新しいマシン名";` を追加する。
+3.  **`flake.nix`を編集**: `nixosConfigurations` に新しいマシンのエントリを追加し、**さらに** `homeConfigurations` にも新しいマシン用のエントリを追加する。
 
 これで、新しいマシン上で `nixos-rebuild switch --flake .#laptop` のようにコマンドを実行すれば、そのマシン用の設定をビルドできるようになります。
 

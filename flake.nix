@@ -25,7 +25,14 @@
     );
     checks.x86_64-linux = self.packageChecks // {
       nixos = self.nixosConfigurations.default.config.system.build.toplevel;
-      home-manager = self.homeConfigurations."t4d4@nixos".activation-script;
+      home-manager = builtins.listToAttrs (
+        builtins.map (
+          name: {
+            inherit name;
+            value = self.homeConfigurations.${name}.activation-script;
+          }
+        ) (builtins.attrNames self.homeConfigurations)
+      );
     };
       nixosConfigurations = {
         default = inputs.nixpkgs.lib.nixosSystem {
