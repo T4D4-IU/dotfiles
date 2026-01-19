@@ -18,30 +18,30 @@
 
 ### Phase 1: ディレクトリ構造の再編成
 
-- [ ] **1-1. Home Manager中心の構造にリファクタリング**
-  - [ ] 現在の構成を確認（NixOS設定とHome Manager設定が混在）
-  - [ ] Home Managerをメインに、NixOS設定は補助的に扱う方針を決定
-  - [ ] ユーザー名の不一致（`asaki` vs `t4d4`）を解決
+- [x] **1-1. Home Manager中心の構造にリファクタリング**
+  - [x] 現在の構成を確認（NixOS設定とHome Manager設定が混在）
+  - [x] Home Managerをメインに、NixOS設定は補助的に扱う方針を決定
+  - [x] ユーザー名の不一致（`asaki` vs `t4d4`）を解決 → `t4d4`に統一
 
-- [ ] **1-2. ホスト別設定の分離**
-  - [ ] `hosts/` ディレクトリを作成
-  - [ ] 各ホストごとに `hosts/<hostname>/` を作成
-    - [ ] `hosts/nixos/` （既存のNixOSデスクトップ）
-      - [ ] `default.nix` - ホスト固有の設定エントリーポイント
-      - [ ] `configuration.nix` - NixOSシステム設定（システムレベル）
-      - [ ] `hardware-configuration.nix` - ハードウェア設定
-      - [ ] `home.nix` - このホスト用のHome Manager設定
-    - [ ] 将来的に他のホスト（Mac、WSL等）を追加しやすい構造に
-  - [ ] 共通設定を分離する仕組みを導入
+- [x] **1-2. ホスト別設定の分離**
+  - [x] `hosts/` ディレクトリを作成
+  - [x] 各ホストごとに `hosts/<hostname>/` を作成
+    - [x] `hosts/nixos/` （既存のNixOSデスクトップ）
+      - [x] `default.nix` - ホスト固有の設定エントリーポイント
+      - [x] `configuration.nix` - NixOSシステム設定（システムレベル）
+      - [x] `hardware-configuration.nix` - ハードウェア設定
+      - [x] `home.nix` - このホスト用のHome Manager設定
+    - [x] 将来的に他のホスト（Mac、WSL等）を追加しやすい構造に
+  - [x] 共通設定を分離する仕組みを導入
 
-- [ ] **1-3. Home Managerモジュールの整理**
-  - [ ] `modules/home/` ディレクトリを作成（記事の構成に準拠）
-  - [ ] 既存の `home-manager/` の内容を `modules/home/` に移動・整理
-  - [ ] OS共通設定とOS固有設定を分離
-    - [ ] `modules/home/common/` - すべてのOSで共通の設定
-    - [ ] `modules/home/linux/` - Linux固有の設定（Hyprland等）
-    - [ ] `modules/home/darwin/` - macOS固有の設定（将来用）
-  - [ ] 各モジュールを条件分岐で有効/無効にできるようにする
+- [x] **1-3. Home Managerモジュールの整理**
+  - [x] `modules/home/` ディレクトリを作成（記事の構成に準拠）
+  - [x] 既存の `home-manager/` の内容を `modules/home/` に移動・整理
+  - [x] OS共通設定とOS固有設定を分離
+    - [x] `modules/home/common/` - すべてのOSで共通の設定
+    - [x] `modules/home/linux/` - Linux固有の設定（Hyprland等）
+    - [x] `modules/home/darwin/` - macOS固有の設定（将来用、ディレクトリ作成済み）
+  - [ ] 各モジュールを条件分岐で有効/無効にできるようにする（Phase 4で実施）
 
 - [ ] **1-4. NixOSモジュールの整理（オプショナル）**
   - [ ] `modules/nixos/` ディレクトリを作成
@@ -54,19 +54,20 @@
 
 ### Phase 2: Flake設定の改善
 
-- [ ] **2-1. flake.nix の再構築（記事の手法を参考に）**
-  - [ ] ホストごとの `homeConfigurations` を定義
-    - [ ] `username@hostname` 形式で識別（例: `t4d4@nixos`, `t4d4@macbook`）
-    - [ ] 各ホストで異なるアーキテクチャを明示的に指定
+- [x] **2-1. flake.nix の再構築（記事の手法を参考に）**
+  - [x] ホストごとの `homeConfigurations` を定義
+    - [x] `username@hostname` 形式で識別（例: `t4d4@nixos`）
+    - [x] 各ホストで異なるアーキテクチャを明示的に指定
       - `x86_64-linux` - Linux（NixOS、WSL）
       - `aarch64-darwin` - Apple Silicon Mac（将来用）
       - `x86_64-darwin` - Intel Mac（将来用）
-  - [ ] NixOS設定は `nixosConfigurations` に分離
-    - [ ] Home Manager統合は `nixosModules` として読み込む形に
-  - [ ] ホスト追加時の手順を簡略化
+  - [x] NixOS設定は `nixosConfigurations` に分離
+    - [x] `hosts/nixos/default.nix`をエントリーポイントとして使用
+  - [x] rust-overlay を追加（development.nixの依存関係）
+  - [ ] ホスト追加時の手順を簡略化（ドキュメント化が必要）
 
 - [ ] **2-2. 共通設定の抽出とヘルパー関数の作成**
-  - [ ] `lib/` ディレクトリを作成
+  - [x] `lib/` ディレクトリを作成
   - [ ] ホスト情報を定義する共通フォーマットを作成
   - [ ] OS判定やアーキテクチャ判定のヘルパー関数を実装
   - [ ] 記事のように `pkgs.stdenv.isDarwin` 等を活用した条件分岐
@@ -78,21 +79,24 @@
 
 ### Phase 3: ユーザー名・設定の統一
 
-- [ ] **3-1. ユーザー名の不一致を解決**
-  - [ ] `asaki` と `t4d4` のどちらをメインユーザーにするか決定
-    - NixOSシステムユーザー: `asaki`
-    - Home Manager: `t4d4@nixos`
-  - [ ] 方針を決定:
-    - 案A: すべて `t4d4` に統一
-    - 案B: ホストごとに異なるユーザー名を使用（`t4d4@nixos`, `asaki@laptop` 等）
-  - [ ] NixOS設定とHome Manager設定のユーザー名を整合させる
+- [x] **3-1. ユーザー名の不一致を解決**
+  - [x] `asaki` と `t4d4` のどちらをメインユーザーにするか決定
+    - **決定**: すべて `t4d4` に統一（案A採用）
+  - [x] 方針を決定:
+    - 案A: すべて `t4d4` に統一 ← **採用**
+    - ~~案B: ホストごとに異なるユーザー名を使用~~
+  - [x] NixOS設定とHome Manager設定のユーザー名を整合させる
+    - [x] xremap userName: `asaki` → `t4d4`
+    - [x] users.users定義: `asaki` → `t4d4`
+    - [x] hyprlock壁紙パス修正: `/home/asaki/` → `/home/t4d4/`
+    - [x] root home.nix更新: `asaki` → `t4d4`
 
-- [ ] **3-2. Home Manager設定の統合**
-  - [ ] ルートの `home.nix`（最小構成）の役割を確認
-  - [ ] `home-manager/home.nix`（詳細構成）をメインにする
-  - [ ] ホストごとの `hosts/<hostname>/home.nix` に統合
-  - [ ] 共通設定は `modules/home/common/` に抽出
-  - [ ] ホスト固有の設定は `hosts/<hostname>/home.nix` に記述
+- [x] **3-2. Home Manager設定の統合**
+  - [x] ルートの `home.nix`（最小構成）の役割を確認 → 後方互換性用
+  - [x] `home-manager/home.nix`（詳細構成）をメインにする
+  - [x] ホストごとの `hosts/<hostname>/home.nix` に統合
+  - [x] 共通設定は `modules/home/common/` に抽出
+  - [x] ホスト固有の設定は `hosts/<hostname>/home.nix` に記述
 
 - [ ] **3-3. パッケージ管理の方針統一**
   - [ ] `home.packages` でユーザー環境のツールをインストール
@@ -274,3 +278,37 @@ dotfiles/
 - [ ] CI/CDでの複数環境ビルドテスト
   - GitHub Actions で Linux/macOS 両方をテスト
   - `nix flake check` で全ホストを検証
+
+---
+
+## 📊 進捗サマリー
+
+### ✅ 完了したフェーズ
+
+#### Phase 1: ディレクトリ構造の再編成 (完了)
+- ホスト別設定: `hosts/nixos/` を作成し、NixOS設定を配置
+- Home Managerモジュール: `modules/home/{common,linux}` に整理
+- flake.nix: 新構造を反映、rust-overlay追加
+- 非推奨オプションの修正（GNOME、GDM、fonts）
+
+#### Phase 2-1: flake.nix の再構築 (部分完了)
+- `homeConfigurations` を `t4d4@nixos` 形式で定義
+- `nixosConfigurations` を `hosts/nixos/` から読み込み
+- アーキテクチャ指定: `x86_64-linux`
+
+#### Phase 3: ユーザー名・設定の統一 (完了)
+- すべての設定を `t4d4` に統一
+- xremap、NixOSユーザー定義、Home Manager、hyprlockパス全て修正
+
+### 🚧 次のステップ
+
+1. **Phase 1-4**: NixOSモジュールの整理（オプション）
+2. **Phase 2-2**: ヘルパー関数の作成（lib/）
+3. **Phase 4**: OS・環境別の柔軟性向上（条件分岐の実装）
+4. **Phase 5**: ドキュメント整備（README更新）
+5. **Phase 6**: テスト・検証
+
+### 📝 コミット履歴
+
+- `1109677`: Phase 1: Restructure to host-based configuration
+- `faad3f8`: Phase 3-1: Unify username to t4d4
