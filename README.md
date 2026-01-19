@@ -276,10 +276,30 @@ home-manager switch --flake .#t4d4@nixos --rollback
 ## 📊 CI/CD
 
 GitHub Actionsで以下を自動チェック:
-- ✅ Flake設定の妥当性検証
-- ✅ カスタムパッケージのビルド確認
-- ✅ NixOSシステム設定の評価
-- ✅ Home Manager設定の評価
+
+### 🔍 主要なチェック
+- ✅ **Flake設定の妥当性検証** - メタデータと構造の確認
+- ✅ **カスタムパッケージのビルド** - dfx, haystack-editor
+- ✅ **NixOSシステム設定の評価** - configuration.nixの検証
+- ✅ **複数ホストのHome Manager設定** - nixos, wsl両方をテスト
+- ✅ **モジュールの構文チェック** - 個別モジュールの独立性確認
+
+### 🚀 CI/CDワークフロー
+
+**Linux (ubuntu-latest)**:
+- パッケージビルド（並列実行）
+- NixOS設定のドライビルド
+- Home Manager設定（nixos, wsl）のビルド
+- モジュール構文チェック
+
+**macOS (macos-latest)** ※将来対応時:
+- Darwin固有モジュールの構文チェック
+- macOS Home Manager設定のビルド
+
+### 📈 最適化
+- **Cachix統合**: ビルドキャッシュで高速化
+- **並列実行**: 複数ジョブの同時実行
+- **段階的チェック**: 軽量チェックから重いビルドへ
 
 ## 📚 参考資料
 
