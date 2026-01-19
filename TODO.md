@@ -178,14 +178,18 @@
 
 ### Phase 6: テスト・検証
 
-- [ ] **6-1. CI/CDの更新**
-  - [ ] 複数ホスト構成のビルドテスト
-  - [ ] 複数ユーザー構成のテスト
-  - [ ] 各モジュールの独立性テスト
+- [x] **6-1. CI/CDの更新**
+  - [x] 複数ホスト構成のビルドテスト（nixos, wsl）
+  - [x] 各モジュールの独立性テスト
+  - [x] パッケージの個別ビルドテスト
+  - [x] Cachix統合で高速化
+  - [x] 並列実行の最適化
+  - [x] macOS用ワークフローの準備
+  - [x] CI/CDドキュメントの作成
 
 - [ ] **6-2. 実環境での検証**
-  - [ ] 現在の環境で正常に動作するか確認
-  - [ ] 別のマシンでの動作確認（可能であれば）
+  - [ ] 現在のNixOS環境で`nixos-rebuild switch`を実行
+  - [ ] WSL環境での動作確認（可能であれば）
 
 ---
 
@@ -297,9 +301,11 @@ dotfiles/
 - [ ] 環境ごとの適用コマンドを統一
   - `justfile` や `Makefile` でラッパーを作成？
   - `nix run .#apply-<hostname>` のような統一インターフェース
-- [ ] CI/CDでの複数環境ビルドテスト
-  - GitHub Actions で Linux/macOS 両方をテスト
-  - `nix flake check` で全ホストを検証
+- [x] CI/CDでの複数環境ビルドテスト
+  - [x] GitHub Actions で複数ホスト（nixos, wsl）をテスト
+  - [x] macOS用ワークフローの準備
+  - [x] 並列実行による高速化
+  - [x] Cachix統合
 
 ---
 
@@ -335,19 +341,39 @@ dotfiles/
   - 新しいディレクトリ構造の説明
   - ホスト追加の詳細ガイド
   - トラブルシューティングセクション
+  - WSL対応の追加
 - **5-2**: modules/home/README.md の作成
   - 全モジュールの詳細説明
   - 使用方法とベストプラクティス
 - **5-3**: lib/README.md の作成
   - ヘルパー関数の使用方法
   - ホスト定義フォーマット
+- **5-4**: docs/WSL_SETUP.md の作成
+  - WSL/Ubuntu向けセットアップガイド
+
+#### Phase 6-1: CI/CD強化 (完了)
+- 複数ホスト（nixos, wsl）の並列テスト
+- パッケージの個別ビルド検証
+- モジュール構文チェック
+- Cachix統合による高速化
+- macOS用ワークフローの準備
+- docs/CI_CD.md の作成
+
+#### WSL/Ubuntu対応 (完了)
+- hosts/wsl/ 設定の追加
+- CLI専用環境の構築
+- WSLセットアップドキュメント
+
+#### Hyprland削除・GNOME専用化 (完了)
+- 不要なWaylandツールの削除
+- GNOME単独のデスクトップ環境
 
 ### 🚧 次のステップ
 
-1. **Phase 1-4**: NixOSモジュールの整理（オプション）
-2. **Phase 4-2+**: OS条件分岐の高度化
-3. **Phase 6**: テスト・検証（CI/CD改善）
-4. **実運用**: 実際のシステムで新構造をテスト
+1. **Phase 6-2**: 実環境での検証
+   - NixOSシステムでの動作確認
+   - WSL環境でのテスト
+2. その他のオプション機能（必要に応じて）
 
 ### 📝 コミット履歴
 
@@ -357,3 +383,7 @@ dotfiles/
 - `7ead6b5`: Phase 2-2 & 4-1: Add helper library and modular structure
 - `5258ca4`: docs: Update TODO.md - Phase 2-2 and 4-1 completed
 - `d65bcec`: Phase 5: Complete documentation overhaul
+- `17029bc`: docs: Update TODO.md - Phase 5 completed
+- `44f7f94`: refactor: Remove Hyprland configuration and related tools
+- `f75b54f`: feat: Add WSL/Ubuntu support (CLI-only configuration)
+- `62a7149`: feat: Enhance CI/CD with comprehensive testing
