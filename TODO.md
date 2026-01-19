@@ -137,20 +137,35 @@
 
 ### Phase 5: ドキュメント整備
 
-- [ ] **5-1. README.md の更新**
-  - [ ] 記事の内容を踏まえた導入手順を記載
-  - [ ] 新しいディレクトリ構造を反映
-  - [ ] ホストの追加方法を具体的に記載
-    - `flake.nix` への追加方法
-    - `hosts/<new-host>/` の作成手順
-  - [ ] 環境別のコマンド例を記載
-    - NixOS: `sudo nixos-rebuild switch --flake .#nixos`
-    - Home Manager: `home-manager switch --flake .#t4d4@nixos`
-    - macOS用: `nix run home-manager/master -- switch --flake .#user@macbook`
-  - [ ] トラブルシューティングを追加
+- [x] **5-1. README.md の更新**
+  - [x] 記事の内容を踏まえた導入手順を記載
+  - [x] 新しいディレクトリ構造を反映
+  - [x] ホストの追加方法を具体的に記載
+    - [x] `flake.nix` への追加方法
+    - [x] `hosts/<new-host>/` の作成手順
+    - [x] `lib/hosts.nix` への定義追加
+  - [x] 環境別のコマンド例を記載
+    - [x] NixOS: `sudo nixos-rebuild switch --flake .#nixos`
+    - [x] Home Manager: `home-manager switch --flake .#t4d4@nixos`
+    - [x] macOS用の例も記載
+  - [x] トラブルシューティングを追加
+    - [x] ディスク容量不足の対処
+    - [x] エラーデバッグ方法
+    - [x] ロールバック手順
 
-- [ ] **5-2. 各モジュールのドキュメント作成**
-  - [ ] `modules/home/README.md` を作成
+- [x] **5-2. 各モジュールのドキュメント作成**
+  - [x] `modules/home/README.md` を作成
+    - [x] 各モジュールの目的と内容を説明
+    - [x] OS別の利用可能性を明記
+    - [x] 使用例とカスタマイズ方法を記載
+    - [x] 新規モジュール追加のガイド
+
+- [x] **5-3. ヘルパーライブラリのドキュメント作成**
+  - [x] `lib/README.md` を作成
+    - [x] helpers.nix の関数説明
+    - [x] hosts.nix のフォーマット説明
+    - [x] 新規ホスト追加の詳細手順
+    - [x] ベストプラクティスと将来の拡張案
   - [ ] 各モジュールの目的と有効化方法を説明
   - [ ] OS別の利用可能性を明記
   - [ ] 設定例とカスタマイズ方法を記載
@@ -315,13 +330,24 @@ dotfiles/
 - OS別モジュールの分離（common/linux/darwin）
 - hosts/nixos/home.nix のシンプル化
 
+#### Phase 5: ドキュメント整備 (完了)
+- **5-1**: README.md の完全刷新
+  - 新しいディレクトリ構造の説明
+  - ホスト追加の詳細ガイド
+  - トラブルシューティングセクション
+- **5-2**: modules/home/README.md の作成
+  - 全モジュールの詳細説明
+  - 使用方法とベストプラクティス
+- **5-3**: lib/README.md の作成
+  - ヘルパー関数の使用方法
+  - ホスト定義フォーマット
+
 ### 🚧 次のステップ
 
 1. **Phase 1-4**: NixOSモジュールの整理（オプション）
-2. **Phase 4-2**: OS判定による動的条件分岐の実装
-3. **Phase 4-3/4**: 機能別トグル化とdotfiles配置
-4. **Phase 5**: ドキュメント整備（README更新）
-5. **Phase 6**: テスト・検証
+2. **Phase 4-2+**: OS条件分岐の高度化
+3. **Phase 6**: テスト・検証（CI/CD改善）
+4. **実運用**: 実際のシステムで新構造をテスト
 
 ### 📝 コミット履歴
 
@@ -329,3 +355,5 @@ dotfiles/
 - `faad3f8`: Phase 3-1: Unify username to t4d4
 - `bbca474`: docs: Update TODO.md with completed progress
 - `7ead6b5`: Phase 2-2 & 4-1: Add helper library and modular structure
+- `5258ca4`: docs: Update TODO.md - Phase 2-2 and 4-1 completed
+- `d65bcec`: Phase 5: Complete documentation overhaul
