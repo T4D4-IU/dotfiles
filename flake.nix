@@ -11,7 +11,15 @@
     };
   };
 
-  outputs = { self, ... }@inputs: {
+  outputs = { self, nixpkgs, ... }@inputs: 
+    let
+      # Import our helper library
+      lib = nixpkgs.lib;
+      myLib = import ./lib { inherit lib; };
+      helpers = myLib.helpers;
+      hosts = myLib.hosts;
+    in
+    {
     packages.x86_64-linux = let
       pkgs = import inputs.nixpkgs { system = "x86_64-linux"; };
       in {
@@ -28,30 +36,25 @@
       nixos = self.nixosConfigurations.nixos.config.system.build.toplevel;
       home-manager = self.homeConfigurations."t4d4@nixos".activation-script;
     };
-      nixosConfigurations = {
-        nixos = inputs.nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          modules = [
-            ./hosts/nixos
-            ];
-          specialArgs = {
-            inherit inputs;
-            };
-          };
-        };
-      homeConfigurations = {
-      "t4d4@nixos" = inputs.home-manager.lib.homeManagerConfiguration {
-        pkgs = import inputs.nixpkgs {
-          system = "x86_64-linux";
-          config.allowUnfree = true; # プロプライエタリなパッケージを許可
-          overlays = [ (import inputs.rust-overlay) ];
-        };
-        extraSpecialArgs = {
-          inherit inputs;
-        };
-        modules = [
-          ./hosts/nixos/home.nix
-        ];
+
+    # NixOS Configurations using helper
+    nixosConfigurations = {
+      nixos = helpers.mkNixosConfiguration {
+        inherit inputs;
+        system = hosts.nixos.system;
+        hostname = hosts.nixos.hostname;
+        modules = hosts.nixos.nixosModules;
+      };
+    };
+
+    # Home Manager Configurations using helper
+    homeConfigurations = {
+      "t4d4@nixos" = helpers.mkHomeConfiguration {
+        inherit inputs;
+        system = hosts.nixos.system;
+        username = hosts.nixos.username;
+        homeDirectory = hosts.nixos.homeDirectory;
+        modules = hosts.nixos.homeModules;
       };
     };
   };

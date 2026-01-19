@@ -15,23 +15,13 @@
   # release notes.
   home.stateVersion = "24.11"; # Please read the comment before changing.
 
-  # Import common modules
+  # Import modular configurations
   imports = [
     # Common modules (cross-platform)
-    ../../modules/home/common/cli.nix
-    ../../modules/home/common/dev.nix
-    ../../modules/home/common/development.nix
-    ../../modules/home/common/direnv.nix
-    ../../modules/home/common/starship.nix
-    ../../modules/home/common/zed.nix
-    ../../modules/home/common/zsh.nix
+    ../../modules/home/common
     
-    # Linux-specific modules
-    ../../modules/home/linux/gui.nix
-    ../../modules/home/linux/hyprland.nix
-    ../../modules/home/linux/hyprlock.nix
-    ../../modules/home/linux/rofi.nix
-    ../../modules/home/linux/security.nix
+    # Linux-specific modules (only for this host)
+    ../../modules/home/linux
   ];
 
   programs.zoxide = {
