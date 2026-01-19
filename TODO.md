@@ -66,11 +66,12 @@
   - [x] rust-overlay を追加（development.nixの依存関係）
   - [ ] ホスト追加時の手順を簡略化（ドキュメント化が必要）
 
-- [ ] **2-2. 共通設定の抽出とヘルパー関数の作成**
+- [x] **2-2. 共通設定の抽出とヘルパー関数の作成**
   - [x] `lib/` ディレクトリを作成
-  - [ ] ホスト情報を定義する共通フォーマットを作成
-  - [ ] OS判定やアーキテクチャ判定のヘルパー関数を実装
-  - [ ] 記事のように `pkgs.stdenv.isDarwin` 等を活用した条件分岐
+  - [x] ホスト情報を定義する共通フォーマットを作成（lib/hosts.nix）
+  - [x] OS判定やアーキテクチャ判定のヘルパー関数を実装（lib/helpers.nix）
+  - [x] mkHomeConfiguration / mkNixosConfiguration ヘルパー関数を作成
+  - [ ] 記事のように `pkgs.stdenv.isDarwin` 等を活用した条件分岐（今後の課題）
 
 - [ ] **2-3. 設定ファイルの配置方法を統一**
   - [ ] `home.file` を使ってdotfilesを配置
@@ -105,24 +106,30 @@
 
 ### Phase 4: OS・環境別の柔軟性向上（記事の核心部分）
 
-- [ ] **4-1. OS判定による条件分岐の実装**
+- [x] **4-1. モジュール構造の整理**
+  - [x] modules/home/common/default.nix でOS共通モジュールを自動インポート
+  - [x] modules/home/linux/default.nix でLinux専用モジュールを自動インポート
+  - [x] modules/home/darwin/default.nix を作成（将来のmacOS用）
+  - [x] hosts/nixos/home.nix をモジュール化してシンプルに
+
+- [ ] **4-2. OS判定による条件分岐の実装**
   - [ ] `pkgs.stdenv.isDarwin` でmacOS判定
   - [ ] `pkgs.stdenv.isLinux` でLinux判定
   - [ ] ホスト名やユーザー名による分岐も実装
   - [ ] 記事のサンプルコードを参考に実装
 
-- [ ] **4-2. アーキテクチャ別のパッケージ指定**
+- [ ] **4-3. アーキテクチャ別のパッケージ指定**
   - [ ] `x86_64-linux` 用のパッケージセット
   - [ ] `aarch64-darwin` 用のパッケージセット（Apple Silicon Mac用）
   - [ ] アーキテクチャ非依存の共通パッケージ
 
-- [ ] **4-3. 機能別モジュールのトグル化**
+- [ ] **4-4. 機能別モジュールのトグル化**
   - [ ] GUI環境（Hyprland、Rofi等）の有効/無効
   - [ ] CUIのみの環境（WSL、サーバー等）をサポート
   - [ ] 開発ツールセットの選択（言語別、プロジェクト別）
-  - [ ] 各ホストの `home.nix` でインポートするモジュールを選択
+  - [x] 各ホストの `home.nix` でインポートするモジュールを選択（基本実装完了）
 
-- [ ] **4-4. dotfilesの配置の柔軟化**
+- [ ] **4-5. dotfilesの配置の柔軟化**
   - [ ] OS別の設定ファイルパスに対応
     - Linux: `~/.config/`
     - macOS: `~/.config/` または `~/Library/Application Support/`
@@ -287,24 +294,32 @@ dotfiles/
 
 #### Phase 1: ディレクトリ構造の再編成 (完了)
 - ホスト別設定: `hosts/nixos/` を作成し、NixOS設定を配置
-- Home Managerモジュール: `modules/home/{common,linux}` に整理
+- Home Managerモジュール: `modules/home/{common,linux,darwin}` に整理
 - flake.nix: 新構造を反映、rust-overlay追加
 - 非推奨オプションの修正（GNOME、GDM、fonts）
 
-#### Phase 2-1: flake.nix の再構築 (部分完了)
-- `homeConfigurations` を `t4d4@nixos` 形式で定義
-- `nixosConfigurations` を `hosts/nixos/` から読み込み
-- アーキテクチャ指定: `x86_64-linux`
+#### Phase 2: Flake設定の改善 (完了)
+- **2-1**: `homeConfigurations` を `t4d4@nixos` 形式で定義
+- **2-1**: `nixosConfigurations` を `hosts/nixos/` から読み込み
+- **2-2**: ヘルパーライブラリの作成
+  - lib/helpers.nix: mkHomeConfiguration, mkNixosConfiguration
+  - lib/hosts.nix: 構造化されたホスト定義
+  - OS/アーキテクチャ検出ヘルパー関数
 
 #### Phase 3: ユーザー名・設定の統一 (完了)
 - すべての設定を `t4d4` に統一
-- xremap、NixOSユーザー定義、Home Manager、hyprlockパス全て修正
+- xremap、NixOSユーザー定義、Home Manager、hyperlockパス全て修正
+
+#### Phase 4-1: モジュール構造の整理 (完了)
+- modules/home/*/default.nix でモジュールの自動インポート
+- OS別モジュールの分離（common/linux/darwin）
+- hosts/nixos/home.nix のシンプル化
 
 ### 🚧 次のステップ
 
 1. **Phase 1-4**: NixOSモジュールの整理（オプション）
-2. **Phase 2-2**: ヘルパー関数の作成（lib/）
-3. **Phase 4**: OS・環境別の柔軟性向上（条件分岐の実装）
+2. **Phase 4-2**: OS判定による動的条件分岐の実装
+3. **Phase 4-3/4**: 機能別トグル化とdotfiles配置
 4. **Phase 5**: ドキュメント整備（README更新）
 5. **Phase 6**: テスト・検証
 
@@ -312,3 +327,5 @@ dotfiles/
 
 - `1109677`: Phase 1: Restructure to host-based configuration
 - `faad3f8`: Phase 3-1: Unify username to t4d4
+- `bbca474`: docs: Update TODO.md with completed progress
+- `7ead6b5`: Phase 2-2 & 4-1: Add helper library and modular structure
