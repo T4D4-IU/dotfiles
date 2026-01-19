@@ -9,15 +9,23 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    pre-commit-hooks = {
+      url = "github:cachix/pre-commit-hooks.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, ... }@inputs: 
+  outputs = { self, nixpkgs, pre-commit-hooks, ... }@inputs: 
     let
       # Import our helper library
       lib = nixpkgs.lib;
       myLib = import ./lib { inherit lib; };
       helpers = myLib.helpers;
       hosts = myLib.hosts;
+      
+      # Systems to support
+      systems = [ "x86_64-linux" "aarch64-darwin" "x86_64-darwin" ];
+      forAllSystems = nixpkgs.lib.genAttrs systems;
     in
     {
     packages.x86_64-linux = let
@@ -32,10 +40,37 @@
         value = self.packages.${system}.${name};
       }) (builtins.attrNames self.packages.${system})
     );
-    checks.x86_64-linux = self.packageChecks // {
-      nixos = self.nixosConfigurations.nixos.config.system.build.toplevel;
-      home-manager = self.homeConfigurations."t4d4@nixos".activation-script;
-    };
+    checks = forAllSystems (system:
+      let
+        pkgs = import nixpkgs { inherit system; };
+        pre-commit-check = pre-commit-hooks.lib.${system}.run {
+          src = ./.;
+          hooks = {
+            # Nix formatting with alejandra
+            alejandra.enable = true;
+            
+            # Nix linting
+            statix.enable = true;
+            deadnix.enable = true;
+            
+            # Additional checks
+            check-merge-conflicts.enable = true;
+            end-of-file-fixer.enable = true;
+            trim-trailing-whitespace.enable = true;
+          };
+        };
+      in
+      if system == "x86_64-linux" then
+        self.packageChecks // {
+          nixos = self.nixosConfigurations.nixos.config.system.build.toplevel;
+          home-manager = self.homeConfigurations."t4d4@nixos".activation-script;
+          pre-commit = pre-commit-check;
+        }
+      else
+        {
+          pre-commit = pre-commit-check;
+        }
+    );
 
     # NixOS Configurations using helper
     nixosConfigurations = {
@@ -66,5 +101,50 @@
         modules = hosts.wsl.homeModules;
       };
     };
+
+    # Development shell
+    devShells = forAllSystems (system:
+      let
+        pkgs = import nixpkgs { inherit system; };
+        pre-commit-check = self.checks.${system}.pre-commit;
+      in
+      {
+        default = pkgs.mkShell {
+          name = "dotfiles-dev";
+          
+          packages = with pkgs; [
+            # Formatters
+            alejandra        # Nix code formatter (official)
+            nixfmt-rfc-style # Alternative formatter
+            
+            # Linters
+            statix           # Lints and suggestions for Nix
+            deadnix          # Find unused code
+            
+            # Development tools
+            nil              # Nix LSP
+            
+            # Pre-commit
+            pre-commit
+          ];
+
+          shellHook = ''
+            ${pre-commit-check.shellHook}
+            echo ""
+            echo "🛠️  Dotfiles development environment"
+            echo ""
+            echo "Pre-commit hooks are installed!"
+            echo "They will run automatically on 'git commit'."
+            echo ""
+            echo "Manual commands:"
+            echo "  alejandra .             # Format all files"
+            echo "  statix check .          # Run linter"
+            echo "  deadnix .               # Check for dead code"
+            echo "  pre-commit run --all    # Run all pre-commit hooks"
+            echo ""
+          '';
+        };
+      }
+    );
   };
 }

@@ -96,6 +96,24 @@ dotfiles/
 - **dfx**: DFINITY SDK (Internet Computer開発)
 - **haystack-editor**: Haystackコードエディター
 
+## 🧹 コード品質
+
+このプロジェクトでは、Nixコードの品質を保つために以下のツールを使用：
+- **alejandra**: コードフォーマッター
+- **statix**: リンター（アンチパターン検出）
+- **deadnix**: 未使用コード検出
+
+詳細は **[📘 リンター・フォーマッター設定](docs/LINTING.md)** を参照。
+
+### 開発環境
+
+```bash
+# 開発シェルに入る（pre-commitフックが自動設定される）
+nix develop
+```
+
+Push時に自動でリンター/フォーマッターがチェックされます。
+
 ## 🚀 使用方法
 
 ### 初回セットアップ
