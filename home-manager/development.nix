@@ -28,6 +28,10 @@
     gibo # Gitignore boilerplate generator
     # claude-code # AI code generator
     devbox
+    devenv
+    github-copilot-cli
+    gemini-cli
+    amp-cli
   ];
   programs.ghostty = {
     enable = true;

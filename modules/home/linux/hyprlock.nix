@@ -3,7 +3,7 @@
         enable = true;
         settings = {
             background = {
-                path = "/home/asaki/画像/Wallpapers/rust_circuits.png";
+                path = "/home/t4d4/画像/Wallpapers/rust_circuits.png";
                 blur_passes = 2;
                 contrast = 0.8916;
                 brightness = 0.8172;

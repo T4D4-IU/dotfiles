@@ -62,7 +62,7 @@
 
   # xremapでキー設定をいい感じに変更
   services.xremap = {
-    userName = "asaki";
+    userName = "t4d4";
     serviceMode = "system";
     config = {
       modmap = [
@@ -191,9 +191,9 @@
   # services.xserver.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.asaki = {
+  users.users.t4d4 = {
     isNormalUser = true;
-    description = "Asaki";
+    description = "t4d4";
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
     #  thunderbird
