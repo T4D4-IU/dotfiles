@@ -24,6 +24,23 @@
     ];
   };
 
+  # WSL/Ubuntu environment (CLI-only)
+  wsl = {
+    system = "x86_64-linux";
+    hostname = "wsl";
+    username = "t4d4";  # Change to your WSL username
+    homeDirectory = "/home/t4d4";  # Change to your home directory
+    
+    features = {
+      gui = false;  # No GUI on WSL
+      development = true;
+    };
+    
+    homeModules = [
+      ../hosts/wsl/home.nix
+    ];
+  };
+
   # Future hosts can be added here
   # Example for macOS:
   # macbook = {

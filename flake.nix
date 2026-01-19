@@ -56,6 +56,15 @@
         homeDirectory = hosts.nixos.homeDirectory;
         modules = hosts.nixos.homeModules;
       };
+      
+      # WSL/Ubuntu environment (CLI-only)
+      "t4d4@wsl" = helpers.mkHomeConfiguration {
+        inherit inputs;
+        system = hosts.wsl.system;
+        username = hosts.wsl.username;
+        homeDirectory = hosts.wsl.homeDirectory;
+        modules = hosts.wsl.homeModules;
+      };
     };
   };
 }
