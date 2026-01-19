@@ -4,9 +4,5 @@
 {
   imports = [
     ./gui.nix
-    ./hyprland.nix
-    ./hyprlock.nix
-    ./rofi.nix
-    ./security.nix
   ];
 }

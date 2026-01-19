@@ -64,7 +64,7 @@ dotfiles/
 - **ユーザー**: `t4d4`
 - **カーネル**: Linux Zen
 - **ブートローダー**: systemd-boot
-- **デスクトップ環境**: GNOME + Hyprland
+- **デスクトップ環境**: GNOME
 - **ディスプレイマネージャー**: GDM
 - **日本語環境**: 
   - ロケール: ja_JP.UTF-8
@@ -76,10 +76,10 @@ dotfiles/
 
 **ユーザーレベル (Home Manager)**:
 - **シェル**: Zsh + Starship
-- **エディター**: Neovim, Zed
+- **エディター**: Neovim, Zed, Cursor
 - **開発ツール**: Git, GitHub CLI, direnv
 - **CLI強化**: eza, bat, fd, ripgrep, fzf, zoxide
-- **ウィンドウマネージャー**: Hyprland + Rofi
+- **GUIアプリ**: Brave, Discord, Obsidian, Slack等
 
 ### カスタムパッケージ
 - **dfx**: DFINITY SDK (Internet Computer開発)

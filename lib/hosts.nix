@@ -11,7 +11,6 @@
     # Features enabled for this host
     features = {
       gui = true;
-      hyprland = true;
       development = true;
     };
     

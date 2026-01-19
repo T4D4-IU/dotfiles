@@ -97,40 +97,7 @@ Linux環境専用の設定。
 - **メディア**: Spotify
 - **同期**: Syncthing
 - **ネットワーク**: Wireshark
-- **システム**: Waybar, dunst, wlogout
-- **セキュリティ**: Armitage (Metasploit GUI)
-
-### hyprland.nix
-**Hyprlandウィンドウマネージャー**
-
-主要なキーバインド:
-- `SUPER + G` - Ghosttyターミナル
-- `SUPER + C` - VSCode
-- `SUPER + B` - Brave
-- `SUPER + D` - Rofiランチャー
-- `SUPER + L` - ロック
-- `SUPER + Q` - ウィンドウを閉じる
-- `SUPER + F` - フルスクリーン
-- `ALT + 1-9` - ワークスペース切り替え
-
-### hyprlock.nix
-**スクリーンロック設定**
-
-- 壁紙表示
-- 時計表示
-- カスタムレイアウト
-
-### rofi.nix
-**アプリケーションランチャー**
-
-- カスタムテーマ
-- bemoji統合（絵文字選択）
-
-### security.nix
-**セキュリティツール**
-
-- `metasploit` - ペネトレーションテストフレームワーク
-- `armitage` - Metasploit GUI
+- **システム**: NetworkManager Applet, Blueberry (Bluetooth)
 
 ## 🍎 macOS固有モジュール (darwin/)
 
