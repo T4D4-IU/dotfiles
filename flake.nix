@@ -4,6 +4,7 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
     xremap.url = "github:xremap/nix-flake";
+    rust-overlay.url = "github:oxalica/rust-overlay";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -31,7 +32,7 @@
         nixos = inputs.nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [
-            ./configuration.nix
+            ./hosts/nixos
             ];
           specialArgs = {
             inherit inputs;
@@ -43,12 +44,13 @@
         pkgs = import inputs.nixpkgs {
           system = "x86_64-linux";
           config.allowUnfree = true; # プロプライエタリなパッケージを許可
+          overlays = [ (import inputs.rust-overlay) ];
         };
         extraSpecialArgs = {
           inherit inputs;
         };
         modules = [
-          ./home.nix
+          ./hosts/nixos/home.nix
         ];
       };
     };
