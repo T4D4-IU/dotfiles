@@ -1,14 +1,14 @@
 {pkgs, ...}: {
   home.packages = with pkgs; [
-    warp-terminal
+    # warp-terminal
     gcc
     nodejs-slim # npmのないNode.js単体
     nodePackages.pnpm
     # nodePackages.wrangler # Cloudflare Workers CLI
     deno
     bun
-    postman
-    mise
+    # postman
+    # mise
     foundry
     # wasmer # ユニバーサルWebAssemblyランタイム - ビルドエラーのため一時的にコメントアウト
     (rust-bin.stable.latest.default.override {
@@ -20,8 +20,8 @@
     cargo-shuttle
     cargo-llvm-cov # Rustのカバレッジ計測ツール
     cargo-binutils # cargo-llvm-covに使う
-    vscode
-    jetbrains-toolbox
+    # vscode
+    # jetbrains-toolbox
     # zenn-cli # textlintとpnpm lock.yamlが競合するため一時的にコメントアウト
     wakatime-cli
     ghq # Remote repository management made easy
@@ -33,15 +33,15 @@
     gemini-cli
     amp-cli
   ];
-  programs.ghostty = {
-    enable = true;
-    settings = {
-      theme = "catppuccin-mocha";
-      window-padding-x = 10;
-      window-padding-y = 5;
-      window-padding-balance = true;
-      background-opacity = 0.85;
-      background-blur-radius = 20;
-    };
-  };
+  # programs.ghostty = {
+  #   enable = true;
+  #   settings = {
+  #     theme = "catppuccin-mocha";
+  #     window-padding-x = 10;
+  #     window-padding-y = 5;
+  #     window-padding-balance = true;
+  #     background-opacity = 0.85;
+  #     background-blur-radius = 20;
+  #   };
+  # };
 }
