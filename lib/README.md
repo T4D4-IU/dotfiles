@@ -142,7 +142,7 @@ nixos = {
 ### flake.nix での使用
 
 ```nix
-outputs = { self, nixpkgs, ... }@inputs: 
+outputs = { self, nixpkgs, ... }@inputs:
   let
     lib = nixpkgs.lib;
     myLib = import ./lib { inherit lib; };
