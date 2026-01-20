@@ -17,9 +17,32 @@
     ../../modules/home/linux
   ];
 
-  programs.zoxide = {
-    enable = true;
-    enableZshIntegration = true;
+  programs = {
+    zoxide = {
+      enable = true;
+      enableZshIntegration = true;
+    };
+
+    # Let Home Manager install and manage itself.
+    home-manager.enable = true;
+
+    # GitHub CLI Settings
+    gh = {
+      enable = true;
+      extensions = with pkgs; [
+        gh-markdown-preview
+        gh-copilot
+        gh-dash
+        gh-poi
+        gh-actions-cache
+        # gh-skyline
+        gh-eco
+      ];
+      settings = {
+        editor = "vim";
+        git_protocol = "ssh";
+      };
+    };
   };
 
   # Home Manager can also manage your environment variables through
@@ -27,27 +50,6 @@
   # shell provided by Home Manager.
   home.sessionVariables = {
     # EDITOR = "nvim";
-  };
-
-  # Let Home Manager install and manage itself.
-  programs.home-manager.enable = true;
-
-  # GitHub CLI Settings
-  programs.gh = {
-    enable = true;
-    extensions = with pkgs; [
-      gh-markdown-preview
-      gh-copilot
-      gh-dash
-      gh-poi
-      gh-actions-cache
-      # gh-skyline
-      gh-eco
-    ];
-    settings = {
-      editor = "vim";
-      git_protocol = "ssh";
-    };
   };
 
   # Allow unfree packages

@@ -7,8 +7,21 @@
   pkgs,
   ...
 }: {
-  # change kernel
-  boot.kernelPackages = pkgs.linuxKernel.packages.linux_zen;
+  # Bootloader and kernel configuration
+  boot = {
+    # change kernel
+    kernelPackages = pkgs.linuxKernel.packages.linux_zen;
+
+    # Bootloader.
+    # boot.loader.grub.enable = true;
+    # boot.loader.grub.device = "/dev/sda";
+    # boot.loader.grub.useOSProber = true;
+    # systemd-bootを有効化
+    loader = {
+      systemd-boot.enable = true;
+      efi.canTouchEfiVariables = true;
+    };
+  };
 
   nix = {
     settings = {
@@ -26,20 +39,26 @@
   # プロプライエタリなパッケージを許可する
   nixpkgs.config.allowUnfree = true;
 
-  # tailscaleを有効化
-  services.tailscale.enable = true;
-  networking.firewall = {
-    enable = true;
-    # tailscaleの仮想NICを信頼する
-    # `<Tailscaleのホスト名>:<ポート番号>`のアクセスが可能になる
-    trustedInterfaces = ["tailscale0"];
-    allowedUDPPorts = [config.services.tailscale.port];
+  networking = {
+    hostName = "nixos"; # Define your hostname.
+    # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+
+    # Configure network proxy if necessary
+    # networking.proxy.default = "http://user:password@proxy:port/";
+    # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
+
+    # Enable networking
+    networkmanager.enable = true;
+
+    firewall = {
+      enable = true;
+      # tailscaleの仮想NICを信頼する
+      # `<Tailscaleのホスト名>:<ポート番号>`のアクセスが可能になる
+      trustedInterfaces = ["tailscale0"];
+      allowedUDPPorts = [config.services.tailscale.port];
+    };
   };
 
-  # Linuxデスクトップ向けのパッケージマネージャー
-  # アプリケーションをサンドボックス化して実行する
-  # NixOSが対応していないアプリのインストールに使う
-  services.flatpak.enable = true;
   xdg.portal.enable = true;
 
   # Enable Docker
@@ -63,76 +82,106 @@
       inputs.xremap.nixosModules.default
     ];
 
-  # xremapでキー設定をいい感じに変更
-  services.xremap = {
-    userName = "t4d4";
-    serviceMode = "system";
-    config = {
-      modmap = [
-        {
-          # CapsLockをCtrlに置換
-          name = "CapsLock is dead";
-          remap = {
-            CapsLock = "Ctrl_L";
-          };
-        }
-      ];
-      keymap = [
-        {
-          # Ctrl + HがどのアプリケーションでもBackSpaceになるように変更
-          name = "Ctrl+H should be enabled on all apps as BackSpace";
-          remap = {
-            C-h = "Backspace";
-          };
-          # 一部アプリケーションを対象から除外
-          application = {
-            not = ["Alacritty" "Kitty" "Wezterm" "warp-terminal"];
-          };
-        }
-      ];
+  services = {
+    # tailscaleを有効化
+    tailscale.enable = true;
+
+    # Linuxデスクトップ向けのパッケージマネージャー
+    # アプリケーションをサンドボックス化して実行する
+    # NixOSが対応していないアプリのインストールに使う
+    flatpak.enable = true;
+
+    # xremapでキー設定をいい感じに変更
+    xremap = {
+      userName = "t4d4";
+      serviceMode = "system";
+      config = {
+        modmap = [
+          {
+            # CapsLockをCtrlに置換
+            name = "CapsLock is dead";
+            remap = {
+              CapsLock = "Ctrl_L";
+            };
+          }
+        ];
+        keymap = [
+          {
+            # Ctrl + HがどのアプリケーションでもBackSpaceになるように変更
+            name = "Ctrl+H should be enabled on all apps as BackSpace";
+            remap = {
+              C-h = "Backspace";
+            };
+            # 一部アプリケーションを対象から除外
+            application = {
+              not = ["Alacritty" "Kitty" "Wezterm" "warp-terminal"];
+            };
+          }
+        ];
+      };
     };
+
+    # Enable the X11 windowing system.
+    xserver = {
+      enable = true;
+
+      # Enable the GNOME Desktop Environment.
+      displayManager.gdm.enable = true;
+      desktopManager.gnome.enable = true;
+
+      # Configure keymap in X11
+      xkb = {
+        layout = "jp";
+        variant = "";
+      };
+    };
+
+    # Enable CUPS to print documents.
+    printing.enable = true;
+
+    # Enable sound with pipewire.
+    pulseaudio.enable = false;
+    pipewire = {
+      enable = true;
+      alsa.enable = true;
+      alsa.support32Bit = true;
+      pulse.enable = true;
+      # If you want to use JACK applications, uncomment this
+      #jack.enable = true;
+
+      # use the example session manager (no others are packaged yet so this is enabled by default,
+      # no need to redefine it in your config for now)
+      #media-session.enable = true;
+    };
+
+    # Enable touchpad support (enabled default in most desktopManager).
+    # xserver.libinput.enable = true;
   };
-
-  # Bootloader.
-  # boot.loader.grub.enable = true;
-  # boot.loader.grub.device = "/dev/sda";
-  # boot.loader.grub.useOSProber = true;
-  # systemd-bootを有効化
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-
-  networking.hostName = "nixos"; # Define your hostname.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-
-  # Enable networking
-  networking.networkmanager.enable = true;
 
   # Set your time zone.
   time.timeZone = "Asia/Tokyo";
 
   # Select internationalisation properties.
-  i18n.defaultLocale = "ja_JP.UTF-8";
+  i18n = {
+    defaultLocale = "ja_JP.UTF-8";
 
-  i18n.extraLocaleSettings = {
-    LC_ADDRESS = "ja_JP.UTF-8";
-    LC_IDENTIFICATION = "ja_JP.UTF-8";
-    LC_MEASUREMENT = "ja_JP.UTF-8";
-    LC_MONETARY = "ja_JP.UTF-8";
-    LC_NAME = "ja_JP.UTF-8";
-    LC_NUMERIC = "ja_JP.UTF-8";
-    LC_PAPER = "ja_JP.UTF-8";
-    LC_TELEPHONE = "ja_JP.UTF-8";
-    LC_TIME = "ja_JP.UTF-8";
-  };
+    extraLocaleSettings = {
+      LC_ADDRESS = "ja_JP.UTF-8";
+      LC_IDENTIFICATION = "ja_JP.UTF-8";
+      LC_MEASUREMENT = "ja_JP.UTF-8";
+      LC_MONETARY = "ja_JP.UTF-8";
+      LC_NAME = "ja_JP.UTF-8";
+      LC_NUMERIC = "ja_JP.UTF-8";
+      LC_PAPER = "ja_JP.UTF-8";
+      LC_TELEPHONE = "ja_JP.UTF-8";
+      LC_TIME = "ja_JP.UTF-8";
+    };
 
-  i18n.inputMethod = {
-    type = "fcitx5";
-    enable = true;
-    fcitx5.addons = [pkgs.fcitx5-mozc];
+    inputMethod = {
+      type = "fcitx5";
+      enable = true;
+      fcitx5.addons = [pkgs.fcitx5-mozc];
+    };
   };
 
   fonts = {
@@ -154,40 +203,7 @@
     };
   };
 
-  # Enable the X11 windowing system.
-  services.xserver.enable = true;
-
-  # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
-
-  # Configure keymap in X11
-  services.xserver.xkb = {
-    layout = "jp";
-    variant = "";
-  };
-
-  # Enable CUPS to print documents.
-  services.printing.enable = true;
-
-  # Enable sound with pipewire.
-  services.pulseaudio.enable = false;
   security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-    # If you want to use JACK applications, uncomment this
-    #jack.enable = true;
-
-    # use the example session manager (no others are packaged yet so this is enabled by default,
-    # no need to redefine it in your config for now)
-    #media-session.enable = true;
-  };
-
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.t4d4 = {
@@ -215,10 +231,9 @@
     zsh = {
       enable = true;
     };
+    # Install firefox.
+    firefox.enable = true;
   };
-
-  # Install firefox.
-  programs.firefox.enable = true;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
