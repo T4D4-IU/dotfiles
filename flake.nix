@@ -30,6 +30,17 @@
     # Systems to support
     systems = ["x86_64-linux" "aarch64-darwin" "x86_64-darwin"];
     forAllSystems = nixpkgs.lib.genAttrs systems;
+
+    # Internal helper for package checks
+    packageChecks = let
+      system = "x86_64-linux";
+    in
+      builtins.listToAttrs (
+        builtins. map (name: {
+          inherit name;
+          value = self. packages.${system}.${name};
+        }) (builtins.attrNames self.packages.${system})
+      );
   in {
     packages.x86_64-linux = let
       pkgs = import inputs.nixpkgs {system = "x86_64-linux";};
@@ -37,19 +48,11 @@
       dfx = pkgs.callPackage ./pkgs/dfx.nix {};
       haystack-editor = pkgs.callPackage ./pkgs/haystack-editor.nix {};
     };
-    packageChecks = let
-      system = "x86_64-linux";
-    in
-      builtins.listToAttrs (
-        builtins.map (name: {
-          inherit name;
-          value = self.packages.${system}.${name};
-        }) (builtins.attrNames self.packages.${system})
-      );
+
     checks = forAllSystems (
       system: let
         pkgs = import nixpkgs {inherit system;};
-        pre-commit-check = pre-commit-hooks.lib.${system}.run {
+        pre-commit-check = pre-commit-hooks. lib.${system}.run {
           src = ./.;
           hooks = {
             # Nix formatting with alejandra
@@ -68,9 +71,9 @@
       in
         if system == "x86_64-linux"
         then
-          self.packageChecks
+          packageChecks
           // {
-            nixos = self.nixosConfigurations.nixos.config.system.build.toplevel;
+            nixos = self.nixosConfigurations.nixos.config. system.build.toplevel;
             home-manager = self.homeConfigurations."t4d4@nixos".activationPackage;
             pre-commit = pre-commit-check;
           }
@@ -83,7 +86,7 @@
     nixosConfigurations = {
       nixos = helpers.mkNixosConfiguration {
         inherit inputs;
-        system = hosts.nixos.system;
+        system = hosts. nixos.system;
         hostname = hosts.nixos.hostname;
         modules = hosts.nixos.nixosModules;
       };
@@ -94,7 +97,7 @@
       "t4d4@nixos" = helpers.mkHomeConfiguration {
         inherit inputs;
         inherit (hosts.nixos) system username homeDirectory;
-        modules = hosts.nixos.homeModules;
+        modules = hosts. nixos.homeModules;
       };
 
       # WSL/Ubuntu environment (CLI-only)
@@ -140,7 +143,7 @@
             echo ""
             echo "Manual commands:"
             echo "  alejandra .             # Format all files"
-            echo "  statix check .          # Run linter"
+            echo "  statix check .           # Run linter"
             echo "  deadnix .               # Check for dead code"
             echo "  pre-commit run --all    # Run all pre-commit hooks"
             echo ""
