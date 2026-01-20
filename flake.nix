@@ -22,10 +22,10 @@
     ...
   } @ inputs: let
     # Import our helper library
-    lib = nixpkgs.lib;
+    inherit (nixpkgs) lib;
     myLib = import ./lib {inherit lib;};
-    helpers = myLib.helpers;
-    hosts = myLib.hosts;
+    inherit (myLib) helpers;
+    inherit (myLib) hosts;
 
     # Systems to support
     systems = ["x86_64-linux" "aarch64-darwin" "x86_64-darwin"];
@@ -51,7 +51,6 @@
 
     checks = forAllSystems (
       system: let
-        pkgs = import nixpkgs {inherit system;};
         pre-commit-check = pre-commit-hooks. lib.${system}.run {
           src = ./.;
           hooks = {
@@ -59,7 +58,11 @@
             alejandra.enable = true;
 
             # Nix linting
-            statix.enable = true;
+            statix = {
+              enable = true;
+              # バグ回避: --ignoreフラグに値が必要なため、ダミーの除外対象を指定
+              settings.ignore = [".direnv"];
+            };
             deadnix.enable = true;
 
             # Additional checks
@@ -86,8 +89,8 @@
     nixosConfigurations = {
       nixos = helpers.mkNixosConfiguration {
         inherit inputs;
-        system = hosts. nixos.system;
-        hostname = hosts.nixos.hostname;
+        inherit (hosts. nixos) system;
+        inherit (hosts.nixos) hostname;
         modules = hosts.nixos.nixosModules;
       };
     };

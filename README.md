@@ -73,7 +73,7 @@ dotfiles/
 - **ブートローダー**: systemd-boot
 - **デスクトップ環境**: GNOME
 - **ディスプレイマネージャー**: GDM
-- **日本語環境**: 
+- **日本語環境**:
   - ロケール: ja_JP.UTF-8
   - インプットメソッド: fcitx5 + Mozc
   - フォント: Noto CJK、Nerd Fonts
@@ -175,19 +175,19 @@ nix eval .#homeConfigurations.\"t4d4@nixos\".config.home.username
 {
   # 既存のnixosホスト
   nixos = { ... };
-  
+
   # 新しいホスト（例: MacBook）
   macbook = {
     system = "aarch64-darwin";
     hostname = "macbook";
     username = "t4d4";
     homeDirectory = "/Users/t4d4";
-    
+
     features = {
       gui = true;
       development = true;
     };
-    
+
     homeModules = [
       ../hosts/macbook/home.nix
     ];
@@ -234,7 +234,7 @@ homeConfigurations = {
     homeDirectory = hosts.nixos.homeDirectory;
     modules = hosts.nixos.homeModules;
   };
-  
+
   # 新しいホスト
   "t4d4@macbook" = helpers.mkHomeConfiguration {
     inherit inputs;

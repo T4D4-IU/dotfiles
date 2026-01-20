@@ -1,6 +1,6 @@
 # PR #5 対応アクションアイテム
 
-**作成日時**: 2026-01-20  
+**作成日時**: 2026-01-20
 **PR**: [#5 🚀 Refactor: Multi-environment support with enhanced modularity](https://github.com/T4D4-IU/dotfiles/pull/5)
 
 ---
@@ -23,20 +23,20 @@
 - **問題**: Home Manager設定のビルドが`wasmer`パッケージのリンクエラーで失敗
 - **エラー内容**: `undefined reference to '__rust_probestack'`
 - **原因**: `modules/home/common/development.nix`で`wasmer`パッケージを含めている
-- **対応方法**: 
+- **対応方法**:
   - オプション1: `wasmer`をパッケージリストから削除
   - オプション2: ビルド設定を修正（より複雑）
-- **影響ファイル**: 
+- **影響ファイル**:
   - `modules/home/common/development.nix`
 - **関連ログ**: Job #60798790709, #60798790711
 
 ### 2. pre-commitフォーマット適用
 - [x] **対応完了**
 - **問題**: `alejandra`フォーマッターによる自動整形が必要
-- **影響ファイル**: 
+- **影響ファイル**:
   - `pkgs/dfx.nix`
   - `pkgs/haystack-editor.nix`
-- **対応方法**: 
+- **対応方法**:
   ```bash
   nix fmt
   git add pkgs/dfx.nix pkgs/haystack-editor.nix
@@ -69,7 +69,7 @@
 - [x] **対応完了**
 - **問題**: ユーザー名が`t4d4`以外の場合に失敗する手順
 - **ファイル**: `docs/WSL_SETUP.md` line 69
-- **対応方法**: 
+- **対応方法**:
   - flake.nixの`homeConfigurations`がハードコードされていることを明記
   - ユーザー名変更時はflake.nixも修正が必要と追記
   - または動的生成への変更を検討（lib.mapAttrs'使用）
@@ -136,7 +136,7 @@
 - [ ] **対応完了**
 - **ファイル**: `.github/workflows/nix-check.yml` (lines 175-189)
 - **問題**: summaryジョブが`full-check`に依存せず、無条件に成功を報告
-- **対応方法**: 
+- **対応方法**:
   - needsに`full-check`を追加
   - `full-check`の結果を条件チェック
 - **レビュアー**: CodeRabbit

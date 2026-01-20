@@ -1,4 +1,4 @@
-{...}:
+_:
 # Define host configurations in a structured format
 {
   nixos = {
