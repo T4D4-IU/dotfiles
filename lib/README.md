@@ -103,7 +103,6 @@ helpers.systemType "aarch64-darwin"  # => "darwin"
     
     features = {
       gui = <true/false>;
-      hyprland = <true/false>;
       development = <true/false>;
     };
     
@@ -130,7 +129,6 @@ nixos = {
   
   features = {
     gui = true;
-    hyprland = true;
     development = true;
   };
   

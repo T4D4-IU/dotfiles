@@ -11,12 +11,12 @@
 
 ### 1. Nixのインストール
 
-**推奨: Determinate Systems版Nixインストーラー**
+#### 推奨: Determinate Systems版Nixインストーラー
 ```bash
 curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
 ```
 
-**または標準のNixインストーラー**
+#### または標準のNixインストーラー
 ```bash
 sh <(curl -L https://nixos.org/nix/install) --daemon
 ```

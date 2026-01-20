@@ -48,11 +48,7 @@ dotfiles/
 │       │   └── zsh.nix            # Zshシェル
 │       ├── linux/                 # Linux固有設定
 │       │   ├── default.nix        # Linuxモジュール自動インポート
-│       │   ├── gui.nix            # GUIアプリケーション
-│       │   ├── hyprland.nix       # Hyprlandウィンドウマネージャー
-│       │   ├── hyprlock.nix       # スクリーンロック
-│       │   ├── rofi.nix           # アプリケーションランチャー
-│       │   └── security.nix       # セキュリティツール
+│       │   └── gui.nix            # GUIアプリケーション
 │       └── darwin/                # macOS固有設定（将来用）
 │           └── default.nix        # macOSモジュール自動インポート
 ├── lib/                           # ヘルパー関数

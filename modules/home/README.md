@@ -36,13 +36,15 @@ modules/home/
 - その他多数
 
 ### dev.nix
-**基本的な開発ツール**
+**開発補助ツール**
 
-- `code-cursor` - Cursorエディター
-- `ghostty` - モダンなターミナルエミュレーター
-- `gibo` - .gitignore生成ツール
-- `atuin` - シェル履歴管理
-- `zellij` - モダンなターミナルマルチプレクサー
+- `marp-cli` - Markdownプレゼンテーション作成
+- `textlint` - テキストリンター
+- `zizmor` - GitHub Actions静的解析ツール
+- `valgrind` - メモリリーク検出
+- `act` - GitHub Actionsローカル実行
+- `pinact` - GitHub Actionsバージョン固定ツール
+- `actionlint` - GitHub Actionsワークフローチェッカー
 
 ### development.nix
 **言語固有の開発環境**

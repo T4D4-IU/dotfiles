@@ -7,17 +7,17 @@
 
 ## 📊 進捗状況
 
-- [ ] Critical (3/3)
-- [ ] High Priority (3/3)
+- [x] Critical (3/3) ✅ **完了**
+- [x] High Priority (3/3) ✅ **完了**
 - [ ] Medium Priority (4/4)
 - [ ] Low Priority (3/3)
 
 ---
 
-## 🔴 Critical (必須対応)
+## 🔴 Critical (必須対応) ✅ **完了**
 
 ### 1. wasmerビルドエラーの修正
-- [ ] **対応完了**
+- [x] **対応完了**
 - **問題**: Home Manager設定のビルドが`wasmer`パッケージのリンクエラーで失敗
 - **エラー内容**: `undefined reference to '__rust_probestack'`
 - **原因**: `modules/home/common/development.nix`で`wasmer`パッケージを含めている
@@ -29,7 +29,7 @@
 - **関連ログ**: Job #60798790709, #60798790711
 
 ### 2. pre-commitフォーマット適用
-- [ ] **対応完了**
+- [x] **対応完了**
 - **問題**: `alejandra`フォーマッターによる自動整形が必要
 - **影響ファイル**: 
   - `pkgs/dfx.nix`
@@ -43,7 +43,7 @@
 - **関連ログ**: Job #60798790702
 
 ### 3. flake.nix修正 (activation-script → activationPackage)
-- [ ] **対応完了**
+- [x] **対応完了**
 - **問題**: 誤った属性名を使用（CodeRabbit指摘）
 - **ファイル**: `flake.nix` line 66
 - **現在**: `self.homeConfigurations."t4d4@nixos".activation-script`
@@ -64,7 +64,7 @@
 - **レビュアー**: Gemini Code Assist, Copilot
 
 ### 5. WSLドキュメントの修正
-- [ ] **対応完了**
+- [x] **対応完了**
 - **問題**: ユーザー名が`t4d4`以外の場合に失敗する手順
 - **ファイル**: `docs/WSL_SETUP.md` line 69
 - **対応方法**: 
@@ -74,7 +74,7 @@
 - **レビュアー**: Gemini Code Assist
 
 ### 6. common CLIモジュールからWayland専用ツールを移動
-- [ ] **対応完了**
+- [x] **対応完了**
 - **問題**: WSL（CLI専用）でも読み込まれるcommonモジュールにGUI専用ツールが含まれる
 - **ファイル**: `modules/home/common/cli.nix` (lines 43-47)
 - **対象パッケージ**:

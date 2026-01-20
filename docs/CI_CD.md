@@ -100,7 +100,7 @@ strategy:
 自分のプロジェクト用にCachixを設定する場合：
 
 ### 1. Cachixアカウント作成
-https://cachix.org でサインアップ
+[Cachix](https://cachix.org) でサインアップ
 
 ### 2. キャッシュの作成
 ```bash
@@ -127,7 +127,7 @@ cachix authtoken
 ## 📊 CI/CDの読み方
 
 ### 成功時
-```
+```text
 ✅ All checks completed!
   ✅ Flake metadata
   ✅ Custom packages (dfx, haystack-editor)

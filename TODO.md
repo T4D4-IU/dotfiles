@@ -218,16 +218,12 @@ dotfiles/
 │   │   │       ├── zsh.nix
 │   │   │       └── starship.nix
 │   │   ├── linux/                 # Linux固有設定
-│   │   │   ├── gui.nix            # GUIアプリ
-│   │   │   ├── hyprland.nix       # Hyprland WM
-│   │   │   ├── hyprlock.nix
-│   │   │   └── rofi.nix
+│   │   │   └── gui.nix            # GUIアプリ
 │   │   └── darwin/                # macOS固有設定（将来用）
 │   │       └── gui.nix
 │   └── nixos/                     # NixOSシステムモジュール
 │       ├── desktop/
-│       │   ├── gnome.nix
-│       │   └── hyprland.nix
+│       │   └── gnome.nix
 │       ├── i18n/
 │       │   └── japanese.nix
 │       ├── development/
