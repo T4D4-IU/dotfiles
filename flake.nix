@@ -20,6 +20,7 @@
     nixpkgs,
     pre-commit-hooks,
     ...
+  } @ inputs:
   } @ inputs: let
     # Import our helper library
     lib = nixpkgs.lib;

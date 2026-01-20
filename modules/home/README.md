@@ -132,7 +132,7 @@ Linux環境専用の設定。
     ../../modules/home/common/zsh.nix
     # 他のモジュールは除外
   ];
-  
+
   # モジュール設定を上書き
   programs.zsh.shellAliases = {
     myalias = "echo 'custom'";

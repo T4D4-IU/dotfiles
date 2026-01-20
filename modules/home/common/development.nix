@@ -22,7 +22,7 @@
     cargo-binutils # cargo-llvm-covに使う
     vscode
     jetbrains-toolbox
-    zenn-cli
+    # zenn-cli # textlintとpnpm lock.yamlが競合するため一時的にコメントアウト
     wakatime-cli
     ghq # Remote repository management made easy
     gibo # Gitignore boilerplate generator

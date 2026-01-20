@@ -126,12 +126,12 @@ nixos = {
   hostname = "nixos";
   username = "t4d4";
   homeDirectory = "/home/t4d4";
-  
+
   features = {
     gui = true;
     development = true;
   };
-  
+
   nixosModules = [ ../hosts/nixos ];
   homeModules = [ ../hosts/nixos/home.nix ];
 }
@@ -180,19 +180,19 @@ outputs = { self, nixpkgs, ... }@inputs:
 ```nix
 {
   nixos = { ... };  # 既存
-  
+
   # 新しいホスト
   macbook = {
     system = "aarch64-darwin";
     hostname = "macbook";
     username = "t4d4";
     homeDirectory = "/Users/t4d4";
-    
+
     features = {
       gui = true;
       development = true;
     };
-    
+
     homeModules = [
       ../hosts/macbook/home.nix
     ];
@@ -212,7 +212,7 @@ mkdir -p hosts/macbook
 ```nix
 homeConfigurations = {
   "t4d4@nixos" = helpers.mkHomeConfiguration { ... };
-  
+
   # 新規追加
   "t4d4@macbook" = helpers.mkHomeConfiguration {
     inherit inputs;
