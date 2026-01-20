@@ -100,16 +100,16 @@ helpers.systemType "aarch64-darwin"  # => "darwin"
     hostname = "<ホスト名>";
     username = "<ユーザー名>";
     homeDirectory = "<ホームディレクトリ>";
-    
+
     features = {
       gui = <true/false>;
       development = <true/false>;
     };
-    
+
     nixosModules = [
       # NixOS設定モジュール（NixOSの場合のみ）
     ];
-    
+
     homeModules = [
       # Home Manager設定モジュール
     ];
