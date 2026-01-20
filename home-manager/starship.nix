@@ -1,7 +1,7 @@
 {pkgs, ...}: {
-    programs.starship = {
-    };
-    home.file."./.config/starship.toml".text = ''
+  programs.starship = {
+  };
+  home.file."./.config/starship.toml".text = ''
     format = """
     [](#9A348E)\
     $username\
@@ -55,5 +55,5 @@
     time_format = "%T"
     style = "bg:#06969A"
     format = '[ 󰅐 $time]($style)'
-    '';
+  '';
 }

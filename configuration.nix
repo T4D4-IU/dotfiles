@@ -1,10 +1,12 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
-
-{ inputs, config, pkgs, ... }:
-
 {
+  inputs,
+  config,
+  pkgs,
+  ...
+}: {
   # change kernel
   boot.kernelPackages = pkgs.linuxKernel.packages.linux_zen;
 
@@ -52,12 +54,13 @@
   };
 
   imports =
-    [ # Include the results of the hardware scan.
+    [
+      # Include the results of the hardware scan.
       ./hardware-configuration.nix
     ]
     # xremapのNixOS modulesを使えるようにする
     ++ [
-    inputs.xremap.nixosModules.default
+      inputs.xremap.nixosModules.default
     ];
 
   # xremapでキー設定をいい感じに変更
@@ -67,25 +70,25 @@
     config = {
       modmap = [
         {
-	  # CapsLockをCtrlに置換
-	  name = "CapsLock is dead";
-	  remap = {
-	    CapsLock = "Ctrl_L";
-	  };
-	}
+          # CapsLockをCtrlに置換
+          name = "CapsLock is dead";
+          remap = {
+            CapsLock = "Ctrl_L";
+          };
+        }
       ];
       keymap = [
         {
-	  # Ctrl + HがどのアプリケーションでもBackSpaceになるように変更
-	  name = "Ctrl+H should be enabled on all apps as BackSpace";
-	  remap = {
-	    C-h = "Backspace";
-	  };
-	  # 一部アプリケーションを対象から除外
-	  application = {
-	    not = ["Alacritty" "Kitty" "Wezterm" "warp-terminal"];
-	  };
-	}
+          # Ctrl + HがどのアプリケーションでもBackSpaceになるように変更
+          name = "Ctrl+H should be enabled on all apps as BackSpace";
+          remap = {
+            C-h = "Backspace";
+          };
+          # 一部アプリケーションを対象から除外
+          application = {
+            not = ["Alacritty" "Kitty" "Wezterm" "warp-terminal"];
+          };
+        }
       ];
     };
   };
@@ -144,13 +147,12 @@
     fontconfig = {
       defaultFonts = {
         serif = ["Noto Serif CJK JP" "Noto Color Emoji"];
-	sansSerif = ["Noto Sans CJK JP" "Noto Color Emoji"];
-	monospace = ["JetBrainsMono Nerd Font" "Noto Color Emoji"];
-	emoji = ["Noto Color Emoji"];
+        sansSerif = ["Noto Sans CJK JP" "Noto Color Emoji"];
+        monospace = ["JetBrainsMono Nerd Font" "Noto Color Emoji"];
+        emoji = ["Noto Color Emoji"];
       };
     };
   };
-
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
@@ -158,7 +160,6 @@
   # Enable the GNOME Desktop Environment.
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
-
 
   # Configure keymap in X11
   services.xserver.xkb = {
@@ -192,9 +193,9 @@
   users.users.t4d4 = {
     isNormalUser = true;
     description = "t4d4";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = ["networkmanager" "wheel"];
     packages = with pkgs; [
-    #  thunderbird
+      #  thunderbird
     ];
     shell = pkgs.zsh;
   };
@@ -222,8 +223,8 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-  #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-  #  wget
+    #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    #  wget
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -252,5 +253,4 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "24.11"; # Did you read the comment?
-
 }

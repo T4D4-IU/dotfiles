@@ -6,7 +6,7 @@
     package = null;
     portalPackage = null;
     settings = {
-      "$mod" ="SUPER";
+      "$mod" = "SUPER";
       "$alt" = "ALT";
       bind = [
         "$mod, G, exec, ghostty"
@@ -56,12 +56,12 @@
         force_zero_scaling = true;
       };
     };
-#    plugins = [
-#      pkgs.hyprlandPlugins.hy3
-#      pkgs.hyprlandPlugins.hyprbars
-#      pkgs.hyprlandPlugins.hyprwinwrap
-#      pkgs.hyprlandPlugins.borders-plus-plus
-#    ];
+    #    plugins = [
+    #      pkgs.hyprlandPlugins.hy3
+    #      pkgs.hyprlandPlugins.hyprbars
+    #      pkgs.hyprlandPlugins.hyprwinwrap
+    #      pkgs.hyprlandPlugins.borders-plus-plus
+    #    ];
   };
   services.gnome-keyring.enable = true;
 }

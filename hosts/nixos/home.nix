@@ -1,11 +1,8 @@
-{ config, pkgs, ... }:
-
 {
-  # Home Manager needs a bit of information about you and the paths it should
-  # manage.
-  home.username = "t4d4";
-  home.homeDirectory = "/home/t4d4";
-
+  config,
+  pkgs,
+  ...
+}: {
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release
   # introduces backwards incompatible changes.
@@ -19,7 +16,7 @@
   imports = [
     # Common modules (cross-platform)
     ../../modules/home/common
-    
+
     # Linux-specific modules (only for this host)
     ../../modules/home/linux
   ];

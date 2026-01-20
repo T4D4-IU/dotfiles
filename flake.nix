@@ -15,44 +15,50 @@
     };
   };
 
-  outputs = { self, nixpkgs, pre-commit-hooks, ... }@inputs: 
-    let
-      # Import our helper library
-      lib = nixpkgs.lib;
-      myLib = import ./lib { inherit lib; };
-      helpers = myLib.helpers;
-      hosts = myLib.hosts;
-      
-      # Systems to support
-      systems = [ "x86_64-linux" "aarch64-darwin" "x86_64-darwin" ];
-      forAllSystems = nixpkgs.lib.genAttrs systems;
-    in
-    {
+  outputs = {
+    self,
+    nixpkgs,
+    pre-commit-hooks,
+    ...
+  } @ inputs: let
+    # Import our helper library
+    lib = nixpkgs.lib;
+    myLib = import ./lib {inherit lib;};
+    helpers = myLib.helpers;
+    hosts = myLib.hosts;
+
+    # Systems to support
+    systems = ["x86_64-linux" "aarch64-darwin" "x86_64-darwin"];
+    forAllSystems = nixpkgs.lib.genAttrs systems;
+  in {
     packages.x86_64-linux = let
-      pkgs = import inputs.nixpkgs { system = "x86_64-linux"; };
-      in {
-        dfx = pkgs.callPackage ./pkgs/dfx.nix { };
-        haystack-editor = pkgs.callPackage ./pkgs/haystack-editor.nix { };
-      };
-    packageChecks = let system = "x86_64-linux"; in builtins.listToAttrs (
-      builtins.map (name: {
-        inherit name;
-        value = self.packages.${system}.${name};
-      }) (builtins.attrNames self.packages.${system})
-    );
-    checks = forAllSystems (system:
-      let
-        pkgs = import nixpkgs { inherit system; };
+      pkgs = import inputs.nixpkgs {system = "x86_64-linux";};
+    in {
+      dfx = pkgs.callPackage ./pkgs/dfx.nix {};
+      haystack-editor = pkgs.callPackage ./pkgs/haystack-editor.nix {};
+    };
+    packageChecks = let
+      system = "x86_64-linux";
+    in
+      builtins.listToAttrs (
+        builtins.map (name: {
+          inherit name;
+          value = self.packages.${system}.${name};
+        }) (builtins.attrNames self.packages.${system})
+      );
+    checks = forAllSystems (
+      system: let
+        pkgs = import nixpkgs {inherit system;};
         pre-commit-check = pre-commit-hooks.lib.${system}.run {
           src = ./.;
           hooks = {
             # Nix formatting with alejandra
             alejandra.enable = true;
-            
+
             # Nix linting
             statix.enable = true;
             deadnix.enable = true;
-            
+
             # Additional checks
             check-merge-conflicts.enable = true;
             end-of-file-fixer.enable = true;
@@ -60,14 +66,15 @@
           };
         };
       in
-      if system == "x86_64-linux" then
-        self.packageChecks // {
-          nixos = self.nixosConfigurations.nixos.config.system.build.toplevel;
-          home-manager = self.homeConfigurations."t4d4@nixos".activation-script;
-          pre-commit = pre-commit-check;
-        }
-      else
-        {
+        if system == "x86_64-linux"
+        then
+          self.packageChecks
+          // {
+            nixos = self.nixosConfigurations.nixos.config.system.build.toplevel;
+            home-manager = self.homeConfigurations."t4d4@nixos".activationPackage;
+            pre-commit = pre-commit-check;
+          }
+        else {
           pre-commit = pre-commit-check;
         }
     );
@@ -91,7 +98,7 @@
         homeDirectory = hosts.nixos.homeDirectory;
         modules = hosts.nixos.homeModules;
       };
-      
+
       # WSL/Ubuntu environment (CLI-only)
       "t4d4@wsl" = helpers.mkHomeConfiguration {
         inherit inputs;
@@ -103,27 +110,26 @@
     };
 
     # Development shell
-    devShells = forAllSystems (system:
-      let
-        pkgs = import nixpkgs { inherit system; };
+    devShells = forAllSystems (
+      system: let
+        pkgs = import nixpkgs {inherit system;};
         pre-commit-check = self.checks.${system}.pre-commit;
-      in
-      {
+      in {
         default = pkgs.mkShell {
           name = "dotfiles-dev";
-          
+
           packages = with pkgs; [
             # Formatters
-            alejandra        # Nix code formatter (official)
+            alejandra # Nix code formatter (official)
             nixfmt-rfc-style # Alternative formatter
-            
+
             # Linters
-            statix           # Lints and suggestions for Nix
-            deadnix          # Find unused code
-            
+            statix # Lints and suggestions for Nix
+            deadnix # Find unused code
+
             # Development tools
-            nil              # Nix LSP
-            
+            nil # Nix LSP
+
             # Pre-commit
             pre-commit
           ];

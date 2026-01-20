@@ -1,6 +1,6 @@
 {
-    programs.zsh = {
-        enable = true;
+  programs.zsh = {
+    enable = true;
     autocd = true;
     enableCompletion = true;
     autosuggestion = {
@@ -27,5 +27,5 @@
       dfx = "nix run 'github:T4D4-IU/dotfiles#dfx'";
       haystack-editor = "nix run 'github:T4D4-IU/dotfiles#haystack-editor'";
     };
-    };
+  };
 }

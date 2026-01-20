@@ -1,11 +1,8 @@
-{ config, pkgs, ... }:
-
 {
-  # Home Manager needs a bit of information about you and the paths it should
-  # manage.
-  home.username = "t4d4";  # 実際のWSLユーザー名に変更してください
-  home.homeDirectory = "/home/t4d4";  # 実際のホームディレクトリに変更してください
-
+  config,
+  pkgs,
+  ...
+}: {
   # This value determines the Home Manager release that your configuration is
   # compatible with.
   home.stateVersion = "24.11";
@@ -15,7 +12,7 @@
   imports = [
     # Common modules (cross-platform)
     ../../modules/home/common
-    
+
     # Linux GUI modules are NOT imported for WSL
     # ../../modules/home/linux
   ];

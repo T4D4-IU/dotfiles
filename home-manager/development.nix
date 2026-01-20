@@ -12,10 +12,10 @@
     foundry
     wasmer # ユニバーサルWebAssemblyランタイム
     (rust-bin.stable.latest.default.override {
-        targets = [
-            "wasm32-unknown-unknown"
-            # "wasm32-wasi" # 最新のStable版ではサポートされていない？
-        ];
+      targets = [
+        "wasm32-unknown-unknown"
+        # "wasm32-wasi" # 最新のStable版ではサポートされていない？
+      ];
     })
     cargo-shuttle
     cargo-llvm-cov # Rustのカバレッジ計測ツール

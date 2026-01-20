@@ -65,8 +65,14 @@ wsl = {
 
 ```bash
 # Home Managerをビルドして適用
-nix run home-manager/master -- switch --flake ~/dotfiles#your-username@wsl
+# ⚠️ 注意: ユーザー名が t4d4 以外の場合、flake.nix の homeConfigurations を修正する必要があります
+nix run home-manager/master -- switch --flake ~/dotfiles#t4d4@wsl
 ```
+
+**ユーザー名をカスタマイズする場合:**
+1. `flake.nix` の `homeConfigurations` セクション（103-111行目付近）を編集
+2. `"t4d4@wsl"` を `"your-username@wsl"` に変更
+3. または `lib/hosts.nix` でユーザー名を設定し、動的生成に変更することも可能
 
 初回は時間がかかる場合があります（パッケージのダウンロードとビルド）。
 

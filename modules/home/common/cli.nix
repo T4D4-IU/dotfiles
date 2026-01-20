@@ -1,6 +1,4 @@
-{ pkgs, ... }:
-
-{
+{pkgs, ...}: {
   home.packages = with pkgs; [
     fastfetch # fetch system information
     omekasy # generate dressed up text
@@ -34,16 +32,11 @@
     neo-cowsay # Cowsay reborn, written in Go
     gping # Ping, but with a graph
     sl # Steam Locomotive runs across your terminal when you type 'sl'
-    atuin #Replacement for a shell history which records additional commanads
+    atuin # Replacement for a shell history which records additional commands
     charm-freeze # Tool to generate images of code and terminal output
     genact # Nonsense activity generator
     vhs # Tool for generating terminal GIFs with code
     xh # Friendly and fast tool for sending HTTP requests
     zellij # Terminal workspace with batteries included
-    grimblast # Helper for screenshots within Hyprland, based on grimshot
-    hyprpaper # Blazing fast wayland wallpaper utility
-    cliphist # Wayland clipboard History
-    wl-clipboard # Wayland clipboard manager
-    brightnessctl # screen brightness
   ];
 }
