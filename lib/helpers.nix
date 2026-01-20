@@ -60,16 +60,4 @@
     else if lib.hasSuffix "-darwin" system
     then "darwin"
     else "unknown";
-
-  # Conditionally include modules based on OS
-  optionalModules = {
-    linux = condition: modules:
-      if condition
-      then modules
-      else [];
-    darwin = condition: modules:
-      if condition
-      then modules
-      else [];
-  };
 }
