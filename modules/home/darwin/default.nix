@@ -1,9 +1,4 @@
-{
-  config,
-  pkgs,
-  lib,
-  ...
-}:
+{...}:
 # macOS-specific modules (placeholder for future use)
 {
   imports = [

@@ -1,7 +1,7 @@
 {
-  config,
-  pkgs,
-  lib,
+  _config,
+  _pkgs,
+  _lib,
   ...
 }:
 # Common modules that should be loaded on all systems

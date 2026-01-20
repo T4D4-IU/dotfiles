@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{...}: {
   programs.starship = {
   };
   home.file."./.config/starship.toml".text = ''

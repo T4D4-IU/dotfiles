@@ -34,8 +34,8 @@
   mkNixosConfiguration = {
     inputs,
     system,
-    hostname,
     modules ? [],
+    ...
   }:
     inputs.nixpkgs.lib.nixosSystem {
       inherit system;
