@@ -225,9 +225,7 @@
       enable = true;
       defaultEditor = true; # $EDITOR=nvim
     };
-    starship = {
-      enable = true;
-    };
+
     zsh = {
       enable = true;
     };
