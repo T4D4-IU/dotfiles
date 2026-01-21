@@ -1,4 +1,8 @@
-{...}:
+{
+  config,
+  lib,
+  ...
+}:
 # Linux-specific modules
 {
   imports = [
