@@ -93,6 +93,7 @@
 
     # xremapでキー設定をいい感じに変更
     xremap = {
+      enable = true;
       userName = "t4d4";
       serviceMode = "system";
       config = {
@@ -125,16 +126,16 @@
     xserver = {
       enable = true;
 
-      # Enable the GNOME Desktop Environment.
-      displayManager.gdm.enable = true;
-      desktopManager.gnome.enable = true;
-
       # Configure keymap in X11
       xkb = {
         layout = "jp";
         variant = "";
       };
     };
+
+    # Enable the GNOME Desktop Environment.
+    displayManager.gdm.enable = true;
+    desktopManager.gnome.enable = true;
 
     # Enable CUPS to print documents.
     printing.enable = true;
@@ -180,7 +181,7 @@
     inputMethod = {
       type = "fcitx5";
       enable = true;
-      fcitx5.addons = [pkgs.fcitx5-mozc];
+      fcitx5.addons = [pkgs. fcitx5-mozc];
     };
   };
 
@@ -188,7 +189,7 @@
     packages = with pkgs; [
       noto-fonts-cjk-serif
       noto-fonts-cjk-sans
-      noto-fonts-emoji
+      noto-fonts-color-emoji
       nerd-fonts.hack
       nerd-fonts.jetbrains-mono
     ];
