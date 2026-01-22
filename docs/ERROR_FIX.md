@@ -1,4 +1,4 @@
-# AGENT.md - Nix Dotfiles Maintenance Guide
+# ERROR_FIX.md - Nix Dotfiles Maintenance Guide
 
 このドキュメントは、このNix Dotfilesリポジトリにおいて `nix flake check` やビルドエラーが発生した際に、AIエージェントが自律的に修正を行うための指針です。
 
