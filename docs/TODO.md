@@ -202,7 +202,9 @@ dotfiles/
 ├── flake.nix                      # エントリーポイント（複数ホスト対応）
 ├── flake.lock
 ├── README.md
-├── TODO.md
+├── docs/                          # ドキュメント
+│   ├── TODO.md
+│   └── ...
 ├── lib/                           # ヘルパー関数・共通ユーティリティ
 │   ├── default.nix
 │   └── helpers.nix                # OS判定、ホスト設定生成等
