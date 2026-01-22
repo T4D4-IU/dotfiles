@@ -27,13 +27,26 @@
       "lsp": {
         "rust-analyzer": {
           "check": {
-            "extraArgs": ["--target-dir", "target/ra"]
+            "extraArgs": [
+              "--target-dir",
+              "target/ra"
+            ]
           },
           "initialization_options": {
             "check": {
               "command": "check"
             }
           }
+        },
+        "nixd": {
+          "binary": {
+            "path": "/home/t4d4/.nix-profile/bin/nixd"
+          }
+        }
+      },
+      "languages": {
+        "Nix": {
+          "language_servers": ["!nil", "nixd"]
         }
       },
       "terminal": {
@@ -41,13 +54,13 @@
         "blinking": "terminal_controlled",
         "copy_on_select": true,
         "font_family": "JetBrainsMono Nerd Font",
-        "toolbar": {
-          "title": true
-        },
         "line_height": {
           "custom": 1.5
         },
         "working_directory": "current_project_directory"
+      },
+      "which_key": {
+        "enabled": true,
       }
     }
   '';

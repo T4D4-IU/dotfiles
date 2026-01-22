@@ -3,5 +3,6 @@
 {
   imports = [
     ./gui.nix
+    ./zed.nix
   ];
 }

@@ -4,7 +4,6 @@
     omekasy # generate dressed up text
     teip # modern pipeline
     eza # modern ls command
-    zoxide # smarter cd command
     wthrr # weather command
     dust # du command alternative
     bat # cat command alternative

@@ -10,8 +10,10 @@
     ./dev.nix
     ./development.nix
     ./direnv.nix
+    ./gh.nix
+    ./git.nix
     ./starship.nix
-    ./zed.nix
+    ./zoxide.nix
     ./zsh.nix
   ];
 }
