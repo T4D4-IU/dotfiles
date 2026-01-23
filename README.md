@@ -30,25 +30,29 @@ dotfiles/
 ├── flake.nix                      # Flakeエントリーポイント
 ├── flake.lock                     # 依存関係のロック
 ├── hosts/                         # ホスト別設定
-│   └── nixos/                     # NixOSデスクトップ
-│       ├── default.nix            # ホスト設定エントリー
-│       ├── configuration.nix      # NixOSシステム設定
-│       ├── hardware-configuration.nix  # ハードウェア設定
-│       └── home.nix               # このホスト用のHome Manager設定
+│   ├── nixos/                     # NixOSデスクトップ
+│   │   ├── default.nix            # ホスト設定エントリー
+│   │   ├── configuration.nix      # NixOSシステム設定
+│   │   ├── hardware-configuration.nix  # ハードウェア設定
+│   │   └── home.nix               # このホスト用のHome Manager設定
+│   └── wsl/                       # WSL環境
+│       └── home.nix               # WSL用のHome Manager設定
 ├── modules/                       # 再利用可能なモジュール
 │   └── home/                      # Home Managerモジュール
 │       ├── common/                # OS共通設定
 │       │   ├── default.nix        # 共通モジュール自動インポート
 │       │   ├── cli.nix            # CLIツール
-│       │   ├── dev.nix            # 基本開発ツール
-│       │   ├── development.nix    # 言語固有の開発環境
+│       │   ├── development.nix    # 開発ツール全般（言語固有環境・補助ツール）
 │       │   ├── direnv.nix         # direnv設定
+│       │   ├── gh.nix             # GitHub CLI設定
+│       │   ├── git.nix            # Git設定
 │       │   ├── starship.nix       # プロンプト設定
-│       │   ├── zed.nix            # Zedエディター
+│       │   ├── zoxide.nix         # zoxide設定
 │       │   └── zsh.nix            # Zshシェル
 │       ├── linux/                 # Linux固有設定
 │       │   ├── default.nix        # Linuxモジュール自動インポート
-│       │   └── gui.nix            # GUIアプリケーション
+│       │   ├── gui.nix            # GUIアプリケーション
+│       │   └── zed.nix            # Zedエディター
 │       └── darwin/                # macOS固有設定（将来用）
 │           └── default.nix        # macOSモジュール自動インポート
 ├── lib/                           # ヘルパー関数
@@ -56,6 +60,7 @@ dotfiles/
 │   ├── helpers.nix                # 設定生成ヘルパー
 │   └── hosts.nix                  # ホスト定義
 ├── pkgs/                          # カスタムパッケージ
+│   ├── default.nix                # パッケージエントリー
 │   ├── dfx.nix                    # DFINITY SDK
 │   └── haystack-editor.nix        # Haystackエディター
 ├── configuration.nix              # (後方互換用、非推奨)
