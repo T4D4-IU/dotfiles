@@ -16,7 +16,8 @@ on:
       - '.gitignore'
 
 jobs:
-  # Linting and formatting check (runs first and fast)    lint-format:
+  # Linting and formatting check (runs first and fast)
+  lint-format:
         runs-on: ubuntu-latest
         steps:
             - name: Checkout repository
