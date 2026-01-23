@@ -7,7 +7,6 @@
 
   imports = [
     ./cli.nix
-    ./dev.nix
     ./development.nix
     ./direnv.nix
     ./gh.nix

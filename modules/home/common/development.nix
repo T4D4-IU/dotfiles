@@ -14,9 +14,17 @@
     # claude-code # AI code generator
     devbox
     devenv
-    github-copilot-cli
-    gemini-cli
+    act # GitHub Actionsのローカル実行
+    actionlint # Static checker for GitHub Actions workflow files
     amp-cli
+    cachix
+    gemini-cli
+    github-copilot-cli
+    marp-cli
+    pinact # Pin GitHub Actions versions
+    textlint
+    valgrind # memory leak detector
+    zizmor # static analysis tool for GitHub Actions
   ];
   # programs.ghostty = {
   #   enable = true;

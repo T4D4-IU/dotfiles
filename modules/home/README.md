@@ -35,9 +35,10 @@ modules/home/
 - `tmux` - ターミナルマルチプレクサー
 - その他多数
 
-### dev.nix
-**開発補助ツール**
+### development.nix
+**開発環境と補助ツール**
 
+**基本ツール:**
 - `marp-cli` - Markdownプレゼンテーション作成
 - `textlint` - テキストリンター
 - `zizmor` - GitHub Actions静的解析ツール
@@ -45,11 +46,9 @@ modules/home/
 - `act` - GitHub Actionsローカル実行
 - `pinact` - GitHub Actionsバージョン固定ツール
 - `actionlint` - GitHub Actionsワークフローチェッカー
+- `cachix` - Nixバイナリキャッシュ管理
 
-### development.nix
-**言語固有の開発環境**
-
-サポート言語:
+**言語固有環境:**
 - **Rust**: rust-bin (stable/nightly対応)
 - **Go**: go_1_23
 - **Python**: python3, pip, uv
