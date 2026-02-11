@@ -1,15 +1,17 @@
-{ config, pkgs, ... }:
-
 {
+  config,
+  pkgs,
+  ...
+}: {
   # 1. パッケージのインストール
-  home.packages = [ pkgs.code-server ];
+  home.packages = [pkgs.code-server];
 
   # 2. Systemd ユーザーサービスの定義
   # (Home Managerに専用オプションがないため、自分で定義します)
   systemd.user.services.code-server = {
     Unit = {
       Description = "code-server";
-      After = [ "network.target" ];
+      After = ["network.target"];
     };
 
     Service = {
@@ -29,7 +31,7 @@
 
     Install = {
       # ログイン時に自動起動
-      WantedBy = [ "default.target" ];
+      WantedBy = ["default.target"];
     };
   };
 }
