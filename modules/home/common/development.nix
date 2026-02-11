@@ -12,6 +12,7 @@
     ghq # Remote repository management made easy
     gibo # Gitignore boilerplate generator
     # claude-code # AI code generator
+    code-server
     devbox
     devenv
     act # GitHub Actionsのローカル実行

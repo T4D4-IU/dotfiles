@@ -12,6 +12,7 @@
     ./gh.nix
     ./git.nix
     ./starship.nix
+    ./tailscale.nix
     ./zoxide.nix
     ./zsh.nix
   ];
