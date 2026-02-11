@@ -29,6 +29,12 @@ CLI専用のツールとシェル環境を簡単にセットアップできま�
 dotfiles/
 ├── flake.nix                      # Flakeエントリーポイント
 ├── flake.lock                     # 依存関係のロック
+├── docs/                          # ドキュメント
+│   ├── CI_CD.md                   # CI/CDパイプライン解説
+│   ├── ERROR_FIX.md               # エラー修正ログ
+│   ├── LINTING.md                 # リンター・フォーマッター設定
+│   ├── TODO.md                    # タスク管理
+│   └── WSL_SETUP.md               # WSLセットアップガイド
 ├── hosts/                         # ホスト別設定
 │   ├── nixos/                     # NixOSデスクトップ
 │   │   ├── default.nix            # ホスト設定エントリー
@@ -42,6 +48,7 @@ dotfiles/
 │       ├── common/                # OS共通設定
 │       │   ├── default.nix        # 共通モジュール自動インポート
 │       │   ├── cli.nix            # CLIツール
+│       │   ├── code-server.nix    # VSCode Server設定
 │       │   ├── development.nix    # 開発ツール全般（言語固有環境・補助ツール）
 │       │   ├── direnv.nix         # direnv設定
 │       │   ├── gh.nix             # GitHub CLI設定
@@ -111,6 +118,31 @@ dotfiles/
 ```bash
 # 開発シェルに入る（pre-commitフックが自動設定される）
 nix develop
+```
+
+### 手動での実行
+
+ツールを個別に実行したい場合は、`nix develop` でシェルに入った後に以下のコマンドが使用できます。
+
+```bash
+# フォーマットの適用
+alejandra .
+
+# リンターの実行
+statix check .
+
+# 未使用コードの検出
+deadnix .
+
+# すべてのチェックを全ファイルに対して実行
+pre-commit run --all-files
+```
+
+開発用シェルに入らずに一時的に実行したい場合は、`nix run` を使用します。
+
+```bash
+# ワンショットでのフォーマット適用
+nix run nixpkgs#alejandra -- .
 ```
 
 Push時に自動でリンター/フォーマッターがチェックされます。
