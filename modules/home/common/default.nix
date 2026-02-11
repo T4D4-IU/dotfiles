@@ -7,12 +7,12 @@
 
   imports = [
     ./cli.nix
+    ./code-server.nix
     ./development.nix
     ./direnv.nix
     ./gh.nix
     ./git.nix
     ./starship.nix
-    ./tailscale.nix
     ./zoxide.nix
     ./zsh.nix
   ];
