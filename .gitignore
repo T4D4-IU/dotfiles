@@ -1,2 +1,3 @@
 lazygit
 pkgs/result
+.pre-commit-config.yaml
