@@ -1,5 +1,5 @@
 {pkgs, ...}: {
-  home.packages = with; [
+  home.packages = with pkgs; [
     tailscale
   ];
 }
