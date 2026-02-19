@@ -1,6 +1,4 @@
-
-{ inputs, config, ... }:
-{
+{inputs, ...}: {
   imports = [
     inputs.sops-nix.nixosModules.sops
   ];
@@ -10,8 +8,6 @@
     defaultSopsFormat = "yaml";
 
     #age.keyFile = "/home/t4d4/.config/sops/age/keys.txt";
-    age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
-
-    secrets.test_secret = {};
+    age.sshKeyPaths = ["/etc/ssh/ssh_host_ed25519_key"];
   };
 }
