@@ -36,7 +36,7 @@
       enable = true;
       extensions = with pkgs; [
         gh-markdown-preview
-        gh-copilot
+        github-copilot-cli
         gh-dash
         gh-poi
         gh-actions-cache

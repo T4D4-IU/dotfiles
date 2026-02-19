@@ -9,6 +9,14 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    my-secrets = {
+      url = "git+ssh://git@github.com/T4D4-IU/dotfiles-secrets";
+      flake = false;
+    };
     pre-commit-hooks = {
       url = "github:cachix/pre-commit-hooks.nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -131,6 +139,11 @@
 
             # Development tools
             nil # Nix LSP
+
+            # Encryption
+            sops
+            age
+            ssh-to-age
 
             # Pre-commit
             pre-commit
