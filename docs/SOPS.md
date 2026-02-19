@@ -6,7 +6,7 @@
 ## 概要
 
 - **公開リポジトリ**: `~/dotfiles`（設定ファイル、公開しても問題ない内容）
-- **プライベートリポジトリ**: `~/dotfiles/secrets`（GithubのPrivateリポジトリ、`.gitignore`で除外、暗号化された秘密情報を格納）
+- **プライベートリポジトリ**: `~/dotfiles/secrets`（GitHubのPrivateリポジトリ、`.gitignore`で除外、暗号化された秘密情報を格納）
 
 `sops` は `age` を使用して秘密情報を暗号化し、NixOSのビルド時に `sops-nix` モジュールを通じて復号化されたファイルを `/run/secrets` などに配置します。
 
@@ -85,7 +85,7 @@ sops secrets/secrets.yaml
    ```
 2. `flake.lock` を更新して新しいコミットハッシュを取り込みます。
    ```bash
-   nix flake update
+   nix flake lock --update-input my-secrets
    ```
 3. NixOSを適用します。
    ```bash
