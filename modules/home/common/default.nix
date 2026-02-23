@@ -12,6 +12,7 @@
     ./direnv.nix
     ./gh.nix
     ./git.nix
+    ./jujutsu.nix
     ./starship.nix
     ./zoxide.nix
     ./zsh.nix
