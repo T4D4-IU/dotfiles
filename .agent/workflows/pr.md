@@ -2,14 +2,35 @@
 description: Smart Submit with Jujutsu
 ---
 
+# jj GitHub PR Workflow
+
+このワークフローは、Jujutsu を使用して現在の作業（リビジョン）を整理し、GitHub にプルリクエストを作成するための手順です。
+
 ## Steps
-1. **Status Check**:
-   - `jj status` と `jj diff` を実行して、現在のリビジョン（@）の変更内容を確認する。
-2. **Describe (Commit 相当)**:
-   - 変更内容を分析し、Conventional Commits 形式でメッセージを作成して `jj describe -m "<メッセージ>"` を実行する。
-3. **Bookmark & Push**:
-   - 現在のリビジョンに対して新しいブックマークを設定する（例: `jj bookmark create fix/update-xxx -r @`）。
-   - リモートへPushする（例: `jj git push --bookmark fix/update-xxx`）。
-4. **Create PR**:
-   - ghコマンドを使用してプルリクエストを作成する。
-   - PRのタイトルと説明には、変更内容の要約を記載する。
+
+1. **Context Analysis (状況確認)**:
+   - AI が現在のリビジョン `@` の位置と変更内容を正確に把握するために実行します。
+   - `jj log -r 'ancestors(@, 3) | @' --stat` : 最近の履歴と現在の変更ファイルの統計を表示。
+   - `jj diff` : 実際の変更詳細を確認。
+
+2. **Describe (メッセージ作成)**:
+   - 変更内容を分析し、Conventional Commits 形式でメッセージを設定します。
+   - `jj describe -m "<type>(<scope>): <subject>"`
+
+3. **Bookmark Management (ブックマーク設定)**:
+   - PR 用のブックマークを作成、または既存のものを現在の位置に移動します。
+   - `jj bookmark set <branch-name> -r @`
+   - ※ `create` ではなく `set` を使うことで、修正時の再 push にも対応します。
+
+4. **Push to Remote (リモート送信)**:
+   - ブックマークをリモート（通常は `origin`）に Push します。
+   - `jj git push --bookmark <branch-name>`
+
+5. **Create Pull Request (PR作成)**:
+   - `gh` コマンドを使用して PR を作成します。
+   - `gh pr create --fill`
+   - ※ もし Git リポジトリが検出されないエラーが出る場合は、環境変数 `GIT_DIR=.jj/repo/store/git` を付与して実行してください。
+
+6. **Cleanup & Next Task (迷走防止)**:
+   - PR 作成後、現在のリビジョンから離れ、`main` の先端から新しい作業用リビジョンを作成します。これにより、AI が同じリビジョンにダラダラと変更を書き込み続けるのを防ぎます。
+   - `jj new main`
