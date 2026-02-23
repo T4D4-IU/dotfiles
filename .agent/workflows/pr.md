@@ -32,4 +32,4 @@ description: Smart Submit with Jujutsu
    - ※ もし Git リポジトリが検出されないエラーが出る場合は、環境変数 `GIT_DIR=.jj/repo/store/git` を付与して実行してください。
 
 6. **Cleanup & Next Task (迷走防止)**:
-   - PR 作成後はPRの作成が完了したコトを作成したPRのリンクを添えて報告し待機してください。
+   - PR作成が完了したら、そのPRのリンクを添えて報告し、待機してください。
