@@ -221,9 +221,6 @@
     git = {
       enable = true;
     };
-    jujutsu = {
-      enable = true;
-    };
     neovim = {
       enable = true;
       defaultEditor = true; # $EDITOR=nvim
