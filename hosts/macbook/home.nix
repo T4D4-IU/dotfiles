@@ -5,20 +5,16 @@
 
   # Define features for this host
   features = {
-    gui = false;
+    gui = true;
   };
 
   # Import modular configurations
-  # WSLではGUIモジュールをインポートしない（CLI専用）
   imports = [
     # Common modules (cross-platform)
     ../../modules/home/common
 
-    # code-server (Linux-only; not part of the linux GUI module set)
-    ../../modules/home/common/code-server.nix
-
-    # Linux GUI modules are NOT imported for WSL
-    # ../../modules/home/linux
+    # macOS-specific modules
+    ../../modules/home/darwin
   ];
 
   programs = {
@@ -26,9 +22,9 @@
     home-manager.enable = true;
   };
 
-  # WSL-specific settings
+  # macOS-specific session variables
   home.sessionVariables = {
-    # WSL特有の環境変数があればここに追加
+    # macOS-specific session variables (macOS特有の環境変数があればここに追加)
   };
 
   # Allow unfree packages

@@ -7,6 +7,7 @@ on:
       - master
   pull_request:
     paths:
+      - 'modules/home/common/**'
       - 'modules/home/darwin/**'
       - 'hosts/macbook/**'
       - 'flake.nix'
@@ -19,6 +20,11 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+
+      - name: Setup SSH key for private repo access
+        uses: webfactory/ssh-agent@v0.8.0
+        with:
+          ssh-private-key: ${{ secrets.DOTFILES_SECRETS_DEPLOY_KEY }}
 
       - name: Install Nix
         uses: cachix/install-nix-action@4e002c8ec80594ecd40e759629461e26c8abed15 # v31.9.0
@@ -41,16 +47,26 @@ jobs:
       - name: Show flake metadata
         run: nix flake metadata
 
-  # This job will be enabled once macOS host is configured
-  # macos-home-manager:
-  #   runs-on: macos-latest
-  #   steps:
-  #     - name: Checkout repository
-  #       uses: actions/checkout@v4
-  #
-  #     - name: Install Nix
-  #       uses: cachix/install-nix-action@v31
-  #
-  #     - name: Build Home Manager configuration
-  #       run: |
-  #         nix build .#homeConfigurations.\"t4d4@macbook\".activationPackage
+  macos-home-manager:
+    runs-on: macos-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+
+      - name: Setup SSH key for private repo access
+        uses: webfactory/ssh-agent@v0.8.0
+        with:
+          ssh-private-key: ${{ secrets.DOTFILES_SECRETS_DEPLOY_KEY }}
+
+      - name: Install Nix
+        uses: cachix/install-nix-action@4e002c8ec80594ecd40e759629461e26c8abed15 # v31.9.0
+        with:
+          nix_path: nixpkgs=channel:nixpkgs-unstable
+          extra_nix_config: |
+            experimental-features = nix-command flakes
+
+      - name: Build Home Manager configuration (macOS)
+        run: |
+          nix build .#homeConfigurations.\"t4d4@macbook\".activationPackage --no-link

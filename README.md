@@ -12,6 +12,7 @@
 - 🛠️ **ヘルパーライブラリ**: 新しいホストの追加が容易
 - 🔒 **型安全**: Nix Flakesによる宣言的な設定管理
 - 🐧 **WSL/Ubuntu対応**: 非NixOS環境でも同じ設定を使用可能
+- 🍎 **macOS対応**: Apple Silicon・Intel Macでも同じ設定を使用可能
 
 ## 🚀 クイックスタート
 
@@ -22,6 +23,11 @@
 **[📘 WSLセットアップガイド](docs/WSL_SETUP.md)** を参照してください。
 
 CLI専用のツールとシェル環境を簡単にセットアップできます。
+
+### macOS環境
+**[📘 macOSセットアップガイド](docs/MAC_SETUP.md)** を参照してください。
+
+Apple Silicon・Intel Macの両方に対応しています。
 
 ## 📁 ディレクトリ構造
 
@@ -41,8 +47,10 @@ dotfiles/
 │   │   ├── configuration.nix      # NixOSシステム設定
 │   │   ├── hardware-configuration.nix  # ハードウェア設定
 │   │   └── home.nix               # このホスト用のHome Manager設定
-│   └── wsl/                       # WSL環境
-│       └── home.nix               # WSL用のHome Manager設定
+│   ├── wsl/                       # WSL環境
+│   │   └── home.nix               # WSL用のHome Manager設定
+│   └── macbook/                   # macOS環境
+│       └── home.nix               # macOS用のHome Manager設定
 ├── modules/                       # 再利用可能なモジュール
 │   └── home/                      # Home Managerモジュール
 │       ├── common/                # OS共通設定
@@ -60,8 +68,9 @@ dotfiles/
 │       │   ├── default.nix        # Linuxモジュール自動インポート
 │       │   ├── gui.nix            # GUIアプリケーション
 │       │   └── zed.nix            # Zedエディター
-│       └── darwin/                # macOS固有設定（将来用）
-│           └── default.nix        # macOSモジュール自動インポート
+│       └── darwin/                # macOS固有設定
+│           ├── default.nix        # macOSモジュール自動インポート
+│           └── gui.nix            # macOS GUIアプリケーション
 ├── lib/                           # ヘルパー関数
 │   ├── default.nix                # ライブラリエントリー
 │   ├── helpers.nix                # 設定生成ヘルパー
@@ -103,6 +112,15 @@ dotfiles/
 ### カスタムパッケージ
 - **dfx**: DFINITY SDK (Internet Computer開発)
 - **haystack-editor**: Haystackコードエディター
+
+### ホスト: macbook (aarch64-darwin)
+
+**ユーザーレベル (Home Manager)**:
+- **シェル**: Zsh + Starship
+- **エディター**: Neovim (nix run経由)
+- **開発ツール**: Git, GitHub CLI, direnv
+- **CLI強化**: eza, bat, fd, ripgrep, fzf, zoxide
+- **GUIアプリ**: Brave, Discord, Obsidian, Raycast, Spotify, Syncthing
 
 ## 🧹 コード品質
 
@@ -149,7 +167,7 @@ Push時に自動でリンター/フォーマッターがチェックされます
 
 ## 🚀 使用方法
 
-### 初回セットアップ
+### 初回セットアップ (NixOS)
 
 1. **リポジトリのクローン**:
 ```bash
@@ -165,6 +183,27 @@ sudo nixos-rebuild switch --flake .#nixos
 3. **Home Managerの適用**:
 ```bash
 home-manager switch --flake .#t4d4@nixos
+```
+
+### 初回セットアップ (macOS)
+
+**[📘 macOSセットアップガイド](docs/MAC_SETUP.md)** を参照してください。
+
+簡単な手順:
+
+1. **Nixのインストール**:
+```bash
+curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
+```
+
+2. **リポジトリのクローン**:
+```bash
+git clone https://github.com/T4D4-IU/dotfiles.git ~/dotfiles
+```
+
+3. **Home Managerの適用**:
+```bash
+nix run home-manager/master -- switch --flake ~/dotfiles#t4d4@macbook
 ```
 
 ### 日常の更新
@@ -332,7 +371,7 @@ GitHub Actionsで以下を自動チェック:
 - ✅ **Flake設定の妥当性検証** - メタデータと構造の確認
 - ✅ **カスタムパッケージのビルド** - dfx, haystack-editor
 - ✅ **NixOSシステム設定の評価** - configuration.nixの検証
-- ✅ **複数ホストのHome Manager設定** - nixos, wsl両方をテスト
+- ✅ **複数ホストのHome Manager設定** - nixos, wsl, macbook全てをテスト
 - ✅ **モジュールの構文チェック** - 個別モジュールの独立性確認
 
 ### 🚀 CI/CDワークフロー
@@ -343,7 +382,7 @@ GitHub Actionsで以下を自動チェック:
 - Home Manager設定（nixos, wsl）のビルド
 - モジュール構文チェック
 
-**macOS (macos-latest)** ※将来対応時:
+**macOS (macos-latest)**:
 - Darwin固有モジュールの構文チェック
 - macOS Home Manager設定のビルド
 
