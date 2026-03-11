@@ -14,6 +14,9 @@
     # Common modules (cross-platform)
     ../../modules/home/common
 
+    # code-server (Linux-only; not part of the linux GUI module set)
+    ../../modules/home/common/code-server.nix
+
     # Linux GUI modules are NOT imported for WSL
     # ../../modules/home/linux
   ];
