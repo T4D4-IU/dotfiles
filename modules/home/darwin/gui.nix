@@ -13,6 +13,7 @@
       brave
       raycast
       syncthing
+      notion
     ];
   };
 }
