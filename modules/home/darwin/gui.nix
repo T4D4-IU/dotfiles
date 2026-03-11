@@ -10,7 +10,8 @@
       discord
       obsidian
       spotify
-      syncthing
+      brave
+      raycast
     ];
   };
 }
