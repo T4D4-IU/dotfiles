@@ -8,7 +8,7 @@
 modules/home/
 ├── common/           # OS共通設定（すべての環境で使用）
 ├── linux/            # Linux固有設定
-└── darwin/           # macOS固有設定（将来用）
+└── darwin/           # macOS固有設定
 ```
 
 ## 🌍 OS共通モジュール (common/)
@@ -112,6 +112,13 @@ macOS環境専用の設定。
 - **生産性**: Obsidian, Notion App, Raycast
 - **メディア**: Spotify
 - **同期**: Syncthing
+
+> GUIアプリは `hosts/macbook/home.nix` で `features.gui = true` が設定されている場合に有効になります。
+> 設定を適用するには以下のコマンドを実行してください:
+>
+> ```bash
+> home-manager switch --flake ~/dotfiles#t4d4@macbook
+> ```
 
 ## 🔧 使用方法
 

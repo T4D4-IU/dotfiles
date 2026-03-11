@@ -195,9 +195,19 @@ home-manager switch --flake .#t4d4@macbook
 - **Brave** - ブラウザ
 - **Discord** - チャット
 - **Obsidian** - ノート管理
+- **Notion App** - ドキュメント・ノート管理
 - **Raycast** - ランチャー
 - **Spotify** - 音楽
 - **Syncthing** - ファイル同期
+
+> **GUIアプリを有効化するコマンド:**
+>
+> ```bash
+> cd ~/dotfiles
+> home-manager switch --flake .#t4d4@macbook
+> ```
+>
+> GUIアプリは `hosts/macbook/home.nix` の `features.gui = true` によって制御されています（デフォルトで有効）。
 
 ## 🔧 カスタマイズ
 
