@@ -15,5 +15,26 @@
       syncthing
       notion-app
     ];
+
+    # Home Manager installs .app bundles to ~/.nix-profile/Applications/, but
+    # macOS Spotlight and Launchpad only search /Applications/ and ~/Applications/.
+    # This activation script symlinks all managed .app bundles into
+    # ~/Applications/Home Manager Apps/ so they are discoverable by macOS.
+    home.activation.linkApps = lib.hm.dag.entryAfter ["writeBoundary"] ''
+      app_folder="$HOME/Applications/Home Manager Apps"
+      # Safety check: only proceed if the path contains the expected suffix
+      case "$app_folder" in
+        *"Home Manager Apps")
+          rm -rf "$app_folder"
+          mkdir -p "$app_folder"
+          if [ -d "$newGenPath/home-path/Applications" ]; then
+            find -H "$newGenPath/home-path/Applications" -maxdepth 1 -name "*.app" \
+              -print0 | while IFS= read -r -d "" app; do
+                ln -sf "$app" "$app_folder/"
+              done
+          fi
+          ;;
+      esac
+    '';
   };
 }

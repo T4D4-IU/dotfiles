@@ -209,6 +209,12 @@ home-manager switch --flake .#t4d4@macbook
 >
 > GUIアプリは `hosts/macbook/home.nix` の `features.gui = true` によって制御されています（デフォルトで有効）。
 
+> ⚠️ **アプリが見つからない場合:**
+>
+> Home Managerはアプリを `~/.nix-profile/Applications/` にインストールしますが、macOSのSpotlightやLaunchpadはここを検索しません。
+> `home-manager switch` を実行すると、自動的に `~/Applications/Home Manager Apps/` にシンボリックリンクが作成されます。
+> アプリはSpotlight（`Cmd+Space`）で名前を検索するか、Finder で `~/Applications/Home Manager Apps/` フォルダを開いて起動してください。
+
 ## 🔧 カスタマイズ
 
 ### 追加パッケージのインストール

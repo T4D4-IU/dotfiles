@@ -119,6 +119,8 @@ macOS環境専用の設定。
 > ```bash
 > home-manager switch --flake ~/dotfiles#t4d4@macbook
 > ```
+>
+> `home-manager switch` 実行後、`~/Applications/Home Manager Apps/` フォルダにシンボリックリンクが自動作成され、SpotlightやFinderからアプリを起動できます。
 
 ## 🔧 使用方法
 
