@@ -12,6 +12,7 @@
       spotify
       brave
       raycast
+      syncthing
     ];
   };
 }
