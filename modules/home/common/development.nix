@@ -23,7 +23,7 @@
     marp-cli
     pinact # Pin GitHub Actions versions
     textlint
-    valgrind # memory leak detector
+    # valgrind # memory leak detector - broken in current nixpkgs
     zizmor # static analysis tool for GitHub Actions
   ];
   # programs.ghostty = {

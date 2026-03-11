@@ -42,7 +42,6 @@ modules/home/
 - `marp-cli` - Markdownプレゼンテーション作成
 - `textlint` - テキストリンター
 - `zizmor` - GitHub Actions静的解析ツール
-- `valgrind` - メモリリーク検出
 - `act` - GitHub Actionsローカル実行
 - `pinact` - GitHub Actionsバージョン固定ツール
 - `actionlint` - GitHub Actionsワークフローチェッカー
