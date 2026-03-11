@@ -8,7 +8,7 @@
 modules/home/
 ├── common/           # OS共通設定（すべての環境で使用）
 ├── linux/            # Linux固有設定
-└── darwin/           # macOS固有設定（将来用）
+└── darwin/           # macOS固有設定
 ```
 
 ## 🌍 OS共通モジュール (common/)
@@ -101,7 +101,28 @@ Linux環境専用の設定。
 
 ## 🍎 macOS固有モジュール (darwin/)
 
-将来のmacOS対応用。現在は空。
+macOS環境専用の設定。
+
+### gui.nix
+**GUIアプリケーション**
+
+インストールされるアプリ:
+- **ブラウザ**: Brave
+- **コミュニケーション**: Discord
+- **生産性**: Obsidian, Notion App, Raycast
+- **メディア**: Spotify
+- **同期**: Syncthing
+
+> GUIアプリは `hosts/macbook/home.nix` で `features.gui = true` が設定されている場合に有効になります。
+> 設定を適用するには以下のコマンドを実行してください:
+>
+> ```bash
+> home-manager switch --flake ~/dotfiles#t4d4@macbook
+> ```
+>
+> `home-manager switch` 実行後、`~/Applications/Home Manager Apps/` フォルダにシンボリックリンクが自動作成され、SpotlightやFinderからアプリを起動できます。
+>
+> ⚠️ `which raycast` や `which spotify` はmacOS上でGUIアプリにCLIバイナリがないため常に失敗します。インストール確認は `ls ~/Applications/Home\ Manager\ Apps/` で行えます。
 
 ## 🔧 使用方法
 
@@ -115,6 +136,17 @@ Linux環境専用の設定。
     ../../modules/home/common    # 共通設定
     ../../modules/home/linux     # Linux専用（Linuxホストのみ）
     # ../../modules/home/darwin  # macOS専用（macOSホストのみ）
+  ];
+}
+```
+
+macOSホスト（例: `hosts/macbook/home.nix`）の場合:
+
+```nix
+{
+  imports = [
+    ../../modules/home/common    # 共通設定
+    ../../modules/home/darwin    # macOS専用
   ];
 }
 ```

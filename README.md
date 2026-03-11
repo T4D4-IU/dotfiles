@@ -120,7 +120,7 @@ dotfiles/
 - **エディター**: Neovim (nix run経由)
 - **開発ツール**: Git, GitHub CLI, direnv
 - **CLI強化**: eza, bat, fd, ripgrep, fzf, zoxide
-- **GUIアプリ**: Brave, Discord, Obsidian, Raycast, Spotify, Syncthing
+- **GUIアプリ**: Brave, Discord, Obsidian, Notion App, Raycast, Spotify, Syncthing
 
 ## 🧹 コード品質
 
