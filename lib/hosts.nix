@@ -40,21 +40,20 @@ _:
     ];
   };
 
-  # Future hosts can be added here
-  # Example for macOS:
-  # macbook = {
-  #   system = "aarch64-darwin";
-  #   hostname = "macbook";
-  #   username = "t4d4";
-  #   homeDirectory = "/Users/t4d4";
-  #
-  #   features = {
-  #     gui = true;
-  #     development = true;
-  #   };
-  #
-  #   homeModules = [
-  #     ../hosts/macbook/home.nix
-  #   ];
-  # };
+  # macOS environment (Apple Silicon)
+  macbook = {
+    system = "aarch64-darwin";
+    hostname = "macbook";
+    username = "t4d4";
+    homeDirectory = "/Users/t4d4";
+
+    features = {
+      gui = true;
+      development = true;
+    };
+
+    homeModules = [
+      ../hosts/macbook/home.nix
+    ];
+  };
 }

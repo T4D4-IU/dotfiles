@@ -117,6 +117,13 @@
         inherit (hosts.wsl) system username homeDirectory;
         modules = hosts.wsl.homeModules;
       };
+
+      # macOS environment (Apple Silicon)
+      "t4d4@macbook" = helpers.mkHomeConfiguration {
+        inherit inputs;
+        inherit (hosts.macbook) system username homeDirectory;
+        modules = hosts.macbook.homeModules;
+      };
     };
 
     # Development shell
