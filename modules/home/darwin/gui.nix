@@ -22,13 +22,13 @@
     # ~/Applications/Home Manager Apps/ so they are discoverable by macOS.
     home.activation.linkApps = lib.hm.dag.entryAfter ["writeBoundary"] ''
       app_folder="$HOME/Applications/Home Manager Apps"
-      # Safety check: only proceed if the path contains the expected suffix
+      # Safety check: ensure the target is within $HOME and has the expected suffix
       case "$app_folder" in
-        *"Home Manager Apps")
+        "$HOME/"*"Home Manager Apps")
           rm -rf "$app_folder"
           mkdir -p "$app_folder"
           if [ -d "$newGenPath/home-path/Applications" ]; then
-            find -H "$newGenPath/home-path/Applications" -maxdepth 1 -name "*.app" \
+            find -L "$newGenPath/home-path/Applications" -maxdepth 1 -name "*.app" \
               -print0 | while IFS= read -r -d "" app; do
                 ln -sf "$app" "$app_folder/"
               done

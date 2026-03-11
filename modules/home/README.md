@@ -121,6 +121,8 @@ macOS環境専用の設定。
 > ```
 >
 > `home-manager switch` 実行後、`~/Applications/Home Manager Apps/` フォルダにシンボリックリンクが自動作成され、SpotlightやFinderからアプリを起動できます。
+>
+> ⚠️ `which raycast` や `which spotify` はmacOS上でGUIアプリにCLIバイナリがないため常に失敗します。インストール確認は `ls ~/Applications/Home\ Manager\ Apps/` で行えます。
 
 ## 🔧 使用方法
 

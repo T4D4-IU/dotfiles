@@ -214,6 +214,10 @@ home-manager switch --flake .#t4d4@macbook
 > Home Managerはアプリを `~/.nix-profile/Applications/` にインストールしますが、macOSのSpotlightやLaunchpadはここを検索しません。
 > `home-manager switch` を実行すると、自動的に `~/Applications/Home Manager Apps/` にシンボリックリンクが作成されます。
 > アプリはSpotlight（`Cmd+Space`）で名前を検索するか、Finder で `~/Applications/Home Manager Apps/` フォルダを開いて起動してください。
+>
+> 💡 **`which raycast` や `which spotify` が見つからなくても問題ありません:**
+> RaycastやSpotifyはmacOS上ではGUIアプリ（`.app` バンドル）として提供されており、ターミナルから呼び出せるCLIバイナリはありません。
+> インストールされているかの確認は `ls ~/Applications/Home\ Manager\ Apps/` で行えます。
 
 ## 🔧 カスタマイズ
 
