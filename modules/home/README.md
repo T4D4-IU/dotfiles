@@ -101,7 +101,17 @@ Linux環境専用の設定。
 
 ## 🍎 macOS固有モジュール (darwin/)
 
-将来のmacOS対応用。現在は空。
+macOS環境専用の設定。
+
+### gui.nix
+**GUIアプリケーション**
+
+インストールされるアプリ:
+- **ブラウザ**: Brave
+- **コミュニケーション**: Discord
+- **生産性**: Obsidian, Notion App, Raycast
+- **メディア**: Spotify
+- **同期**: Syncthing
 
 ## 🔧 使用方法
 
@@ -115,6 +125,17 @@ Linux環境専用の設定。
     ../../modules/home/common    # 共通設定
     ../../modules/home/linux     # Linux専用（Linuxホストのみ）
     # ../../modules/home/darwin  # macOS専用（macOSホストのみ）
+  ];
+}
+```
+
+macOSホスト（例: `hosts/macbook/home.nix`）の場合:
+
+```nix
+{
+  imports = [
+    ../../modules/home/common    # 共通設定
+    ../../modules/home/darwin    # macOS専用
   ];
 }
 ```
