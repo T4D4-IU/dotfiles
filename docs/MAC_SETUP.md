@@ -192,8 +192,10 @@ home-manager switch --flake .#t4d4@macbook
 
 ### GUIアプリ (macOS固有)
 
+- **Brave** - ブラウザ
 - **Discord** - チャット
 - **Obsidian** - ノート管理
+- **Raycast** - ランチャー
 - **Spotify** - 音楽
 - **Syncthing** - ファイル同期
 
