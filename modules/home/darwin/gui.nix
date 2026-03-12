@@ -16,41 +16,52 @@
       notion-app
     ];
 
-    # Home Manager installs .app bundles to ~/.nix-profile/Applications/, but
-    # macOS Spotlight and Launchpad only search /Applications/ and ~/Applications/.
-    # This activation script symlinks all managed .app bundles into
-    # ~/Applications/Home Manager Apps/ so they are discoverable by macOS.
-    home.activation.linkApps = lib.hm.dag.entryAfter ["writeBoundary"] ''
-      # Use the configured home directory instead of relying solely on $HOME.
-      app_folder="${config.home.homeDirectory}/Applications/Home Manager Apps"
+    # Mac applications installed via Home Manager aren't typically indexed by Spotlight
+    # because they are symlinks to /nix/store. We create native macOS aliases instead.
+    home.activation.copyMacApps = lib.hm.dag.entryAfter ["writeBoundary"] ''
+      apps_source="$newGenPath/home-path/Applications"
+      configured_home="${config.home.homeDirectory}"
+      apps_target="$configured_home/Applications/Nix Apps"
 
-      # Safety checks:
-      # 1. Ensure HOME is set.
-      # 2. Ensure HOME matches the configured home directory.
-      # 3. Ensure app_folder is exactly the expected path under HOME.
+      # Basic safety checks to avoid deleting unintended paths
+      if [ -z "$configured_home" ]; then
+        echo "Configured home directory is empty; refusing to create Mac application aliases."
+        exit 1
+      fi
+
       if [ -z "$HOME" ]; then
-        echo "home.activation.linkApps: HOME is not set; refusing to modify filesystem." >&2
-        exit 1
+        echo "HOME is not set; skipping Mac application alias creation."
+        exit 0
       fi
 
-      if [ "$HOME" != "${config.home.homeDirectory}" ]; then
-        echo "home.activation.linkApps: HOME ($HOME) does not match configured home (${config.home.homeDirectory}); refusing to modify filesystem." >&2
-        exit 1
+      if [ "$HOME" != "$configured_home" ]; then
+        echo "Activation HOME ('$HOME') does not match configured home ('$configured_home'); skipping Mac application alias creation."
+        exit 0
       fi
 
-      expected_app_folder="$HOME/Applications/Home Manager Apps"
-      if [ "$app_folder" != "$expected_app_folder" ]; then
-        echo "home.activation.linkApps: Refusing to operate on unexpected app_folder: $app_folder" >&2
-        exit 1
-      fi
+      # Refuse to remove clearly unsafe targets
+      case "$apps_target" in
+        ""|"/"|"$configured_home"|"/Applications" )
+          echo "Refusing to remove unsafe apps_target path: '$apps_target'."
+          exit 1
+          ;;
+      esac
 
-      rm -rf "$app_folder"
-      mkdir -p "$app_folder"
-      if [ -d "$newGenPath/home-path/Applications" ]; then
-        find -L "$newGenPath/home-path/Applications" -maxdepth 1 -name "*.app" \
-          -print0 | while IFS= read -r -d "" app; do
-            ln -sf "$app" "$app_folder/"
-          done
+      # Always remove and recreate the aliases directory to avoid stale aliases
+      rm -rf "$apps_target"
+      mkdir -p "$apps_target"
+
+      if [ -d "$apps_source" ]; then
+        echo "Creating Mac application aliases in $apps_target..."
+
+        for app in "$apps_source"/*.app; do
+          if [ -L "$app" ]; then
+            real_app=$(readlink "$app")
+            app_name=$(basename "$app")
+            echo "Aliasing $app_name..."
+            ${pkgs.mkalias}/bin/mkalias "$real_app" "$apps_target/$app_name"
+          fi
+        done
       fi
     '';
   };
