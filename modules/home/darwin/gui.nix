@@ -16,41 +16,27 @@
       notion-app
     ];
 
-    # Home Manager installs .app bundles to ~/.nix-profile/Applications/, but
-    # macOS Spotlight and Launchpad only search /Applications/ and ~/Applications/.
-    # This activation script symlinks all managed .app bundles into
-    # ~/Applications/Home Manager Apps/ so they are discoverable by macOS.
-    home.activation.linkApps = lib.hm.dag.entryAfter ["writeBoundary"] ''
-      # Use the configured home directory instead of relying solely on $HOME.
-      app_folder="${config.home.homeDirectory}/Applications/Home Manager Apps"
-
-      # Safety checks:
-      # 1. Ensure HOME is set.
-      # 2. Ensure HOME matches the configured home directory.
-      # 3. Ensure app_folder is exactly the expected path under HOME.
-      if [ -z "$HOME" ]; then
-        echo "home.activation.linkApps: HOME is not set; refusing to modify filesystem." >&2
-        exit 1
-      fi
-
-      if [ "$HOME" != "${config.home.homeDirectory}" ]; then
-        echo "home.activation.linkApps: HOME ($HOME) does not match configured home (${config.home.homeDirectory}); refusing to modify filesystem." >&2
-        exit 1
-      fi
-
-      expected_app_folder="$HOME/Applications/Home Manager Apps"
-      if [ "$app_folder" != "$expected_app_folder" ]; then
-        echo "home.activation.linkApps: Refusing to operate on unexpected app_folder: $app_folder" >&2
-        exit 1
-      fi
-
-      rm -rf "$app_folder"
-      mkdir -p "$app_folder"
-      if [ -d "$newGenPath/home-path/Applications" ]; then
-        find -L "$newGenPath/home-path/Applications" -maxdepth 1 -name "*.app" \
-          -print0 | while IFS= read -r -d "" app; do
-            ln -sf "$app" "$app_folder/"
-          done
+    # Mac applications installed via Home Manager aren't typically indexed by Spotlight
+    # because they are symlinks to /nix/store. We create native macOS aliases instead.
+    home.activation.copyMacApps = lib.hm.dag.entryAfter ["writeBoundary"] ''
+      apps_source="$newGenPath/home-path/Applications"
+      apps_target="$HOME/Applications/Nix Apps"
+      
+      if [ -e "$apps_source" ]; then
+        echo "Creating Mac application aliases in $apps_target..."
+        
+        # Remove the old aliases directory and recreate it
+        rm -rf "$apps_target"
+        mkdir -p "$apps_target"
+        
+        for app in "$apps_source"/*.app; do
+          if [ -L "$app" ]; then
+            real_app=$(readlink "$app")
+            app_name=$(basename "$app")
+            echo "Aliasing $app_name..."
+            ${pkgs.mkalias}/bin/mkalias "$real_app" "$apps_target/$app_name"
+          fi
+        done
       fi
     '';
   };
