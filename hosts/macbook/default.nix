@@ -1,4 +1,4 @@
-{...}: {
+_: {
   # Nix-darwin configuration entry point for MacBook
 
   system = {
