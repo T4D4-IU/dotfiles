@@ -209,15 +209,11 @@ home-manager switch --flake .#t4d4@macbook
 >
 > GUIアプリは `hosts/macbook/home.nix` の `features.gui = true` によって制御されています（デフォルトで有効）。
 
-> ⚠️ **アプリが見つからない場合:**
+> 💡 **GUIアプリの管理方法:**
 >
-> Home Managerはアプリを `~/.nix-profile/Applications/` にインストールしますが、macOSのSpotlightやLaunchpadはここを検索しません。
-> `home-manager switch` を実行すると、自動的に `~/Applications/Home Manager Apps/` にシンボリックリンクが作成されます。
-> アプリはSpotlight（`Cmd+Space`）で名前を検索するか、Finder で `~/Applications/Home Manager Apps/` フォルダを開いて起動してください。
+> 現在、主要な GUI アプリ（Brave, Discord, Raycast, Spotify 等）は `hosts/macbook/default.nix` の `homebrew` セクションで管理されています。これにより、macOS のセキュリティ設定との整合性が保たれ、Spotlight からも標準的に検索・起動が可能です。
 >
-> 💡 **`which raycast` や `which spotify` が見つからなくても問題ありません:**
-> RaycastやSpotifyはmacOS上ではGUIアプリ（`.app` バンドル）として提供されており、ターミナルから呼び出せるCLIバイナリはありません。
-> インストールされているかの確認は `ls ~/Applications/Home\ Manager\ Apps/` で行えます。
+> Home Manager を通じてインストールされた GUI ツール（CLI ベース以外）は、依然として `~/.nix-profile/Applications/` に配置されますが、Spotlight でインデックスされない場合があります。その場合は Homebrew での管理を検討してください。
 
 ## 🔧 カスタマイズ
 
