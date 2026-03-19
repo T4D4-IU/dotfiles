@@ -33,10 +33,6 @@ _: {
               from = {key_code = "right_control";};
               to = [{key_code = "right_command";}];
             }
-            {
-              from = {key_code = "grave_accent_and_tilde";};
-              to = [{key_code = "japanese_eisuu";}];
-            }
           ];
           complex_modifications = {
             parameters = {

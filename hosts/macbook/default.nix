@@ -30,7 +30,7 @@ _: {
   # Homebrew for GUI Apps and System-level tools
   homebrew = {
     enable = true;
-    onActivation.cleanup = "zap"; # Removes unmanaged packages
+    onActivation.cleanup = "uninstall"; # Use standard cleanup to avoid aggressively zapping unmanaged packages
     casks = [
       "karabiner-elements"
       "brave-browser"

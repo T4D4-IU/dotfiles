@@ -200,14 +200,14 @@ home-manager switch --flake .#t4d4@macbook
 - **Spotify** - 音楽
 - **Syncthing** - ファイル同期
 
-> **GUIアプリを有効化するコマンド:**
+> **GUIアプリ設定を反映するコマンド（nix-darwin）:**
 >
 > ```bash
 > cd ~/dotfiles
-> home-manager switch --flake .#t4d4@macbook
+> darwin-rebuild switch --flake .#macbook
 > ```
 >
-> GUIアプリは `hosts/macbook/home.nix` の `features.gui = true` によって制御されています（デフォルトで有効）。
+> 💡 **注意**: 上記の `macbook` は `flake.nix` で定義しているホスト名に合わせて読み替えてください。GUI アプリの主なインストール元は `hosts/macbook/default.nix` の `homebrew` セクションであり、Home Manager の `features.gui` フラグには依存しません。
 
 > 💡 **GUIアプリの管理方法:**
 >
