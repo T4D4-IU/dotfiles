@@ -59,8 +59,8 @@
     - [x] `username@hostname` 形式で識別（例: `t4d4@nixos`）
     - [x] 各ホストで異なるアーキテクチャを明示的に指定
       - `x86_64-linux` - Linux（NixOS、WSL）
-      - `aarch64-darwin` - Apple Silicon Mac（将来用）
-      - `x86_64-darwin` - Intel Mac（将来用）
+      - `aarch64-darwin` - Apple Silicon Mac (完了)
+      - `x86_64-darwin` - Intel Mac (対応可能)
   - [x] NixOS設定は `nixosConfigurations` に分離
     - [x] `hosts/nixos/default.nix`をエントリーポイントとして使用
   - [x] rust-overlay を追加（development.nixの依存関係）

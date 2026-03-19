@@ -9,6 +9,10 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    darwin = {
+      url = "github:LnL7/nix-darwin";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -100,6 +104,15 @@
         inherit (hosts. nixos) system;
         inherit (hosts.nixos) hostname;
         modules = hosts.nixos.nixosModules;
+      };
+    };
+
+    # Darwin (macOS) Configurations using helper
+    darwinConfigurations = {
+      macbook = helpers.mkDarwinConfiguration {
+        inherit inputs;
+        inherit (hosts.macbook) system;
+        modules = hosts.macbook.darwinModules;
       };
     };
 

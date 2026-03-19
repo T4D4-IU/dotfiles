@@ -45,6 +45,21 @@
       };
     };
 
+  # Create a macOS (Darwin) configuration for a given host
+  mkDarwinConfiguration = {
+    inputs,
+    system,
+    modules ? [],
+    ...
+  }:
+    inputs.darwin.lib.darwinSystem {
+      inherit system;
+      inherit modules;
+      specialArgs = {
+        inherit inputs;
+      };
+    };
+
   # OS detection helpers
   isLinux = system: lib.hasSuffix "-linux" system;
   isDarwin = system: lib.hasSuffix "-darwin" system;
