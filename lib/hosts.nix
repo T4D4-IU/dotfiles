@@ -52,6 +52,10 @@ _:
       development = true;
     };
 
+    darwinModules = [
+      ../hosts/macbook/default.nix
+    ];
+
     homeModules = [
       ../hosts/macbook/home.nix
     ];
