@@ -36,9 +36,8 @@ _: {
       "anki"
       "bluestacks"
       "brave-browser"
-      "clippy"
+      "clipaste"
       "discord"
-      "gemini"
       "ghostty"
       "google-chrome"
       "google-drive"
@@ -54,7 +53,6 @@ _: {
       "spotify"
       "steam"
       "syncthing-app"
-      "tailscale-app"
       "wireshark-app"
       "zed"
     ];
