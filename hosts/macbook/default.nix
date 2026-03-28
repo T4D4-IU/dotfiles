@@ -32,14 +32,31 @@ _: {
     enable = true;
     onActivation.cleanup = "uninstall"; # Use standard cleanup to avoid aggressively zapping unmanaged packages
     casks = [
-      "karabiner-elements"
+      "antigravity"
+      "anki"
+      "bluestacks"
       "brave-browser"
+      "clippy"
       "discord"
+      "gemini"
+      "ghostty"
+      "google-chrome"
+      "google-drive"
+      "google-japanese-ime"
+      "karabiner-elements"
       "notion"
       "obsidian"
+      "orbstack"
+      "postman"
       "raycast"
+      "rectangle"
+      "rustdesk"
       "spotify"
-      "syncthing"
+      "steam"
+      "syncthing-app"
+      "tailscale-app"
+      "wireshark-app"
+      "zed"
     ];
   };
 
