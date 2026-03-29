@@ -193,12 +193,21 @@ home-manager switch --flake .#t4d4@macbook
 ### GUIアプリ (macOS固有)
 
 - **Brave** - ブラウザ
+- **Google Chrome** - ブラウザ
 - **Discord** - チャット
+- **Ghostty** - ターミナル
 - **Obsidian** - ノート管理
-- **Notion App** - ドキュメント・ノート管理
+- **Notion** - ドキュメント・ノート管理
 - **Raycast** - ランチャー
 - **Spotify** - 音楽
-- **Syncthing** - ファイル同期
+- **Orbstack** - Docker/Kubernetes環境
+- **Postman** - API開発
+- **Zed** - エディター
+- **Karabiner-Elements** - キーリマップ
+- **Rectangle** - ウィンドウマネージャー
+- **Logi Options+** - ロジクール製品設定
+- **Google Japanese IME** - 日本語入力
+- **その他**: Anki, AppCleaner, BlueStacks, CliPaste, Hidden Bar, KeyClu, Open Video Downloader, RustDesk, Shottr, Steam, Stillcolor, Syncthing, Wireshark
 
 > **GUIアプリ設定を反映するコマンド（nix-darwin）:**
 >
