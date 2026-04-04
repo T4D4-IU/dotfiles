@@ -196,6 +196,7 @@ home-manager switch --flake .#t4d4@macbook
 - **Discord** - チャット
 - **Ghostty** - ターミナル
 - **Google Chrome** - ブラウザ
+- **Google Drive** - クラウドストレージ
 - **Google Japanese IME** - 日本語入力
 - **Karabiner-Elements** - キーリマップ
 - **Logi Options+** - ロジクール製品設定
