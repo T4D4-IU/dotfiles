@@ -196,8 +196,10 @@ home-manager switch --flake .#t4d4@macbook
 - **Google Chrome** - ブラウザ
 - **Discord** - チャット
 - **Ghostty** - ターミナル
-- **Obsidian** - ノート管理
+- **Minecraft** - ゲーム
 - **Notion** - ドキュメント・ノート管理
+- **Obsidian** - ノート管理
+- **OneDrive** - クラウドストレージ
 - **Raycast** - ランチャー
 - **Spotify** - 音楽
 - **Orbstack** - Docker/Kubernetes環境
