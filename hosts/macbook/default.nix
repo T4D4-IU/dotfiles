@@ -42,6 +42,7 @@ _: {
       "ghostty"
       "google-chrome"
       "google-drive"
+      "google-gemini"
       "google-japanese-ime"
       "hiddenbar"
       "karabiner-elements"
