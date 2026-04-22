@@ -30,6 +30,7 @@ _: {
   # Homebrew for GUI Apps and System-level tools
   homebrew = {
     enable = true;
+    onActivation.autoUpdate = true;
     onActivation.cleanup = "uninstall"; # Use standard cleanup to avoid aggressively zapping unmanaged packages
     casks = [
       "anki"
