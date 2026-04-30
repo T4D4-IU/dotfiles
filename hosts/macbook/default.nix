@@ -36,6 +36,7 @@ _: {
       "anki"
       "antigravity"
       "appcleaner"
+      "audiorelay"
       "bluestacks"
       "brave-browser"
       "clipaste"

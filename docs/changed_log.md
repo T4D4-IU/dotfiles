@@ -18,3 +18,13 @@
 
 ## 3. どのように (追加修正)
 - `homebrew` の設定に `onActivation.autoUpdate = true;` を追加し、Nix-Darwin環境の適用時（`darwin-rebuild switch` 実行時）にHomebrewが自動更新されるようにしました。
+
+---
+## 1. 何処を (Audiorelayの追加)
+- `/Users/t4d4/dotfiles/hosts/macbook/default.nix` 内の `homebrew.casks` リスト
+
+## 2. 何故 (Audiorelayの追加)
+- ユーザーより Audiorelay の追加要望があったため。
+
+## 3. どのように (Audiorelayの追加)
+- アルファベット順を保つため、`"appcleaner"` と `"bluestacks"` の間に `"audiorelay"` を追記しました。
