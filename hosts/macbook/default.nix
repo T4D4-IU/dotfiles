@@ -30,11 +30,13 @@ _: {
   # Homebrew for GUI Apps and System-level tools
   homebrew = {
     enable = true;
+    onActivation.autoUpdate = true;
     onActivation.cleanup = "uninstall"; # Use standard cleanup to avoid aggressively zapping unmanaged packages
     casks = [
       "anki"
       "antigravity"
       "appcleaner"
+      "audiorelay"
       "bluestacks"
       "brave-browser"
       "clipaste"
@@ -42,6 +44,7 @@ _: {
       "ghostty"
       "google-chrome"
       "google-drive"
+      "google-gemini"
       "google-japanese-ime"
       "hiddenbar"
       "karabiner-elements"

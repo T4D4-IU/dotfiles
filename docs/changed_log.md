@@ -1,32 +1,30 @@
-# 変更履歴 (changed_log.md)
+# 変更ログ
 
-## 2026-04-05: MacBook 設定の更新（Minecraft 削除, Prism Launcher 追加）
+## 1. 何処を
+- `/Users/t4d4/dotfiles/hosts/macbook/default.nix` 内の `homebrew.casks` のリスト
 
-### 1. 何処を
-- `hosts/macbook/default.nix`
-- `README.md`
-- `docs/MAC_SETUP.md`
+## 2. 何故
+- ユーザーより Mac に Google-Gemini (https://formulae.brew.sh/cask/google-gemini#default) を追加したいという要望があったため。
 
-### 2. 何故
-- 公式の Minecraft ランチャーではなく、マルチインスタンス管理に優れた Prism Launcher を使用するため。
+## 3. どのように
+- リストのアルファベット順を保つため、`"google-drive"` と `"google-japanese-ime"` の間に `"google-gemini"` を追記しました。
 
-### 3. どのように
-- `hosts/macbook/default.nix` の `homebrew.casks` リストから `minecraft` を削除し、`prismlauncher` を追加しました。
-- `README.md` と `docs/MAC_SETUP.md` のアプリケーションリストから `Minecraft` を削除し、`Prism Launcher` を追加した際、リスト全体のアルファベット順を正しくソートしました。
-- `docs/MAC_SETUP.md` の GUI アプリリストを `default.nix` と同様に厳密なアルファベット順（Brave, Discord, Ghostty, Google...）に整理しました。
+---
+## 1. 何処を (追加修正)
+- `/Users/t4d4/dotfiles/hosts/macbook/default.nix` 内の `homebrew` 設定
 
-## 2026-04-04: MacBook 設定の更新（Minecraft, OneDrive 追加）
+## 2. 何故 (追加修正)
+- `google-gemini` などの新しいCaskを取得する際、ローカルのHomebrewインデックスが古いために `No available formula` エラーが発生したため。
 
-### 1. 何処を
-- `hosts/macbook/default.nix`
-- `README.md`
-- `docs/MAC_SETUP.md`
+## 3. どのように (追加修正)
+- `homebrew` の設定に `onActivation.autoUpdate = true;` を追加し、Nix-Darwin環境の適用時（`darwin-rebuild switch` 実行時）にHomebrewが自動更新されるようにしました。
 
-### 2. 何故
-- MacBook の環境に `minecraft` と `onedrive` を追加するため。
-- メインのドキュメントおよび macOS セットアップガイドのアプリケーションリストを現状に合わせて最新化するため。
+---
+## 1. 何処を (Audiorelayの追加)
+- `/Users/t4d4/dotfiles/hosts/macbook/default.nix` 内の `homebrew.casks` リスト
 
-### 3. どのように
-- `hosts/macbook/default.nix` の `homebrew.casks` リストに `minecraft` と `onedrive` を追加しました。
-- `README.md` の「ホスト: macbook」セクションの GUI アプリリストに `Minecraft`, `OneDrive` を追記しました。
-- `docs/MAC_SETUP.md` の「GUIアプリ (macOS固有)」セクションに `Minecraft (ゲーム)`, `OneDrive (クラウドストレージ)` を追記しました。
+## 2. 何故 (Audiorelayの追加)
+- ユーザーより Audiorelay の追加要望があったため。
+
+## 3. どのように (Audiorelayの追加)
+- アルファベット順を保つため、`"appcleaner"` と `"bluestacks"` の間に `"audiorelay"` を追記しました。
