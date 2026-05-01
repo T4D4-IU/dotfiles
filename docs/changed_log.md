@@ -28,3 +28,23 @@
 
 ## 3. どのように (Audiorelayの追加)
 - アルファベット順を保つため、`"appcleaner"` と `"bluestacks"` の間に `"audiorelay"` を追記しました。
+
+---
+## 1. 何処を (AudioRelayの削除)
+- `/Users/t4d4/dotfiles/hosts/macbook/default.nix` 内の `homebrew.casks` リスト
+
+## 2. 何故 (AudioRelayの削除)
+- ユーザーより「AudioRelayの調子が悪いので一度消したい」という要望があったため。
+
+## 3. どのように (AudioRelayの削除)
+- `homebrew.casks` のリストから `"audiorelay"` を削除しました。
+
+---
+## 1. 何処を (SonoBusの追加)
+- `/Users/t4d4/dotfiles/hosts/macbook/default.nix` 内の `homebrew.casks` リスト
+
+## 2. 何故 (SonoBusの追加)
+- ユーザーより代わりに SonoBus を追加したいという要望があったため。
+
+## 3. どのように (SonoBusの追加)
+- アルファベット順を保つため、`"shottr"` と `"spotify"` の間に `"sonobus"` を追記しました。
