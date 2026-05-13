@@ -1,9 +1,11 @@
 # Escrcpy - Graphical Scrcpy to display and control Android devices
 # https://github.com/viarotel-org/escrcpy
+#
+# Note: The DMG uses APFS format, so we use 7zz instead of undmg (HFS+ only).
 {
   stdenvNoCC,
   fetchurl,
-  undmg,
+  _7zz,
   lib,
 }:
 stdenvNoCC.mkDerivation rec {
@@ -15,9 +17,13 @@ stdenvNoCC.mkDerivation rec {
     hash = "sha256-8BsqhXI7yf7aRC3s5dzw8UHS4a9bV2UwNTT4VG6vXb4=";
   };
 
-  nativeBuildInputs = [undmg];
+  nativeBuildInputs = [_7zz];
 
-  sourceRoot = "Escrcpy.app";
+  unpackPhase = ''
+    7zz x $src -oextracted
+  '';
+
+  sourceRoot = "extracted/Escrcpy.app";
 
   installPhase = ''
     runHook preInstall
