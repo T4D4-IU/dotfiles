@@ -1,0 +1,36 @@
+# Escrcpy - Graphical Scrcpy to display and control Android devices
+# https://github.com/viarotel-org/escrcpy
+{
+  stdenvNoCC,
+  fetchurl,
+  undmg,
+  lib,
+}:
+stdenvNoCC.mkDerivation rec {
+  pname = "escrcpy";
+  version = "2.10.2";
+
+  src = fetchurl {
+    url = "https://github.com/viarotel-org/escrcpy/releases/download/v${version}/Escrcpy-${version}-mac-arm64.dmg";
+    hash = "sha256-8BsqhXI7yf7aRC3s5dzw8UHS4a9bV2UwNTT4VG6vXb4=";
+  };
+
+  nativeBuildInputs = [undmg];
+
+  sourceRoot = "Escrcpy.app";
+
+  installPhase = ''
+    runHook preInstall
+    mkdir -p "$out/Applications/Escrcpy.app"
+    cp -pR . "$out/Applications/Escrcpy.app"
+    runHook postInstall
+  '';
+
+  meta = with lib; {
+    description = "Graphical Scrcpy to display and control Android devices, powered by Electron";
+    homepage = "https://github.com/viarotel-org/escrcpy";
+    license = licenses.asl20;
+    platforms = ["aarch64-darwin"];
+    sourceProvenance = with sourceTypes; [binaryNativeCode];
+  };
+}

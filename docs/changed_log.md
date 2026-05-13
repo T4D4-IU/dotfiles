@@ -48,3 +48,17 @@
 
 ## 3. どのように (SonoBusの追加)
 - アルファベット順を保つため、`"shottr"` と `"spotify"` の間に `"sonobus"` を追記しました。
+
+---
+## 1. 何処を (Escrcpyの追加) — 2026-05-14
+- `hosts/macbook/escrcpy.nix`（新規作成）
+- `hosts/macbook/default.nix`
+
+## 2. 何故 (Escrcpyの追加)
+- Escrcpy（scrcpy の GUI フロントエンド）を追加するにあたり、Homebrew の Cask（`viarotel-org/escrcpy`）経由でのインストールを試みたが、Cask の `postflight` スクリプトにユーザー入力待ちの処理があり、`darwin-rebuild switch` 経由ではプロンプトが表示されずハングする問題が発生した。
+- そのため Homebrew を使わず、Nix derivation として GitHub Releases から `.dmg` を直接取得・展開する方式に切り替えた。
+
+## 3. どのように (Escrcpyの追加)
+1. `hosts/macbook/escrcpy.nix` を新規作成。`fetchurl` で GitHub Releases の `.dmg` を取得し、`undmg` で展開して `$out/Applications/Escrcpy.app` に配置する derivation を定義。
+2. `hosts/macbook/default.nix` の引数を `_:` から `{ pkgs, ... }:` に変更し、`environment.systemPackages` で上記 derivation を導入。
+3. Mac 専用 GUI アプリの設定を `hosts/macbook/` 配下に閉じることで、他プラットフォームへの影響を回避。
