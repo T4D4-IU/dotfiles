@@ -3,6 +3,7 @@
 
   # macOS GUI Apps managed by Nix (not available via Homebrew Cask)
   environment.systemPackages = [
+    (pkgs.callPackage ./english-paper.nix {})
     (pkgs.callPackage ./escrcpy.nix {})
   ];
 

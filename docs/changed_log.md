@@ -62,3 +62,16 @@
 1. `hosts/macbook/escrcpy.nix` を新規作成。`fetchurl` で GitHub Releases の `.dmg` を取得し、`undmg` で展開して `$out/Applications/Escrcpy.app` に配置する derivation を定義。
 2. `hosts/macbook/default.nix` の引数を `_:` から `{ pkgs, ... }:` に変更し、`environment.systemPackages` で上記 derivation を導入。
 3. Mac 専用 GUI アプリの設定を `hosts/macbook/` 配下に閉じることで、他プラットフォームへの影響を回避。
+
+---
+## 1. 何処を (English Paper Readerの追加) — 2026-05-14
+- `hosts/macbook/english-paper.nix`（新規作成）
+- `hosts/macbook/default.nix`
+
+## 2. 何故 (English Paper Readerの追加)
+- 英語論文を読みながら単語を登録・復習できる macOS アプリ「English Paper Reader」を追加するため。
+- Homebrew Cask には存在しないため、Escrcpy と同様に Nix derivation で GitHub Releases から直接取得する方式を採用。
+
+## 3. どのように (English Paper Readerの追加)
+1. `hosts/macbook/english-paper.nix` を新規作成。`fetchurl` で GitHub Releases の `.zip` を取得し、`unzip` で展開して `$out/Applications/PapersApp.app` に配置する derivation を定義。
+2. `hosts/macbook/default.nix` の `environment.systemPackages` に追加。
