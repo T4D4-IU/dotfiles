@@ -59,7 +59,7 @@
 - そのため Homebrew を使わず、Nix derivation として GitHub Releases から `.dmg` を直接取得・展開する方式に切り替えた。
 
 ## 3. どのように (Escrcpyの追加)
-1. `hosts/macbook/escrcpy.nix` を新規作成。`fetchurl` で GitHub Releases の `.dmg` を取得し、`undmg` で展開して `$out/Applications/Escrcpy.app` に配置する derivation を定義。
+1. `hosts/macbook/escrcpy.nix` を新規作成。`fetchurl` で GitHub Releases の `.dmg` を取得し、`_7zz` で展開して `$out/Applications/Escrcpy.app` に配置する derivation を定義。
 2. `hosts/macbook/default.nix` の引数を `_:` から `{ pkgs, ... }:` に変更し、`environment.systemPackages` で上記 derivation を導入。
 3. Mac 専用 GUI アプリの設定を `hosts/macbook/` 配下に閉じることで、他プラットフォームへの影響を回避。
 
