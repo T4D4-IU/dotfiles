@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{pkgs, ...}: {
   # Nix-darwin configuration entry point for MacBook
 
   # macOS GUI Apps managed by Nix (not available via Homebrew Cask)

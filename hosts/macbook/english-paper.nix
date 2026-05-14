@@ -17,7 +17,7 @@ stdenvNoCC.mkDerivation rec {
     hash = "sha256-ikB1lqJQXCIBt3h3R/jh2hEUdI1oMJNAHpPzMqplcIM=";
   };
 
-  nativeBuildInputs = [ unzip ];
+  nativeBuildInputs = [unzip];
 
   unpackPhase = ''
     unzip $src -d extracted
@@ -36,7 +36,7 @@ stdenvNoCC.mkDerivation rec {
     description = "Read English papers and register vocabulary for review";
     homepage = "https://github.com/mksmkss/English-Paper";
     license = licenses.unfree;
-    platforms = [ "aarch64-darwin" ];
-    sourceProvenance = with sourceTypes; [ binaryNativeCode ];
+    platforms = ["aarch64-darwin"];
+    sourceProvenance = with sourceTypes; [binaryNativeCode];
   };
 }

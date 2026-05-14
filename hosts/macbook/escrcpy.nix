@@ -17,7 +17,7 @@ stdenvNoCC.mkDerivation rec {
     hash = "sha256-8BsqhXI7yf7aRC3s5dzw8UHS4a9bV2UwNTT4VG6vXb4=";
   };
 
-  nativeBuildInputs = [ _7zz ];
+  nativeBuildInputs = [_7zz];
 
   unpackPhase = ''
     7zz x $src -oextracted
@@ -36,7 +36,7 @@ stdenvNoCC.mkDerivation rec {
     description = "Graphical Scrcpy to display and control Android devices, powered by Electron";
     homepage = "https://github.com/viarotel-org/escrcpy";
     license = licenses.asl20;
-    platforms = [ "aarch64-darwin" ];
-    sourceProvenance = with sourceTypes; [ binaryNativeCode ];
+    platforms = ["aarch64-darwin"];
+    sourceProvenance = with sourceTypes; [binaryNativeCode];
   };
 }
