@@ -11,3 +11,7 @@
 ## 3. 変更箇所: `hosts/*/home.nix` および `modules/home/common/default.nix` (前回の修正を含む)
 *   **何故**: オプション名と引数名の衝突による評価エラーを防止するためです。
 *   **どのように**: 各ホストの `home.nix` に直書きされていた `features` ブロックを削除し、純粋に `extraSpecialArgs` から渡される `features` 引数を参照する設計に統一しました。
+
+## 4. 変更箇所: `modules/home/darwin/gui.nix` および `modules/home/linux/gui.nix`
+*   **何故**: 前回 `modules/home/common/default.nix` で `options.features` を削除したことで、これらGUIモジュール内に記述されていた `config.features.gui` へのアクセスがエラー（`attribute 'features' missing`）を引き起こしていました。
+*   **どのように**: これらのファイルはすでに親モジュール（`common/default.nix`）側で `isDarwin && guiEnabled` や `isLinux && guiEnabled` に基づいて条件付きでインポートされるようになっているため、ファイル内部での `config.features.gui` による条件分岐 (`lib.mkIf`) を削除し、直接パッケージリストを設定するように修正しました。

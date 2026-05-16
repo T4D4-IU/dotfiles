@@ -1,13 +1,7 @@
-{
-  config,
-  lib,
-  ...
-}: {
-  config = lib.mkIf config.features.gui {
-    # GUI Applications are now managed via Homebrew in hosts/macbook/default.nix
-    # to ensure proper registration with macOS security settings.
-    home.packages = [
-      # Common GUI tools (CLI-based or non-app-bundle) can go here
-    ];
-  };
+_: {
+  # GUI Applications are now managed via Homebrew in hosts/macbook/default.nix
+  # to ensure proper registration with macOS security settings.
+  home.packages = [
+    # Common GUI tools (CLI-based or non-app-bundle) can go here
+  ];
 }
