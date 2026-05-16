@@ -36,6 +36,5 @@
     genact # Nonsense activity generator
     vhs # Tool for generating terminal GIFs with code
     xh # Friendly and fast tool for sending HTTP requests
-    zellij # Terminal workspace with batteries included
   ];
 }

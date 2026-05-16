@@ -25,6 +25,9 @@
       url = "github:cachix/pre-commit-hooks.nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    my-helix = {
+      url = "github:T4D4-IU/MyHelix";
+    };
   };
 
   outputs = {

@@ -1,5 +1,6 @@
 {
   lib,
+  inputs,
   features ? {},
   isDarwin ? false,
   isLinux ? false,
@@ -20,6 +21,7 @@ in {
       ./starship.nix
       ./zoxide.nix
       ./zsh.nix
+      inputs.my-helix.homeManagerModules.default
     ]
     ++ lib.optional (isDarwin && guiEnabled) ../darwin
     ++ lib.optional (isLinux && guiEnabled) ../linux;
