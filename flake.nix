@@ -54,12 +54,25 @@
         }) (builtins.attrNames self.packages.${system})
       );
   in {
-    packages.x86_64-linux = let
-      pkgs = import inputs.nixpkgs {system = "x86_64-linux";};
-    in {
-      dfx = pkgs.callPackage ./pkgs/dfx.nix {};
-      haystack-editor = pkgs.callPackage ./pkgs/haystack-editor.nix {};
-    };
+    packages = forAllSystems (
+      system: let
+        pkgs = import inputs.nixpkgs {inherit system;};
+
+        # パッケージの定義
+        allPkgs = {
+          dfx = pkgs.callPackage ./pkgs/dfx.nix {};
+          haystack-editor = pkgs.callPackage ./pkgs/haystack-editor.nix {};
+        };
+      in
+        # そのシステム（アーキテクチャ）をサポートしているパッケージのみを公開する
+        lib.filterAttrs (
+          _name: pkg: let
+            platforms = pkg.meta.platforms or [system];
+          in
+            builtins.elem system platforms
+        )
+        allPkgs
+    );
 
     checks = forAllSystems (
       system: let
@@ -98,46 +111,83 @@
     );
 
     # NixOS Configurations using helper
-    nixosConfigurations = {
-      nixos = helpers.mkNixosConfiguration {
-        inherit inputs;
-        inherit (hosts. nixos) system;
-        inherit (hosts.nixos) hostname;
-        modules = hosts.nixos.nixosModules;
-      };
-    };
+    nixosConfigurations = lib.mapAttrs (
+      _name: host:
+        helpers.mkNixosConfiguration {
+          inherit inputs;
+          inherit (host) system;
+          features = host.features or {};
+          modules = host.nixosModules;
+        }
+    ) (lib.filterAttrs (_name: host: host ? nixosModules) hosts);
 
     # Darwin (macOS) Configurations using helper
-    darwinConfigurations = {
-      macbook = helpers.mkDarwinConfiguration {
-        inherit inputs;
-        inherit (hosts.macbook) system;
-        modules = hosts.macbook.darwinModules;
-      };
-    };
+    darwinConfigurations = lib.mapAttrs (
+      _name: host:
+        helpers.mkDarwinConfiguration {
+          inherit inputs;
+          inherit (host) system;
+          features = host.features or {};
+          modules = host.darwinModules;
+        }
+    ) (lib.filterAttrs (_name: host: host ? darwinModules) hosts);
 
     # Home Manager Configurations using helper
-    homeConfigurations = {
-      "t4d4@nixos" = helpers.mkHomeConfiguration {
-        inherit inputs;
-        inherit (hosts.nixos) system username homeDirectory;
-        modules = hosts. nixos.homeModules;
-      };
+    homeConfigurations = builtins.listToAttrs (
+      lib.mapAttrsToList (name: host: {
+        name = "${host.username}@${name}";
+        value = helpers.mkHomeConfiguration {
+          inherit inputs;
+          inherit (host) system username homeDirectory;
+          features = host.features or {};
+          modules = host.homeModules;
+        };
+      }) (lib.filterAttrs (_name: host: host ? homeModules) hosts)
+    );
 
-      # WSL/Ubuntu environment (CLI-only)
-      "t4d4@wsl" = helpers.mkHomeConfiguration {
-        inherit inputs;
-        inherit (hosts.wsl) system username homeDirectory;
-        modules = hosts.wsl.homeModules;
-      };
+    # Automatic environment detection script (run with `nix run .`)
+    apps = forAllSystems (system: let
+      pkgs = import inputs.nixpkgs {inherit system;};
+      applyScript = pkgs.writeShellScriptBin "apply" ''
+        set -euo pipefail
 
-      # macOS environment (Apple Silicon)
-      "t4d4@macbook" = helpers.mkHomeConfiguration {
-        inherit inputs;
-        inherit (hosts.macbook) system username homeDirectory;
-        modules = hosts.macbook.homeModules;
+        OS="$(uname -s)"
+        HOSTNAME="''${1:-$(hostname -s)}"
+        USER="$(whoami)"
+
+        echo "====================================="
+        echo "🛠️  Dotfiles Apply Script"
+        echo "OS:       $OS"
+        echo "Hostname: $HOSTNAME"
+        echo "User:     $USER"
+        echo "====================================="
+
+        if [ "$OS" = "Darwin" ]; then
+          echo "Applying macOS (Darwin) configuration..."
+          nix run ${inputs.darwin} -- switch --flake .#$HOSTNAME
+        elif [ "$OS" = "Linux" ]; then
+          if grep -q "NixOS" /etc/os-release 2>/dev/null; then
+            echo "Applying NixOS configuration..."
+            sudo nixos-rebuild switch --flake .#$HOSTNAME
+          else
+            echo "Applying Home Manager configuration (Linux non-NixOS)..."
+            nix run ${inputs.home-manager} -- switch --flake .#$USER@$HOSTNAME
+          fi
+        else
+          echo "❌ Unsupported OS: $OS"
+          exit 1
+        fi
+      '';
+    in {
+      default = {
+        type = "app";
+        program = "${applyScript}/bin/apply";
       };
-    };
+      apply = {
+        type = "app";
+        program = "${applyScript}/bin/apply";
+      };
+    });
 
     # Development shell
     devShells = forAllSystems (
@@ -151,7 +201,6 @@
           packages = with pkgs; [
             # Formatters
             alejandra # Nix code formatter (official)
-            nixfmt-rfc-style # Alternative formatter
 
             # Linters
             statix # Lints and suggestions for Nix

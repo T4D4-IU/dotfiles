@@ -8,18 +8,10 @@
   # release notes.
   home.stateVersion = "24.11"; # Please read the comment before changing.
 
-  # Define features for this host
-  features = {
-    gui = true;
-  };
-
   # Import modular configurations
   imports = [
     # Common modules (cross-platform)
     ../../modules/home/common
-
-    # Linux-specific modules (only for this host)
-    ../../modules/home/linux
   ];
 
   programs = {

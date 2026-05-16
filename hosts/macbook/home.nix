@@ -73,18 +73,10 @@ _: {
     };
   };
 
-  # Define features for this host
-  features = {
-    gui = true;
-  };
-
   # Import modular configurations
   imports = [
     # Common modules (cross-platform)
     ../../modules/home/common
-
-    # macOS-specific modules
-    ../../modules/home/darwin
   ];
 
   programs = {

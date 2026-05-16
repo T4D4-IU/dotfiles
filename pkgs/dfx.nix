@@ -1,4 +1,5 @@
 {
+  lib,
   stdenv,
   fetchzip,
   autoPatchelfHook,
@@ -24,4 +25,10 @@ in
       cp -r * $out/bin
       runHook postInstall
     '';
+
+    meta = with lib; {
+      description = "The DFINITY Command-Line Execution Environment";
+      homepage = "https://internetcomputer.org/";
+      platforms = ["x86_64-linux"]; # dfx is specifically fetched for x86_64-linux
+    };
   }

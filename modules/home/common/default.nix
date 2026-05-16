@@ -1,19 +1,26 @@
-{lib, ...}:
-# Common modules that should be loaded on all systems
 {
-  options = {
-    features.gui = lib.mkEnableOption "GUI applications and utilities" // {default = true;};
-  };
-
-  imports = [
-    ./cli.nix
-    ./development.nix
-    ./direnv.nix
-    ./gh.nix
-    ./git.nix
-    ./jujutsu.nix
-    ./starship.nix
-    ./zoxide.nix
-    ./zsh.nix
-  ];
+  lib,
+  features ? {},
+  isDarwin ? false,
+  isLinux ? false,
+  ...
+}:
+# Common modules that should be loaded on all systems
+let
+  guiEnabled = features.gui or true;
+in {
+  imports =
+    [
+      ./cli.nix
+      ./development.nix
+      ./direnv.nix
+      ./gh.nix
+      ./git.nix
+      ./jujutsu.nix
+      ./starship.nix
+      ./zoxide.nix
+      ./zsh.nix
+    ]
+    ++ lib.optional (isDarwin && guiEnabled) ../darwin
+    ++ lib.optional (isLinux && guiEnabled) ../linux;
 }
