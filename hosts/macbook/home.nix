@@ -73,11 +73,6 @@ _: {
     };
   };
 
-  # Define features for this host
-  features = {
-    gui = true;
-  };
-
   # Import modular configurations
   imports = [
     # Common modules (cross-platform)

@@ -8,10 +8,6 @@
 let
   guiEnabled = features.gui or true;
 in {
-  options = {
-    features.gui = lib.mkEnableOption "GUI applications and utilities" // {default = true;};
-  };
-
   imports =
     [
       ./cli.nix

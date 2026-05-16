@@ -164,14 +164,14 @@
 
         if [ "$OS" = "Darwin" ]; then
           echo "Applying macOS (Darwin) configuration..."
-          nix run nix-darwin -- switch --flake .#$HOSTNAME
+          nix run ${inputs.darwin} -- switch --flake .#$HOSTNAME
         elif [ "$OS" = "Linux" ]; then
           if grep -q "NixOS" /etc/os-release 2>/dev/null; then
             echo "Applying NixOS configuration..."
             sudo nixos-rebuild switch --flake .#$HOSTNAME
           else
             echo "Applying Home Manager configuration (Linux non-NixOS)..."
-            nix run home-manager -- switch --flake .#$USER@$HOSTNAME
+            nix run ${inputs.home-manager} -- switch --flake .#$USER@$HOSTNAME
           fi
         else
           echo "❌ Unsupported OS: $OS"

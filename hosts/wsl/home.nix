@@ -3,11 +3,6 @@
   # compatible with.
   home.stateVersion = "24.11";
 
-  # Define features for this host
-  features = {
-    gui = false;
-  };
-
   # Import modular configurations
   # WSLではGUIモジュールをインポートしない（CLI専用）
   imports = [

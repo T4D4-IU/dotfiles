@@ -8,11 +8,6 @@
   # release notes.
   home.stateVersion = "24.11"; # Please read the comment before changing.
 
-  # Define features for this host
-  features = {
-    gui = true;
-  };
-
   # Import modular configurations
   imports = [
     # Common modules (cross-platform)
