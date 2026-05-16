@@ -87,16 +87,17 @@ macbook = {
 "your-username@macbook" = helpers.mkHomeConfiguration { ... };
 ```
 
-### 6. Home Managerの初回適用
+### 6. システム全体とHome Managerの初回適用
 
 ```bash
-# Home Managerをインストールして適用
-nix run home-manager/master -- switch --flake ~/dotfiles#t4d4@macbook
+# 自動判定スクリプトで一括設定（nix-darwinとHome Managerを両方適用）
+cd ~/dotfiles
+nix run . -- macbook
 ```
 
-> ⚠️ **注意**: ユーザー名を変更した場合は `t4d4@macbook` の部分を `your-username@macbook` に変更してください。
+> ⚠️ **注意**: ホスト名が `macbook` ではない場合、上記コマンドの末尾を変更してください。
 
-初回は時間がかかります（パッケージのダウンロードとビルド）。
+初回は時間がかかります（パッケージのダウンロードとシステムビルド）。
 
 ### 7. 設定の再読み込み
 
@@ -142,11 +143,11 @@ macbook = {
 
 ### 設定の更新
 
-設定ファイルを編集した後:
+設定ファイル（GUIアプリやHome Managerの設定）を編集した後:
 
 ```bash
 cd ~/dotfiles
-home-manager switch --flake .#t4d4@macbook
+nix run . -- macbook
 ```
 
 ### 依存関係の更新
@@ -154,7 +155,7 @@ home-manager switch --flake .#t4d4@macbook
 ```bash
 cd ~/dotfiles
 nix flake update
-home-manager switch --flake .#t4d4@macbook
+nix run . -- macbook
 ```
 
 ## 🎯 macOS環境に含まれるもの
@@ -184,11 +185,16 @@ home-manager switch --flake .#t4d4@macbook
 
 ### 開発ツール
 
-- **エディター**: Neovim (nix run経由)
+- **エディター**: Helix (MyHelix経由)
 - **Git**: git, GitHub CLI (gh)
 - **direnv** - プロジェクト環境管理
 - **言語**: Rust, Go, Python, Node.js, Deno, Bun
 - **ビルドツール**: devbox, devenv
+
+> 💡 **ターミナルIDE (MyHelix) について**:
+> スマホからSSH接続した際や、省スペースで作業したい場合のために、別リポジトリで管理されている Helix と Zellij の統合環境がインストールされます。
+> - `mzj-mobile`: スマホ向け省スペースレイアウトで Zellij を起動
+> - `myhx-mobile`: スマホ向け設定で行番号などを隠した Helix を起動
 
 ### GUIアプリ (macOS固有)
 
@@ -212,11 +218,11 @@ home-manager switch --flake .#t4d4@macbook
 - **Zed** - エディター
 - **その他**: Anki, AppCleaner, BlueStacks, CliPaste, Hidden Bar, KeyClu, Open Video Downloader, RustDesk, Shottr, Steam, Stillcolor, Syncthing, Wireshark
 
-> **GUIアプリ設定を反映するコマンド（nix-darwin）:**
+> **GUIアプリ設定を反映するコマンド:**
 >
 > ```bash
 > cd ~/dotfiles
-> darwin-rebuild switch --flake .#macbook
+> nix run . -- macbook
 > ```
 >
 > 💡 **注意**: 上記の `macbook` は `flake.nix` で定義しているホスト名に合わせて読み替えてください。GUI アプリの主なインストール元は `hosts/macbook/default.nix` の `homebrew` セクションであり、Home Manager の `features.gui` フラグには依存しません。
@@ -294,14 +300,11 @@ nix-collect-garbage -d
 nix-store --optimise
 ```
 
-### Home Managerのロールバック
+### 設定のロールバック
 
 ```bash
-# 世代を確認
-home-manager generations
-
-# ロールバック
-home-manager switch --flake .#t4d4@macbook --rollback
+# ロールバック（世代番号を指定して戻すことも可能）
+/run/current-system/sw/bin/darwin-rebuild switch --rollback
 ```
 
 ### Flakeロックの問題
@@ -333,9 +336,10 @@ macOS環境では以下が**含まれません**:
 
 ## 💡 ヒント
 
-### nix-darwinの導入（上級者向け）
+### システム設定 (nix-darwin) の利用
 
-macOSのシステムレベルの設定（Dock、Finder、システムサービス等）も管理したい場合は、[nix-darwin](https://github.com/LnL7/nix-darwin)の導入を検討してください。
+この設定では、Home Managerだけでなく `nix-darwin` も標準で導入されており、システムレベルの設定（キーボードリピート速度など）もコード管理されています。
+`hosts/macbook/default.nix` を編集することでシステムの設定を変更できます。
 
 ### Homebrewとの共存
 

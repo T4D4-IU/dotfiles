@@ -29,3 +29,16 @@
 * Dotfiles外部に `~/MyHelix` という独立したNix Flakeリポジトリを構築し、そこにHelixとZellijの設定を隔離しました。
 * スマホ用に省スペースで起動するための専用のラッパースクリプト（`mzj-mobile`, `myhx-mobile`）を定義しました。
 * Dotfilesの `flake.nix` の `inputs` に `MyHelix` リポジトリをローカル参照として追加し、`default.nix` を経由してHome Managerモジュールとして読み込むように連携させました。
+
+## 2026-05-17: ドキュメントの最新化（アーキテクチャ変更への追従）
+
+**1. 何処を変更したか**
+* 変更: `README.md`, `docs/MAC_SETUP.md`, `docs/WSL_SETUP.md`
+
+**2. 何故変更したか**
+* 最近行った「一発適用のApplyスクリプトの導入」「macOSにおけるnix-darwinの標準化」「MyHelix環境へのターミナルIDE分離」といったアーキテクチャの変更が、各セットアップ用ドキュメントに反映されておらず、古いコマンド（`home-manager switch` 等）や古い情報（Neovimの利用等）が残っていたため。
+
+**3. どのように変更したか**
+* `README.md`, `MAC_SETUP.md`, `WSL_SETUP.md` 内の適用コマンドをすべて `nix run . -- <hostname>` ベースのものに統一・更新しました。
+* エディターの項目にHelix（MyHelixリポジトリ）を追加し、Zellijと共にスマホ対応の省スペースターミナルIDE環境（`mzj-mobile`, `myhx-mobile`）として利用できる旨を各所に追記しました。
+* `MAC_SETUP.md` から「nix-darwinの導入（上級者向け）」という時代遅れの記述を削除し、システム設定がnix-darwinで管理されていることを標準の前提として記載しました。

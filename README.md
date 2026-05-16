@@ -104,7 +104,8 @@ dotfiles/
 
 **ユーザーレベル (Home Manager)**:
 - **シェル**: Zsh + Starship
-- **エディター**: Neovim, Zed, Cursor
+- **エディター**: Helix (MyHelixリポジトリで管理), Zed, Cursor
+- **ターミナル環境**: Zellij + MyHelix (スマホ向け省スペースレイアウト対応)
 - **開発ツール**: Git, GitHub CLI, direnv
 - **CLI強化**: eza, bat, fd, ripgrep, fzf, zoxide
 - **GUIアプリ**: Brave, Discord, Obsidian, Slack等
@@ -117,7 +118,7 @@ dotfiles/
 
 **ユーザーレベル (Home Manager)**:
 - **シェル**: Zsh + Starship
-- **エディター**: Neovim (nix run経由)
+- **エディター**: Helix (MyHelix経由)
 - **開発ツール**: Git, GitHub CLI, direnv
 - **CLI強化**: eza, bat, fd, ripgrep, fzf, zoxide
 - **GUIアプリ**: Brave, Chrome, Discord, Ghostty, Karabiner, Notion, Obsidian, OneDrive, Orbstack, Postman, Prism Launcher, Raycast, Rectangle, Spotify, Zed等
@@ -175,14 +176,10 @@ git clone https://github.com/T4D4-IU/dotfiles.git ~/dotfiles
 cd ~/dotfiles
 ```
 
-2. **NixOSシステムの適用**:
+2. **自動セットアップスクリプトの実行**:
+OSとホスト名を自動判定して、NixOSシステム設定・Home Manager設定をすべて適用します。
 ```bash
-sudo nixos-rebuild switch --flake .#nixos
-```
-
-3. **Home Managerの適用**:
-```bash
-home-manager switch --flake .#t4d4@nixos
+nix run . -- nixos
 ```
 
 ### 初回セットアップ (macOS)
@@ -201,30 +198,30 @@ curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix 
 git clone https://github.com/T4D4-IU/dotfiles.git ~/dotfiles
 ```
 
-3. **Home Managerの適用**:
+3. **自動セットアップスクリプトの実行**:
+macOS（nix-darwin）およびHome Managerの設定を一括で適用します。
 ```bash
-nix run home-manager/master -- switch --flake ~/dotfiles#t4d4@macbook
+cd ~/dotfiles
+nix run . -- macbook
 ```
 
 ### 日常の更新
 
 **設定変更後の適用**:
+すべての環境（NixOS, macOS, WSL）で以下のコマンドを実行することで、現在のマシンの設定が一括で更新されます。
 ```bash
-# NixOSシステム設定の更新
-sudo nixos-rebuild switch --flake .#nixos
-
-# Home Manager設定の更新
-home-manager switch --flake .#t4d4@nixos
+cd ~/dotfiles
+nix run . -- $(hostname -s)
 ```
 
 **依存関係の更新**:
 ```bash
 # flake.lockを更新
+cd ~/dotfiles
 nix flake update
 
 # 更新後に適用
-sudo nixos-rebuild switch --flake .#nixos
-home-manager switch --flake .#t4d4@nixos
+nix run . -- $(hostname -s)
 ```
 
 ### 設定の検証
@@ -325,7 +322,7 @@ homeConfigurations = {
 ### 5. 適用
 
 ```bash
-home-manager switch --flake .#t4d4@macbook
+nix run . -- macbook
 ```
 
 ## 🔧 トラブルシューティング
