@@ -15,3 +15,17 @@
 ## 4. 変更箇所: `modules/home/darwin/gui.nix` および `modules/home/linux/gui.nix`
 *   **何故**: 前回 `modules/home/common/default.nix` で `options.features` を削除したことで、これらGUIモジュール内に記述されていた `config.features.gui` へのアクセスがエラー（`attribute 'features' missing`）を引き起こしていました。
 *   **どのように**: これらのファイルはすでに親モジュール（`common/default.nix`）側で `isDarwin && guiEnabled` や `isLinux && guiEnabled` に基づいて条件付きでインポートされるようになっているため、ファイル内部での `config.features.gui` による条件分岐 (`lib.mkIf`) を削除し、直接パッケージリストを設定するように修正しました。
+## 2026-05-16: スマホ・仕事用PC向け独立ターミナル環境（MyHelix）の構築
+
+**1. 何処を変更したか**
+* 新規作成: `~/MyHelix/flake.nix`, `~/MyHelix/modules/helix.nix`, `~/MyHelix/modules/zellij.nix` (Dotfiles外)
+* 変更: `flake.nix`, `modules/home/common/cli.nix`, `modules/home/common/default.nix` (Dotfiles内)
+
+**2. 何故変更したか**
+* ユーザーがスマホなど狭い画面や不安定な回線からSSHで接続する際、ZellijとIDE機能（Helix）を省スペースなUIで利用できるようにするため。
+* 会社のセキュリティポリシーに配慮し、巨大なDotfiles全体ではなく、ターミナル環境（HelixとZellij）のみを独立して利用・持ち出し可能にするため。
+
+**3. どのように変更したか**
+* Dotfiles外部に `~/MyHelix` という独立したNix Flakeリポジトリを構築し、そこにHelixとZellijの設定を隔離しました。
+* スマホ用に省スペースで起動するための専用のラッパースクリプト（`mzj-mobile`, `myhx-mobile`）を定義しました。
+* Dotfilesの `flake.nix` の `inputs` に `MyHelix` リポジトリをローカル参照として追加し、`default.nix` を経由してHome Managerモジュールとして読み込むように連携させました。
