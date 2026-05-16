@@ -117,15 +117,15 @@
       "locked": {
         "lastModified": 1778923037,
         "narHash": "sha256-woBu9egFfqnsL6xAJVkiyKK8p9y4GGCpzGZ1jGQdMM8=",
-        "ref": "refs/heads/main",
+        "owner": "T4D4-IU",
+        "repo": "MyHelix",
         "rev": "2485b49d02b4bc237bbe8b0024ca423d5c599bae",
-        "revCount": 1,
-        "type": "git",
-        "url": "file:///Users/t4d4/MyHelix"
+        "type": "github"
       },
       "original": {
-        "type": "git",
-        "url": "file:///Users/t4d4/MyHelix"
+        "owner": "T4D4-IU",
+        "repo": "MyHelix",
+        "type": "github"
       }
     },
     "my-secrets": {

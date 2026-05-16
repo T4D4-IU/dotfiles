@@ -26,7 +26,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     my-helix = {
-      url = "git+file:///Users/t4d4/MyHelix";
+      url = "github:T4D4-IU/MyHelix";
     };
   };
 
