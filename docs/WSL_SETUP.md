@@ -66,13 +66,14 @@ wsl = {
 ### 5. Home Managerの初回適用
 
 ```bash
-# Home Managerをビルドして適用
+# 自動セットアップスクリプトで一括設定
 # ⚠️ 注意: ユーザー名が t4d4 以外の場合、flake.nix の homeConfigurations を修正する必要があります
-nix run home-manager/master -- switch --flake ~/dotfiles#t4d4@wsl
+cd ~/dotfiles
+nix run . -- wsl
 ```
 
 **ユーザー名をカスタマイズする場合:**
-1. `flake.nix` の `homeConfigurations` セクション（103-111行目付近）を編集
+1. `flake.nix` の `homeConfigurations` セクションを編集
 2. `"t4d4@wsl"` を `"your-username@wsl"` に変更
 3. または `lib/hosts.nix` でユーザー名を設定し、動的生成に変更することも可能
 
@@ -131,7 +132,7 @@ ps -p $$
 設定ファイルを編集した後:
 ```bash
 cd ~/dotfiles
-home-manager switch --flake .#your-username@wsl
+nix run . -- wsl
 ```
 
 ### 依存関係の更新
@@ -139,7 +140,7 @@ home-manager switch --flake .#your-username@wsl
 ```bash
 cd ~/dotfiles
 nix flake update
-home-manager switch --flake .#your-username@wsl
+nix run . -- wsl
 ```
 
 ## 🎯 WSL環境に含まれるもの
@@ -166,7 +167,7 @@ home-manager switch --flake .#your-username@wsl
 - `tmux` - ターミナルマルチプレクサー
 
 ### 開発ツール
-- **エディター**: Neovim, Zed, Cursor
+- **エディター**: Helix (MyHelix経由), Zed, Cursor
 - **Git**: git, GitHub CLI (gh)
 - **direnv** - プロジェクト環境管理
 - **言語**: Rust, Go, Python, Node.js, Deno, Bun
@@ -176,7 +177,9 @@ home-manager switch --flake .#your-username@wsl
 ### 開発支援
 - `gibo` - .gitignore生成
 - `atuin` - シェル履歴管理
-- `zellij` - ターミナルマルチプレクサー
+- `zellij` / `MyHelix` - ターミナルマルチプレクサーと連携したスマホ向け省スペース環境
+  - `mzj-mobile`: コンパクト版Zellijの起動
+  - `myhx-mobile`: 省スペース版Helixの起動
 
 ## 🔧 カスタマイズ
 
@@ -247,7 +250,7 @@ programs.bash = {
 その後、Home Managerを再適用：
 ```bash
 cd ~/dotfiles
-home-manager switch --flake .#your-username@wsl
+nix run . -- wsl
 ```
 
 ### ディスク容量不足
