@@ -1,77 +1,13 @@
-# 変更ログ
+# 変更履歴 (PRレビュー対応およびCIエラー修正)
 
-## 1. 何処を
-- `/Users/t4d4/dotfiles/hosts/macbook/default.nix` 内の `homebrew.casks` のリスト
+## 1. 変更箇所: `lib/helpers.nix` および `modules/home/common/default.nix`
+*   **何故**: GitHub Actions の `macos-home-manager` や `nixos-config` のCIが `infinite recursion encountered`（無限再帰）エラーで失敗していたためです。このエラーは、`modules/home/common/default.nix` の `imports` セクション内でOSを判定するために `pkgs.stdenv.isDarwin` 等を参照したことで発生していました。Home Managerは `pkgs` の構築のために `imports` を評価しようとするため、そこで `pkgs` を参照すると依存関係がループしてしまいます。
+*   **どのように**: `lib/helpers.nix` 側で `system` 変数からOSを判定した結果 (`isDarwin`, `isLinux`) を `extraSpecialArgs` に直接追加しました。そして `modules/home/common/default.nix` では、`pkgs` を使わずにその引数 (`isDarwin`, `isLinux`) を受け取って `imports` の条件分岐に使用するように修正しました。
 
-## 2. 何故
-- ユーザーより Mac に Google-Gemini (https://formulae.brew.sh/cask/google-gemini#default) を追加したいという要望があったため。
+## 2. 変更箇所: `flake.nix` (applyスクリプト部分)
+*   **何故**: GitHub Copilot のレビューから、「macOSやWSLでは実際のホスト名(`hostname -s`)が、flake上の名前(`macbook` や `wsl`)と一致しないことが多く、そのまま `nix run .` を実行するとエラーになる可能性がある」との指摘を受けたためです。
+*   **どのように**: `HOSTNAME="''${1:-$(hostname -s)}"` とすることで、`nix run . -- wsl` のようにコマンドライン引数からホスト名を直接指定（上書き）できるようにしました。引数がない場合はこれまで通り自動で `hostname -s` を取得して利用します。
 
-## 3. どのように
-- リストのアルファベット順を保つため、`"google-drive"` と `"google-japanese-ime"` の間に `"google-gemini"` を追記しました。
-
----
-## 1. 何処を (追加修正)
-- `/Users/t4d4/dotfiles/hosts/macbook/default.nix` 内の `homebrew` 設定
-
-## 2. 何故 (追加修正)
-- `google-gemini` などの新しいCaskを取得する際、ローカルのHomebrewインデックスが古いために `No available formula` エラーが発生したため。
-
-## 3. どのように (追加修正)
-- `homebrew` の設定に `onActivation.autoUpdate = true;` を追加し、Nix-Darwin環境の適用時（`darwin-rebuild switch` 実行時）にHomebrewが自動更新されるようにしました。
-
----
-## 1. 何処を (Audiorelayの追加)
-- `/Users/t4d4/dotfiles/hosts/macbook/default.nix` 内の `homebrew.casks` リスト
-
-## 2. 何故 (Audiorelayの追加)
-- ユーザーより Audiorelay の追加要望があったため。
-
-## 3. どのように (Audiorelayの追加)
-- アルファベット順を保つため、`"appcleaner"` と `"bluestacks"` の間に `"audiorelay"` を追記しました。
-
----
-## 1. 何処を (AudioRelayの削除)
-- `/Users/t4d4/dotfiles/hosts/macbook/default.nix` 内の `homebrew.casks` リスト
-
-## 2. 何故 (AudioRelayの削除)
-- ユーザーより「AudioRelayの調子が悪いので一度消したい」という要望があったため。
-
-## 3. どのように (AudioRelayの削除)
-- `homebrew.casks` のリストから `"audiorelay"` を削除しました。
-
----
-## 1. 何処を (SonoBusの追加)
-- `/Users/t4d4/dotfiles/hosts/macbook/default.nix` 内の `homebrew.casks` リスト
-
-## 2. 何故 (SonoBusの追加)
-- ユーザーより代わりに SonoBus を追加したいという要望があったため。
-
-## 3. どのように (SonoBusの追加)
-- アルファベット順を保つため、`"shottr"` と `"spotify"` の間に `"sonobus"` を追記しました。
-
----
-## 1. 何処を (Escrcpyの追加) — 2026-05-14
-- `hosts/macbook/escrcpy.nix`（新規作成）
-- `hosts/macbook/default.nix`
-
-## 2. 何故 (Escrcpyの追加)
-- Escrcpy（scrcpy の GUI フロントエンド）を追加するにあたり、Homebrew の Cask（`viarotel-org/escrcpy`）経由でのインストールを試みたが、Cask の `postflight` スクリプトにユーザー入力待ちの処理があり、`darwin-rebuild switch` 経由ではプロンプトが表示されずハングする問題が発生した。
-- そのため Homebrew を使わず、Nix derivation として GitHub Releases から `.dmg` を直接取得・展開する方式に切り替えた。
-
-## 3. どのように (Escrcpyの追加)
-1. `hosts/macbook/escrcpy.nix` を新規作成。`fetchurl` で GitHub Releases の `.dmg` を取得し、`_7zz` で展開して `$out/Applications/Escrcpy.app` に配置する derivation を定義。
-2. `hosts/macbook/default.nix` の引数を `_:` から `{ pkgs, ... }:` に変更し、`environment.systemPackages` で上記 derivation を導入。
-3. Mac 専用 GUI アプリの設定を `hosts/macbook/` 配下に閉じることで、他プラットフォームへの影響を回避。
-
----
-## 1. 何処を (English Paper Readerの追加) — 2026-05-14
-- `hosts/macbook/english-paper.nix`（新規作成）
-- `hosts/macbook/default.nix`
-
-## 2. 何故 (English Paper Readerの追加)
-- 英語論文を読みながら単語を登録・復習できる macOS アプリ「English Paper Reader」を追加するため。
-- Homebrew Cask には存在しないため、Escrcpy と同様に Nix derivation で GitHub Releases から直接取得する方式を採用。
-
-## 3. どのように (English Paper Readerの追加)
-1. `hosts/macbook/english-paper.nix` を新規作成。`fetchurl` で GitHub Releases の `.zip` を取得し、`unzip` で展開して `$out/Applications/PapersApp.app` に配置する derivation を定義。
-2. `hosts/macbook/default.nix` の `environment.systemPackages` に追加。
+## 3. 変更箇所: `hosts/*/home.nix` および `modules/home/common/default.nix` (前回の修正を含む)
+*   **何故**: オプション名と引数名の衝突による評価エラーを防止するためです。
+*   **どのように**: 各ホストの `home.nix` に直書きされていた `features` ブロックを削除し、純粋に `extraSpecialArgs` から渡される `features` 引数を参照する設計に統一しました。

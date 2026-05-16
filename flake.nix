@@ -152,7 +152,7 @@
         set -euo pipefail
 
         OS="$(uname -s)"
-        HOSTNAME="$(hostname -s)"
+        HOSTNAME="''${1:-$(hostname -s)}"
         USER="$(whoami)"
 
         echo "====================================="

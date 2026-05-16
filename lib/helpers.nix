@@ -16,6 +16,8 @@
       };
       extraSpecialArgs = {
         inherit inputs features;
+        isDarwin = lib.hasSuffix "-darwin" system;
+        isLinux = lib.hasSuffix "-linux" system;
       };
       modules =
         [

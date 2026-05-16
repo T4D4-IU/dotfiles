@@ -1,7 +1,8 @@
 {
-  pkgs,
   lib,
   features ? {},
+  isDarwin ? false,
+  isLinux ? false,
   ...
 }:
 # Common modules that should be loaded on all systems
@@ -20,6 +21,6 @@ in {
       ./zoxide.nix
       ./zsh.nix
     ]
-    ++ lib.optional (pkgs.stdenv.isDarwin && guiEnabled) ../darwin
-    ++ lib.optional (pkgs.stdenv.isLinux && guiEnabled) ../linux;
+    ++ lib.optional (isDarwin && guiEnabled) ../darwin
+    ++ lib.optional (isLinux && guiEnabled) ../linux;
 }
