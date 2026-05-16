@@ -1,4 +1,5 @@
 {
+  lib,
   stdenv,
   fetchzip,
 }: let
@@ -19,4 +20,9 @@ in
       cp -r * $out/bin
       runHook postInstall
     '';
+
+    meta = with lib; {
+      description = "A visual interface for Haystack";
+      platforms = ["x86_64-linux"]; # URL specifies Linux version
+    };
   }

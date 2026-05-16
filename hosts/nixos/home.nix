@@ -17,9 +17,6 @@
   imports = [
     # Common modules (cross-platform)
     ../../modules/home/common
-
-    # Linux-specific modules (only for this host)
-    ../../modules/home/linux
   ];
 
   programs = {

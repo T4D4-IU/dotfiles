@@ -82,9 +82,6 @@ _: {
   imports = [
     # Common modules (cross-platform)
     ../../modules/home/common
-
-    # macOS-specific modules
-    ../../modules/home/darwin
   ];
 
   programs = {

@@ -5,6 +5,7 @@
     system,
     username,
     homeDirectory,
+    features ? {},
     modules ? [],
   }:
     inputs.home-manager.lib.homeManagerConfiguration {
@@ -14,7 +15,7 @@
         overlays = [(import inputs.rust-overlay)];
       };
       extraSpecialArgs = {
-        inherit inputs;
+        inherit inputs features;
       };
       modules =
         [
@@ -34,6 +35,7 @@
   mkNixosConfiguration = {
     inputs,
     system,
+    features ? {},
     modules ? [],
     ...
   }:
@@ -41,7 +43,7 @@
       inherit system;
       inherit modules;
       specialArgs = {
-        inherit inputs;
+        inherit inputs features;
       };
     };
 
@@ -49,6 +51,7 @@
   mkDarwinConfiguration = {
     inputs,
     system,
+    features ? {},
     modules ? [],
     ...
   }:
@@ -56,7 +59,7 @@
       inherit system;
       inherit modules;
       specialArgs = {
-        inherit inputs;
+        inherit inputs features;
       };
     };
 
