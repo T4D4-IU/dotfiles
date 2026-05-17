@@ -121,6 +121,38 @@ jobs:
         run: |
           nix build .#nixosConfigurations.nixos.config.system.build.toplevel --dry-run
 
+  # Check macOS nix-darwin configuration
+  darwin-config:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+
+      - name: Setup SSH key for private repo access
+        uses: webfactory/ssh-agent@v0.8.0
+        with:
+          ssh-private-key: ${{ secrets.DOTFILES_SECRETS_DEPLOY_KEY }}
+
+      - name: Install Nix
+        uses: cachix/install-nix-action@4e002c8ec80594ecd40e759629461e26c8abed15 # v31.9.0
+        with:
+          nix_path: nixpkgs=channel:nixos-unstable
+
+      - name: Setup Cachix
+        uses: cachix/cachix-action@ad2ddac53f961de1989924296a1f236fcfbaa4fc # v15
+        with:
+          name: t4d4-dotfiles
+          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
+          extraPullNames: nix-community
+
+      - name: Evaluate macOS nix-darwin configuration
+        run: |
+          nix eval .#darwinConfigurations.macbook.config.system.build.toplevel.outPath
+
+      - name: Check macOS nix-darwin configuration syntax (Dry-run)
+        run: |
+          nix build .#darwinConfigurations.macbook.system --dry-run
+
   # Check Home Manager configurations
   home-manager-configs:
     runs-on: ubuntu-latest
@@ -213,6 +245,7 @@ jobs:
         flake-info,
         packages,
         nixos-config,
+        darwin-config,
         home-manager-configs,
         module-check,
         macos-hm-check,
@@ -226,5 +259,6 @@ jobs:
           echo "✅ Flake metadata"
           echo "✅ Custom packages"
           echo "✅ NixOS configuration"
+          echo "✅ macOS nix-darwin configuration"
           echo "✅ Home Manager configurations (nixos, wsl, macbook)"
           echo "✅ Module syntax checks"

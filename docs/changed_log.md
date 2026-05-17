@@ -54,8 +54,10 @@
 * macOS の Home-manager 構成の CI ビルドが 10分以上と非常に長く、かつ macOS ランナー（`macos-latest`）は Linux ランナーの約10倍と極めて高コストであるため。
 * CIで検知したいコードミス（記述エラーや無限再帰等）は、実際にパッケージのコンパイルを行う「ビルド」を行わなくても、安価で高速な Linux ランナー上でドライラン（`nix build ... --dry-run`）を実行するだけで 100% 検出可能であるため。
 * 単一属性の `nix eval` では遅延評価により他の複雑な設定（Karabinerなど）のエラーがスルーされるのを防ぐため、`activationPackage` に対するドライランチェックを採用しました。
+* macOS 専用ランナーの廃止に伴い、macOS のシステム環境設定 (`nix-darwin`) も検証対象から外れてしまうのを防ぐため、Linux 上で `nix-darwin` のドライランチェックを走らせる必要性があるため。
 
 **3. どのように変更したか**
 * 高コストな `.github/workflows/macos-check.yml` を完全に削除しました。
 * `.github/workflows/nix-check.yml` の構文チェック（`module-check`）マトリックスに `darwin` を追加し、Linux 上で Darwin 用モジュールの構文チェックを統合しました。
-* `.github/workflows/nix-check.yml` に新規ジョブ `macos-hm-check` を追加し、Linux 上で macOS 用 Home Manager 構成 (`t4d4@macbook`) の `activationPackage` ドライラン検証 (`nix build ... --dry-run`) を数十秒で瞬時に完了させる設計に最適化しました。
+* `.github/workflows/nix-check.yml` に新規ジョブ `macos-hm-check` を追加し、Linux 上で macOS 用 Home Manager 構成 (`t4d4@macbook`) の `activationPackage` ドライラン検証 (`nix build ... --dry-run`) を数十秒で完了させる設計に最適化しました。
+* `.github/workflows/nix-check.yml` に新規ジョブ `darwin-config` を追加し、Linux 上で macOS システム構成 (`darwinConfigurations.macbook`) の評価およびドライラン検証 (`nix build ... --dry-run`) を実行するように統合しました。
