@@ -42,3 +42,19 @@
 * `README.md`, `MAC_SETUP.md`, `WSL_SETUP.md` 内の適用コマンドをすべて `nix run . -- <hostname>` ベースのものに統一・更新しました。
 * エディターの項目にHelix（MyHelixリポジトリ）を追加し、Zellijと共にスマホ対応の省スペースターミナルIDE環境（`mzj-mobile`, `myhx-mobile`）として利用できる旨を各所に追記しました。
 * `MAC_SETUP.md` から「nix-darwinの導入（上級者向け）」という時代遅れの記述を削除し、システム設定がnix-darwinで管理されていることを標準の前提として記載しました。
+
+## 2026-05-17: CI最適化（高コストな macOS 専用ランナーの廃止と Linux への統合）
+
+**1. 何処を変更したか**
+* 削除: `.github/workflows/macos-check.yml`
+* 変更: `.github/workflows/nix-check.yml`
+* 新規: `docs/ci_optimization_report.md`
+
+**2. 何故変更したか**
+* macOS の Home-manager 構成の CI ビルドが 10分以上と非常に長く、かつ macOS ランナー（`macos-latest`）は Linux ランナーの約10倍と極めて高コストであるため。
+* CIで検知したいコードミス（記述エラーや無限再帰等）は、実際にパッケージのコンパイルを行う「ビルド」を行わなくても、安価で高速な Linux ランナー上で「評価（`nix eval`）」を実行するだけで 100% 検出可能であるため。
+
+**3. どのように変更したか**
+* 高コストな `.github/workflows/macos-check.yml` を完全に削除しました。
+* `.github/workflows/nix-check.yml` の構文チェック（`module-check`）マトリックスに `darwin` を追加し、Linux 上で Darwin 用モジュールの構文チェックを統合しました。
+* `.github/workflows/nix-check.yml` に新規ジョブ `macos-hm-eval` を追加し、Linux 上で macOS 用 Home Manager 構成 (`t4d4@macbook`) の評価チェック (`nix eval`) を数十秒で瞬時に完了させる設計に最適化しました。
