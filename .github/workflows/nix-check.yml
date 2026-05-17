@@ -183,8 +183,8 @@ jobs:
             nix-instantiate --parse "$module" > /dev/null
           done
 
-  # Check macOS Home Manager configuration via evaluation (extremely fast on Linux)
-  macos-hm-eval:
+  # Verify macOS Home Manager configuration (extremely fast Dry-run on Linux)
+  macos-hm-check:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -200,9 +200,9 @@ jobs:
         with:
           nix_path: nixpkgs=channel:nixos-unstable
 
-      - name: Evaluate macOS Home Manager config
+      - name: Verify macOS Home Manager config (Dry-run build)
         run: |
-          nix eval .#homeConfigurations.\"t4d4@macbook\".config.home.username
+          nix build .#homeConfigurations.\"t4d4@macbook\".activationPackage --dry-run
 
   # Summary
   summary:
@@ -215,7 +215,7 @@ jobs:
         nixos-config,
         home-manager-configs,
         module-check,
-        macos-hm-eval,
+        macos-hm-check,
       ]
     if: always()
     steps:
