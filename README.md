@@ -224,6 +224,28 @@ nix flake update
 nix run . -- $(hostname -s)
 ```
 
+### 🔄 トラブルシューティングとロールバック
+
+もし設定の更新によってシステムやユーザー環境の挙動がおかしくなった場合は、以下の方法で以前の正常な世代（Generation）へロールバックできます。
+
+#### 1. Home Manager (ユーザー環境) のロールバック
+Home Manager は適用するたびに環境の履歴を「世代」として保存しています。
+
+```bash
+# 過去の世代一覧を確認（アクティブな世代IDや作成日時が表示されます）
+home-manager generations
+
+# 以前の世代（例: 世代ID 42）へ即座にロールバック
+/nix/store/<hash>-home-manager-generation-42-link/activate
+```
+
+#### 2. システム環境のロールバック
+*   **NixOS (Linux)**: PC起動時のブートローダーメニューから以前の正常だった世代を選択して起動できます。起動後、`sudo nixos-rebuild switch --rollback` でその世代をデフォルトに固定できます。
+*   **nix-darwin (macOS)**: 以下のコマンドを実行することで、macOSのシステム設定を以前の世代に戻せます。
+    ```bash
+    darwin-rebuild --rollback
+    ```
+
 ### 設定の検証
 
 ```bash
