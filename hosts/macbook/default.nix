@@ -38,6 +38,9 @@
     enable = true;
     onActivation.autoUpdate = true;
     onActivation.cleanup = "uninstall"; # Use standard cleanup to avoid aggressively zapping unmanaged packages
+    brews = [
+      "cliclick"
+    ];
     casks = [
       "anki"
       "antigravity"
