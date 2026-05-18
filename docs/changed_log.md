@@ -61,3 +61,15 @@
 * `.github/workflows/nix-check.yml` の構文チェック（`module-check`）マトリックスに `darwin` を追加し、Linux 上で Darwin 用モジュールの構文チェックを統合しました。
 * `.github/workflows/nix-check.yml` に新規ジョブ `macos-hm-check` を追加し、Linux 上で macOS 用 Home Manager 構成 (`t4d4@macbook`) の `activationPackage` ドライラン検証 (`nix build ... --dry-run`) を数十秒で完了させる設計に最適化しました。
 * `.github/workflows/nix-check.yml` に新規ジョブ `darwin-config` を追加し、Linux 上で macOS システム構成 (`darwinConfigurations.macbook`) の評価およびドライラン検証 (`nix build ... --dry-run`) を実行するように統合しました。
+
+## 2026-05-18: cliclick の Nix (Homebrew) 導入による自動クリック環境の構築
+
+**1. 何処を変更したか**
+* 変更: `hosts/macbook/default.nix`
+
+**2. 何故変更したか**
+* ユーザーが希望する、Windowsの「お〜とくりっかー」と同等の機能（ミリ秒単位の間隔指定、クリック種別選択、グローバルホットキー、および**指定したX,Y座標の固定クリック**）を持つ完全無料の自動クリック環境を安全かつスマートに実現するため。
+* 当初提案した `macos-auto-clicker` には座標固定クリック機能が存在しないことが発覚したため、方針を転換し、Nix-darwin の Homebrew 連携機能（`homebrew.brews`）を用いて、Mac 向け定番の CLI クリックツール `cliclick` を導入しました。これにより、外部の野良GUIアプリを導入することなく、macOS標準の「ショートカット.app」との連携によって安全で非常に軽量なホットキー付オートクリッカーマクロが構築可能になりました。
+
+**3. どのように変更したか**
+* `hosts/macbook/default.nix` の `homebrew.brews` に `"cliclick"` を追加しました。これにより、Nix の宣言的管理下に Homebrew 経由で `cliclick` が自動的にインストールされるようになります。
