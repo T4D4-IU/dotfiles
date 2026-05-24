@@ -73,3 +73,41 @@
 
 **3. どのように変更したか**
 * `hosts/macbook/default.nix` の `homebrew.brews` に `"cliclick"` を追加しました。これにより、Nix の宣言的管理下に Homebrew 経由で `cliclick` が自動的にインストールされるようになります。
+
+## 2026-05-21: Sikarugir の追加による Mac での Windows ゲーム動作環境の構築
+
+**1. 何処を変更したか**
+* 変更: `hosts/macbook/default.nix`
+
+**2. 何故変更したか**
+* Mac上でWindows向けのPCゲームを遊ぶため、Wineskinの後継でApple Silicon対応のオープンソース of Wineラッパーツール「Sikarugir」をHomebrew経由でインストールするため。
+
+**3. どのように変更したか**
+* `hosts/macbook/default.nix` の `homebrew.taps` に `"Sikarugir-App/sikarugir"` を追加しました。
+* `homebrew.casks` のリストに、アルファベット順（`shottr` の次、`sonobus` の前）で `"sikarugir"` を追加しました。
+
+## 2026-05-24: 今日のテックトレンド・セキュリティリサーチレポートの作成
+
+**1. 何処を変更したか**
+* 新規作成: `/Users/t4d4/Documents/Obsidian/AI-Workspace/2026年/05月/24日.md` (Obsidian Vault内のレポート)
+
+**2. 何故変更したか**
+* ユーザーからの今日のテックトレンドとセキュリティ関連情報の収集・要約・分析依頼に対応するため。
+* ユーザーの具体的な興味関心（ISC2 CC合格に伴うサイバーセキュリティへの情熱、Rust/Rustfinityの学習、Docker/Linuxの学習、自動テスト・テストピラミッドへの関心、AI/Gemini技術）に100%パーソナライズされた価値ある分析情報を提供するため。
+
+**3. どのように変更したか**
+* Nix flake環境下で動作する専用のトレンドスクリプト `daily_research_scraper.py` を実行し、18のRSSおよびHTMLソースから全117件の最新記事を収集。
+* 収集した記事の中から、セキュリティ、アジャイル/自動テスト、Rust、AIエージェント等の観点で最も価値が高い18記事を厳選。自然な日本語タイトル訳と詳細な要約（2〜3行）を執筆。
+* 指定のテンプレート `daily-research-template.md` に厳格に準拠したレポートファイルを生成し、`AI-Workspace/2026年/05月/24日.md` に保存。
+
+## 2026-05-24: Background Music の追加による Mac でのアプリ毎音量制御環境の構築
+
+**1. 何処を変更したか**
+* 変更: `hosts/macbook/default.nix`
+
+**2. 何故変更したか**
+* ユーザーが希望する、Windowsの「EarTrumpet」と同等の機能（Mac上でアプリごとに音量を個別にコントロールできる機能）を持つ完全無料のオープンソースツール「Background Music」を導入するため。
+* AppVolumeが将来的に有料となる可能性を考慮し、無料で使い続けられる定番のBackground Musicが選定されたため。
+
+**3. どのように変更したか**
+* `hosts/macbook/default.nix` の `homebrew.casks` のリストに、アルファベット順（`appcleaner` の次、`bluestacks` の前）で `"background-music"` を追加しました。
