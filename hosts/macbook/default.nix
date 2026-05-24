@@ -38,6 +38,9 @@
     enable = true;
     onActivation.autoUpdate = true;
     onActivation.cleanup = "uninstall"; # Use standard cleanup to avoid aggressively zapping unmanaged packages
+    taps = [
+      "Sikarugir-App/sikarugir"
+    ];
     brews = [
       "cliclick"
     ];
@@ -45,6 +48,7 @@
       "anki"
       "antigravity"
       "appcleaner"
+      "background-music"
       "bluestacks"
       "brave-browser"
       "clipaste"
@@ -69,6 +73,7 @@
       "rectangle"
       "rustdesk"
       "shottr"
+      "sikarugir"
       "sonobus"
       "spotify"
       "steam"

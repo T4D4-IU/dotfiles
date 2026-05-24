@@ -73,3 +73,27 @@
 
 **3. どのように変更したか**
 * `hosts/macbook/default.nix` の `homebrew.brews` に `"cliclick"` を追加しました。これにより、Nix の宣言的管理下に Homebrew 経由で `cliclick` が自動的にインストールされるようになります。
+
+## 2026-05-21: Sikarugir の追加による Mac での Windows ゲーム動作環境の構築
+
+**1. 何処を変更したか**
+* 変更: `hosts/macbook/default.nix`
+
+**2. 何故変更したか**
+* Mac上でWindows向けのPCゲームを遊ぶため、Wineskinの後継でApple Silicon対応のオープンソース of Wineラッパーツール「Sikarugir」をHomebrew経由でインストールするため。
+
+**3. どのように変更したか**
+* `hosts/macbook/default.nix` の `homebrew.taps` に `"Sikarugir-App/sikarugir"` を追加しました。
+* `homebrew.casks` のリストに、アルファベット順（`shottr` の次、`sonobus` の前）で `"sikarugir"` を追加しました。
+
+## 2026-05-24: Background Music の追加による Mac でのアプリ毎音量制御環境の構築
+
+**1. 何処を変更したか**
+* 変更: `hosts/macbook/default.nix`
+
+**2. 何故変更したか**
+* ユーザーが希望する、Windowsの「EarTrumpet」と同等の機能（Mac上でアプリごとに音量を個別にコントロールできる機能）を持つ完全無料のオープンソースツール「Background Music」を導入するため。
+* AppVolumeが将来的に有料となる可能性を考慮し、無料で使い続けられる定番のBackground Musicが選定されたため。
+
+**3. どのように変更したか**
+* `hosts/macbook/default.nix` の `homebrew.casks` のリストに、アルファベット順（`appcleaner` の次、`bluestacks` の前）で `"background-music"` を追加しました。
