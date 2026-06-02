@@ -45,6 +45,7 @@
       "cliclick"
     ];
     casks = [
+      "android-studio"
       "anki"
       "antigravity"
       "appcleaner"
