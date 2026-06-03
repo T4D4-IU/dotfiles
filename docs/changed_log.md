@@ -4,6 +4,23 @@
 
 ---
 
+## 2026年06月03日の変更
+
+### 1. 変更（修正）箇所
+- [MODIFY] [/Users/t4d4/dotfiles/hosts/macbook/default.nix](file:///Users/t4d4/dotfiles/hosts/macbook/default.nix)
+
+---
+
+### 2. 変更の理由（何故）
+- ユーザーから「Android Studioのコマンドラインツールも追加したい」との要望があったためです。
+
+---
+
+### 3. 変更の内容（どのように）
+- Nix-darwin環境のHomebrew管理設定（`hosts/macbook/default.nix`）の `casks` 配列に `"android-commandlinetools"` を追加しました。
+
+---
+
 ## 2026年06月02日の変更
 
 ### 1. 変更（修正）箇所
