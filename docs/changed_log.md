@@ -1,99 +1,126 @@
-# 変更履歴 (PRレビュー対応およびCIエラー修正)
+# 変更履歴 (changed_log.md)
 
-## 1. 変更箇所: `lib/helpers.nix` および `modules/home/common/default.nix`
-*   **何故**: GitHub Actions の `macos-home-manager` や `nixos-config` のCIが `infinite recursion encountered`（無限再帰）エラーで失敗していたためです。このエラーは、`modules/home/common/default.nix` の `imports` セクション内でOSを判定するために `pkgs.stdenv.isDarwin` 等を参照したことで発生していました。Home Managerは `pkgs` の構築のために `imports` を評価しようとするため、そこで `pkgs` を参照すると依存関係がループしてしまいます。
-*   **どのように**: `lib/helpers.nix` 側で `system` 変数からOSを判定した結果 (`isDarwin`, `isLinux`) を `extraSpecialArgs` に直接追加しました。そして `modules/home/common/default.nix` では、`pkgs` を使わずにその引数 (`isDarwin`, `isLinux`) を受け取って `imports` の条件分岐に使用するように修正しました。
+本ドキュメントは、ユーザー定義ルールに基づき、今回の作業に伴うファイル変更・作成内容を記録したものです。
 
-## 2. 変更箇所: `flake.nix` (applyスクリプト部分)
-*   **何故**: GitHub Copilot のレビューから、「macOSやWSLでは実際のホスト名(`hostname -s`)が、flake上の名前(`macbook` や `wsl`)と一致しないことが多く、そのまま `nix run .` を実行するとエラーになる可能性がある」との指摘を受けたためです。
-*   **どのように**: `HOSTNAME="''${1:-$(hostname -s)}"` とすることで、`nix run . -- wsl` のようにコマンドライン引数からホスト名を直接指定（上書き）できるようにしました。引数がない場合はこれまで通り自動で `hostname -s` を取得して利用します。
+---
 
-## 3. 変更箇所: `hosts/*/home.nix` および `modules/home/common/default.nix` (前回の修正を含む)
-*   **何故**: オプション名と引数名の衝突による評価エラーを防止するためです。
-*   **どのように**: 各ホストの `home.nix` に直書きされていた `features` ブロックを削除し、純粋に `extraSpecialArgs` から渡される `features` 引数を参照する設計に統一しました。
+## 2026年06月03日の変更 (Android Studio等の削除)
 
-## 4. 変更箇所: `modules/home/darwin/gui.nix` および `modules/home/linux/gui.nix`
-*   **何故**: 前回 `modules/home/common/default.nix` で `options.features` を削除したことで、これらGUIモジュール内に記述されていた `config.features.gui` へのアクセスがエラー（`attribute 'features' missing`）を引き起こしていました。
-*   **どのように**: これらのファイルはすでに親モジュール（`common/default.nix`）側で `isDarwin && guiEnabled` や `isLinux && guiEnabled` に基づいて条件付きでインポートされるようになっているため、ファイル内部での `config.features.gui` による条件分岐 (`lib.mkIf`) を削除し、直接パッケージリストを設定するように修正しました。
-## 2026-05-16: スマホ・仕事用PC向け独立ターミナル環境（MyHelix）の構築
+### 1. 変更（修正）箇所
+- [MODIFY] [/Users/t4d4/dotfiles/hosts/macbook/default.nix](file:///Users/t4d4/dotfiles/hosts/macbook/default.nix)
 
-**1. 何処を変更したか**
-* 新規作成: `~/MyHelix/flake.nix`, `~/MyHelix/modules/helix.nix`, `~/MyHelix/modules/zellij.nix` (Dotfiles外)
-* 変更: `flake.nix`, `modules/home/common/cli.nix`, `modules/home/common/default.nix` (Dotfiles内)
+---
 
-**2. 何故変更したか**
-* ユーザーがスマホなど狭い画面や不安定な回線からSSHで接続する際、ZellijとIDE機能（Helix）を省スペースなUIで利用できるようにするため。
-* 会社のセキュリティポリシーに配慮し、巨大なDotfiles全体ではなく、ターミナル環境（HelixとZellij）のみを独立して利用・持ち出し可能にするため。
+### 2. 変更の理由（何故）
+- ユーザーから「Android StudioとCLIを不要になったので消したい」との要望があったため、該当パッケージのインストール設定を削除しました。
 
-**3. どのように変更したか**
-* Dotfiles外部に `~/MyHelix` という独立したNix Flakeリポジトリを構築し、そこにHelixとZellijの設定を隔離しました。
-* スマホ用に省スペースで起動するための専用のラッパースクリプト（`mzj-mobile`, `myhx-mobile`）を定義しました。
-* Dotfilesの `flake.nix` の `inputs` に `MyHelix` リポジトリをローカル参照として追加し、`default.nix` を経由してHome Managerモジュールとして読み込むように連携させました。
+---
 
-## 2026-05-17: ドキュメントの最新化（アーキテクチャ変更への追従）
+### 3. 変更の内容（どのように）
+- Nix-darwin環境のHomebrew管理設定（`hosts/macbook/default.nix`）の `casks` 配列から `"android-studio"` と `"android-commandlinetools"` を削除しました。
 
-**1. 何処を変更したか**
-* 変更: `README.md`, `docs/MAC_SETUP.md`, `docs/WSL_SETUP.md`
+---
 
-**2. 何故変更したか**
-* 最近行った「一発適用のApplyスクリプトの導入」「macOSにおけるnix-darwinの標準化」「MyHelix環境へのターミナルIDE分離」といったアーキテクチャの変更が、各セットアップ用ドキュメントに反映されておらず、古いコマンド（`home-manager switch` 等）や古い情報（Neovimの利用等）が残っていたため。
+## 2026年06月03日の変更
 
-**3. どのように変更したか**
-* `README.md`, `MAC_SETUP.md`, `WSL_SETUP.md` 内の適用コマンドをすべて `nix run . -- <hostname>` ベースのものに統一・更新しました。
-* エディターの項目にHelix（MyHelixリポジトリ）を追加し、Zellijと共にスマホ対応の省スペースターミナルIDE環境（`mzj-mobile`, `myhx-mobile`）として利用できる旨を各所に追記しました。
-* `MAC_SETUP.md` から「nix-darwinの導入（上級者向け）」という時代遅れの記述を削除し、システム設定がnix-darwinで管理されていることを標準の前提として記載しました。
+### 1. 変更（修正）箇所
+- [MODIFY] [/Users/t4d4/dotfiles/hosts/macbook/default.nix](file:///Users/t4d4/dotfiles/hosts/macbook/default.nix)
 
-## 2026-05-17: CI最適化（高コストな macOS 専用ランナーの廃止と Linux への統合）
+---
 
-**1. 何処を変更したか**
-* 削除: `.github/workflows/macos-check.yml`
-* 変更: `.github/workflows/nix-check.yml`
-* 新規: `docs/ci_optimization_report.md`
+### 2. 変更の理由（何故）
+- ユーザーから「Android Studioのコマンドラインツールも追加したい」との要望があったためです。
 
-**2. 何故変更したか**
-* macOS の Home-manager 構成の CI ビルドが 10分以上と非常に長く、かつ macOS ランナー（`macos-latest`）は Linux ランナーの約10倍と極めて高コストであるため。
-* CIで検知したいコードミス（記述エラーや無限再帰等）は、実際にパッケージのコンパイルを行う「ビルド」を行わなくても、安価で高速な Linux ランナー上でドライラン（`nix build ... --dry-run`）を実行するだけで 100% 検出可能であるため。
-* 単一属性の `nix eval` では遅延評価により他の複雑な設定（Karabinerなど）のエラーがスルーされるのを防ぐため、`activationPackage` に対するドライランチェックを採用しました。
-* macOS 専用ランナーの廃止に伴い、macOS のシステム環境設定 (`nix-darwin`) も検証対象から外れてしまうのを防ぐため、Linux 上で `nix-darwin` のドライランチェックを走らせる必要性があるため。
+---
 
-**3. どのように変更したか**
-* 高コストな `.github/workflows/macos-check.yml` を完全に削除しました。
-* `.github/workflows/nix-check.yml` の構文チェック（`module-check`）マトリックスに `darwin` を追加し、Linux 上で Darwin 用モジュールの構文チェックを統合しました。
-* `.github/workflows/nix-check.yml` に新規ジョブ `macos-hm-check` を追加し、Linux 上で macOS 用 Home Manager 構成 (`t4d4@macbook`) の `activationPackage` ドライラン検証 (`nix build ... --dry-run`) を数十秒で完了させる設計に最適化しました。
-* `.github/workflows/nix-check.yml` に新規ジョブ `darwin-config` を追加し、Linux 上で macOS システム構成 (`darwinConfigurations.macbook`) の評価およびドライラン検証 (`nix build ... --dry-run`) を実行するように統合しました。
+### 3. 変更の内容（どのように）
+- Nix-darwin環境のHomebrew管理設定（`hosts/macbook/default.nix`）の `casks` 配列に `"android-commandlinetools"` を追加しました。
 
-## 2026-05-18: cliclick の Nix (Homebrew) 導入による自動クリック環境の構築
+---
 
-**1. 何処を変更したか**
-* 変更: `hosts/macbook/default.nix`
+## 2026年06月02日の変更
 
-**2. 何故変更したか**
-* ユーザーが希望する、Windowsの「お〜とくりっかー」と同等の機能（ミリ秒単位の間隔指定、クリック種別選択、グローバルホットキー、および**指定したX,Y座標の固定クリック**）を持つ完全無料の自動クリック環境を安全かつスマートに実現するため。
-* 当初提案した `macos-auto-clicker` には座標固定クリック機能が存在しないことが発覚したため、方針を転換し、Nix-darwin の Homebrew 連携機能（`homebrew.brews`）を用いて、Mac 向け定番の CLI クリックツール `cliclick` を導入しました。これにより、外部の野良GUIアプリを導入することなく、macOS標準の「ショートカット.app」との連携によって安全で非常に軽量なホットキー付オートクリッカーマクロが構築可能になりました。
+### 1. 変更（修正）箇所
+- [MODIFY] [/Users/t4d4/dotfiles/hosts/macbook/default.nix](file:///Users/t4d4/dotfiles/hosts/macbook/default.nix)
 
-**3. どのように変更したか**
-* `hosts/macbook/default.nix` の `homebrew.brews` に `"cliclick"` を追加しました。これにより、Nix の宣言的管理下に Homebrew 経由で `cliclick` が自動的にインストールされるようになります。
+---
 
-## 2026-05-21: Sikarugir の追加による Mac での Windows ゲーム動作環境の構築
+### 2. 変更の理由（何故）
+- ユーザーから「Android StudioをHomebrew Caskから入れたい」との要望があったためです。
 
-**1. 何処を変更したか**
-* 変更: `hosts/macbook/default.nix`
+---
 
-**2. 何故変更したか**
-* Mac上でWindows向けのPCゲームを遊ぶため、Wineskinの後継でApple Silicon対応のオープンソース of Wineラッパーツール「Sikarugir」をHomebrew経由でインストールするため。
+### 3. 変更の内容（どのように）
+- Nix-darwin環境のHomebrew管理設定（`hosts/macbook/default.nix`）の `casks` 配列に `"android-studio"` を追加しました。
 
-**3. どのように変更したか**
-* `hosts/macbook/default.nix` の `homebrew.taps` に `"Sikarugir-App/sikarugir"` を追加しました。
-* `homebrew.casks` のリストに、アルファベット順（`shottr` の次、`sonobus` の前）で `"sikarugir"` を追加しました。
+---
 
-## 2026-05-24: Background Music の追加による Mac でのアプリ毎音量制御環境の構築
+## 2026年06月01日の変更
 
-**1. 何処を変更したか**
-* 変更: `hosts/macbook/default.nix`
+### 1. 変更（新規作成）箇所
+- [NEW] [/Users/t4d4/Documents/Obsidian/AI-Workspace/2026年/06月/01日.md](file:///Users/t4d4/Documents/Obsidian/AI-Workspace/2026%E5%B9%B4/06%E6%9C%88/01%E6%97%A5.md)
 
-**2. 何故変更したか**
-* ユーザーが希望する、Windowsの「EarTrumpet」と同等の機能（Mac上でアプリごとに音量を個別にコントロールできる機能）を持つ完全無料のオープンソースツール「Background Music」を導入するため。
-* AppVolumeが将来的に有料となる可能性を考慮し、無料で使い続けられる定番のBackground Musicが選定されたため。
+---
 
-**3. どのように変更したか**
-* `hosts/macbook/default.nix` の `homebrew.casks` のリストに、アルファベット順（`appcleaner` の次、`bluestacks` の前）で `"background-music"` を追加しました。
+### 2. 変更の理由（何故）
+- 2026年06月01日の最新技術トレンドニュースを自律的に収集・分析し、ユーザーの最近の興味領域（堅牢な分散システム設計、サイバーセキュリティとアイデンティティ防御、AIエージェント駆動開発プロセス）に沿った形で日本語の要約・レポートとして記録に残すためです。
+
+---
+
+### 3. 変更の内容（どのように）
+- テンプレート `daily-research-template.md` を厳格に適用し、以下の構成で新規レポートを構築・出力しました。
+  1. **今日のトレンドニュース（厳選トップ18）**:
+     - 収集された118件の記事の中から、ユーザーの興味領域（分散システム、Rust/TypeScript、セキュリティ、AIツール/テスト、エディタアップデート）に合致する18本を厳選。
+     - タイトルを自然な日本語に翻訳し、2〜3行の詳細な内容・重要性要約を記述。
+  2. **分析・興味領域との照合**:
+     - ユーザーの直近の日記（TryHackMeや日課の様子）、読書記録、Clippings内の関心領域（①堅牢な分散システム設計、②サイバーセキュリティとアイデンティティ防御、③AIエージェント駆動開発プロセス）と本日のトレンドを詳細に照合・分析した内容を提示。
+  3. **取得エラー報告**:
+     - Levtech LAB（503エラー）およびFindy Media（429エラー）について、`read_url_content` を用いて直接補完取得を試み、その結果を報告。
+
+---
+
+## 2026年05月29日の変更
+
+### 1. 変更（新規作成）箇所
+- [NEW] [/Users/t4d4/Documents/Obsidian/AI-Workspace/2026年/05月/29日.md](file:///Users/t4d4/Documents/Obsidian/AI-Workspace/2026%E5%B9%B4/05%E6%9C%88/29%E6%97%A5.md)
+
+---
+
+### 2. 変更の理由（何故）
+- 2026年05月29日の最新技術トレンドニュースを収集・分析し、ユーザーの最近の関心領域（サイバーセキュリティ、分散システム設計、堅牢なソフトウェアエンジニアリング、自律的AIエージェントの開発プロセスなど）に沿った形で日本語の要約・レポートとして記録に残すためです。
+
+---
+
+### 3. 変更の内容（どのように）
+- テンプレート `daily-research-template.md` を厳格に適用し、以下の構成で新規レポートを構築・出力しました。
+  1. **今日のトレンドニュース（厳選トップ20）**:
+     - 収集された118件の記事の中から、ユーザーの興味領域（セキュリティ、分散システム、AI/LLM、MCP、自動テストなど）に合致する20本を厳選。
+     - タイトルを自然な日本語に翻訳し、2〜3行の詳細な内容・重要性要約を記述。
+  2. **分析・興味領域との照合**:
+     - ユーザーの直近の日記（TryHackMeや日課の様子）や、Clippings内の関心領域（①パスキー/FIDO/認証セキュリティ、②自律的AIエージェント運用とMCP標準、③Rust/ヘキサゴナルアーキテクチャによる堅牢な分散設計）と本日のトレンドを詳細に照合・分析した内容を提示。
+  3. **取得エラー報告**:
+     - エラーが0件であったため「なし」と記載。
+
+---
+
+## 2026年05月26日の変更
+
+### 1. 変更（新規作成）箇所
+- [NEW] [/Users/t4d4/Documents/Obsidian/AI-Workspace/2026年/05月/26日.md](file:///Users/t4d4/Documents/Obsidian/AI-Workspace/2026%E5%B9%B4/05%E6%9C%88/26%E6%97%A5.md)
+
+---
+
+### 2. 変更の理由（何故）
+- 2026年05月26日の最新技術トレンドニュースを収集・分析し、ユーザーの最近の関心領域（セキュリティ、アジャイル、AI開発、インフラ等）に沿った形で日本語の要約・レポートとして記録に残すためです。
+
+---
+
+### 3. 変更の内容（どのように）
+- テンプレート `daily-research-template.md` を厳格に適用し、以下の構成で新規レポートを構築・出力しました。
+  1. **今日のトレンドニュース（厳選トップ17）**:
+     - 収集された117件の記事の中から、ユーザーの興味領域に合致する17本を厳選。
+     - タイトルを自然な日本語に翻訳し、2〜3行の詳細な内容・重要性要約を記述。
+  2. **分析・興味領域との照合**:
+     - ユーザーの直近の日記、Clippings、読書記録から抽出した興味領域（①AIエージェントの可観測性・技術負債、②サプライチェーン防御・ゼロトラストセキュリティ、③分散システム・Rust/TypeScript設計）と本日のトレンドを詳細に照合・分析した内容を提示。
+  3. **取得エラー報告**:
+     - エラーが0件であったため「なし」と記載。
