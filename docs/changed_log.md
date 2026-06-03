@@ -4,6 +4,23 @@
 
 ---
 
+## 2026年06月03日の変更 (Android Studio等の削除)
+
+### 1. 変更（修正）箇所
+- [MODIFY] [/Users/t4d4/dotfiles/hosts/macbook/default.nix](file:///Users/t4d4/dotfiles/hosts/macbook/default.nix)
+
+---
+
+### 2. 変更の理由（何故）
+- ユーザーから「Android StudioとCLIを不要になったので消したい」との要望があったため、該当パッケージのインストール設定を削除しました。
+
+---
+
+### 3. 変更の内容（どのように）
+- Nix-darwin環境のHomebrew管理設定（`hosts/macbook/default.nix`）の `casks` 配列から `"android-studio"` と `"android-commandlinetools"` を削除しました。
+
+---
+
 ## 2026年06月03日の変更
 
 ### 1. 変更（修正）箇所
