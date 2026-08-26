@@ -124,3 +124,30 @@
      - ユーザーの直近の日記、Clippings、読書記録から抽出した興味領域（①AIエージェントの可観測性・技術負債、②サプライチェーン防御・ゼロトラストセキュリティ、③分散システム・Rust/TypeScript設計）と本日のトレンドを詳細に照合・分析した内容を提示。
   3. **取得エラー報告**:
      - エラーが0件であったため「なし」と記載。
+
+
+## 2026-06-16: Homebrew Caskアプリの自動更新の有効化
+
+### 1. 変更の箇所（何処を）
+- `hosts/macbook/default.nix`
+
+### 2. 変更の理由（何故）
+- Homebrew Cask経由でインストールされたMacアプリの更新通知がアプリ側に頻繁に表示される状態となっていました。
+- Nix環境の再構築時 (`nix run . -- macbook`) に自動でアップグレードを行うことで、システム全体の管理を自動化し、手動でのアプリ更新の手間を省くため。
+
+### 3. 変更の内容（どのように）
+- `hosts/macbook/default.nix` 内の `homebrew.onActivation` ブロックに `upgrade = true;` を追記しました。これにより、システムのアクティベーション時に `brew upgrade` が自動実行されるようになります。
+
+
+## 2026-06-16: MyHelixリポジトリの修正 (nodePackages廃止対応)
+
+### 1. 変更の箇所（何処を）
+- `~/MyHelix/modules/helix.nix`
+- `~/dotfiles/flake.lock`
+
+### 2. 変更の理由（何故）
+- Nixpkgs環境の最新化に伴い `nodePackages` 属性が廃止されたため、システムの再構築 (`nix run . -- macbook`) がエラーで中断してしまう問題を解決するため。
+
+### 3. 変更の内容（どのように）
+- `MyHelix` リポジトリ側で `nodePackages.typescript-language-server` 等の記述を `typescript-language-server` 等へ修正し、リモートリポジトリへ反映しました。
+- `dotfiles` 側で `nix flake update my-helix` を実行し、修正後の最新コミットを参照するようにロックファイルを更新しました。
