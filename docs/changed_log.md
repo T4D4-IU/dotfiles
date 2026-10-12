@@ -97,3 +97,40 @@
 
 **3. どのように変更したか**
 * `hosts/macbook/default.nix` の `homebrew.casks` のリストに、アルファベット順（`appcleaner` の次、`bluestacks` の前）で `"background-music"` を追加しました。
+
+## 2026-10-12: adb コマンド (android-platform-tools) の追加
+
+**1. 何処を変更したか**
+* 変更: `hosts/macbook/default.nix`
+
+**2. 何故変更したか**
+* ユーザーから `adb` (Android Debug Bridge) コマンドを利用したいという要望があったため。
+* macOS環境において、EscrcpyなどのAndroid連携ツールと整合し、かつ最も安定して公式バイナリが提供されるHomebrew Cask (`android-platform-tools`) 経由での導入を行うため。
+
+**3. どのように変更したか**
+* `hosts/macbook/default.nix` の `homebrew.casks` リストに、アルファベット順（`anki` の前）で `"android-platform-tools"` を追加しました。
+
+## 2026-10-12: Homebrew bundle の cleanup 廃止に伴う設定変更 (error_report_006 対応)
+
+**1. 何処を変更したか**
+* 変更: `hosts/macbook/default.nix`
+
+**2. 何故変更したか**
+* Homebrew のアップデートにより `brew bundle` における `--cleanup` スイッチが廃止（disabled）され、nix-darwin 適用時に `Calling the --cleanup switch is disabled!` エラーが発生していたため。
+
+**3. どのように変更したか**
+* `hosts/macbook/default.nix` の `homebrew.onActivation.cleanup` を `"uninstall"` から `"none"` に変更しました。これにより廃止されたフラグの呼び出しを回避し、正常に Homebrew bundle 処理が完了するようにしました。
+
+## 2026-10-12: nix-darwin における Homebrew パス (systemPath) および Zsh 統合の追加
+
+**1. 何処を変更したか**
+* 変更: `hosts/macbook/default.nix`
+
+**2. 何故変更したか**
+* Homebrew（および Cask の `android-platform-tools` 等）でインストールされた CLI バイナリ（`adb`, `cliclick` 等）にシステム全体・シェルから自動的に PATH が通るようにするため。
+* 個別のシェル設定にハードコードするのではなく、nix-darwin のベストプラクティスに従い、アーキテクチャ差分（Apple Silicon/Intel）を自動解決する形で宣言的に管理するため。
+
+**3. どのように変更したか**
+* `hosts/macbook/default.nix` の引数に `config` を受け取るように変更しました。
+* `environment.systemPath` に `"${config.homebrew.prefix}/bin"` を追加し、システム全体の PATH に Homebrew のバイナリディレクトリを自動登録しました。
+* `programs.zsh.enable = true;` を追加し、nix-darwin によるシステムレベルの Zsh 統合および補完・PATH 連携を有効化しました。

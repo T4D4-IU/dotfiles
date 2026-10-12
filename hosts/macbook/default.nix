@@ -1,5 +1,17 @@
-{pkgs, ...}: {
+{
+  config,
+  pkgs,
+  ...
+}: {
   # Nix-darwin configuration entry point for MacBook
+
+  # Ensure Homebrew binaries are accessible system-wide
+  environment.systemPath = [
+    "${config.homebrew.prefix}/bin"
+  ];
+
+  # Enable system-level Zsh integration for PATH and completions
+  programs.zsh.enable = true;
 
   # macOS GUI Apps managed by Nix (not available via Homebrew Cask)
   environment.systemPackages = [
@@ -37,7 +49,7 @@
   homebrew = {
     enable = true;
     onActivation.autoUpdate = true;
-    onActivation.cleanup = "uninstall"; # Use standard cleanup to avoid aggressively zapping unmanaged packages
+    onActivation.cleanup = "none"; # Disabled --cleanup switch workaround for recent Homebrew
     taps = [
       "Sikarugir-App/sikarugir"
     ];
@@ -45,6 +57,7 @@
       "cliclick"
     ];
     casks = [
+      "android-platform-tools"
       "anki"
       "antigravity"
       "appcleaner"
