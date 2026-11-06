@@ -134,3 +134,15 @@
 * `hosts/macbook/default.nix` の引数に `config` を受け取るように変更しました。
 * `environment.systemPath` に `"${config.homebrew.prefix}/bin"` を追加し、システム全体の PATH に Homebrew のバイナリディレクトリを自動登録しました。
 * `programs.zsh.enable = true;` を追加し、nix-darwin によるシステムレベルの Zsh 統合および補完・PATH 連携を有効化しました。
+
+## 2026-11-06: Blender と Godot の追加 (Homebrew Cask)
+
+**1. 何処を変更したか**
+* 変更: `hosts/macbook/default.nix`
+
+**2. 何故変更したか**
+* macOS 環境で 3D モデリングソフト「Blender」およびゲームエンジン「Godot（標準版）」を導入して学習・開発を行うため。
+* macOS における GPU アクセラレーション（Metal）や OS 権限・アプリバンドル認識の安定性を重視し、本体アプリは Dotfiles の `homebrew.casks` でグローバルに宣言管理し、プロジェクト固有のアドオンや周辺ツールは各プロジェクトディレクトリ（Git / Devbox）で分離管理する構成としたため。
+
+**3. どのように変更したか**
+* `hosts/macbook/default.nix` の `homebrew.casks` リストに、アルファベット順で `"blender"`（`background-music` の次、`bluestacks` の前）および `"godot"`（`ghostty` の次、`google-chrome` の前）を追加しました。
